@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:mojtama/main.dart';
@@ -49,9 +50,9 @@ class LoginPage extends StatelessWidget {
       body: Container(
         child: ListView(
           children: [
-            SizedBox(
-              height: Get.height / 10,
-            ),
+            // SizedBox(
+            //   height: Get.height / 9,
+            // ),
             Padding(
               padding: EdgeInsets.all(30),
               child: TextFormField(
@@ -154,7 +155,9 @@ class LoginPage extends StatelessWidget {
                     child: Obx(
                       () => isLoading.value
                           ? SpinKitChasingDots(
-                              color: Colors.black,
+                              color: Hive.box("theme").get('is_dark')
+                                  ? Colors.amber
+                                  : Colors.blue,
                               size: 20,
                             )
                           : Text(

@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:mojtama/utils/util.dart';
 import 'package:get/get.dart';
 
 class PrivilagePage extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    var controller = false.obs;
+  var controller = 0.obs;
 
-    var controller2 = false.obs;
-    var is_admin = false.obs;
-    TextEditingController usernameTxt = TextEditingController();
+  var controller2 = false.obs;
+  var controller3 = false.obs;
+  var is_admin = false.obs;
+  Rx<TextEditingController> usernameTxt = TextEditingController().obs;
+
+  String target;
+  var choice = 0.obs;
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -36,7 +41,7 @@ class PrivilagePage extends StatelessWidget {
                 cursorWidth: 1.2,
                 textAlign: TextAlign.left,
                 style: TextStyleX.style,
-                controller: usernameTxt,
+                controller: usernameTxt.value,
                 decoration: InputDecoration(
                   suffixIcon: Icon(Icons.person),
                   //hintText: "نام کاربری خود را وارد کنید",
@@ -50,15 +55,53 @@ class PrivilagePage extends StatelessWidget {
             ),
             Text("سطح دسترسی:"),
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
               child: Row(
                 children: [
-                  Text("مدیر بلوک: "),
+                  Text("مدیر بلوک1: "),
                   Obx(
-                    () => Checkbox(
-                      value: controller.value,
+                    () => Radio(
+                      activeColor: Get.theme.accentColor,
+                      groupValue: choice.value,
+                      value: 1,
                       onChanged: (changed) {
-                        controller.value = changed;
+                        choice.value = changed;
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+              child: Row(
+                children: [
+                  Text("مدیر بلوک2: "),
+                  Obx(
+                    () => Radio(
+                      activeColor: Get.theme.accentColor,
+                      groupValue: choice.value,
+                      value: 2,
+                      onChanged: (changed) {
+                        choice.value = changed;
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+              child: Row(
+                children: [
+                  Text("مدیر بلوک3: "),
+                  Obx(
+                    () => Radio(
+                      activeColor: Get.theme.accentColor,
+                      groupValue: choice.value,
+                      value: 3,
+                      onChanged: (changed) {
+                        choice.value = changed;
                       },
                     ),
                   ),
@@ -69,8 +112,15 @@ class PrivilagePage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.save),
-        tooltip: "تغییر",
+        child: Icon(Icons.check),
+        tooltip: "ذخیره",
+        onPressed: () async {
+          print(await Functions.changePrivilege(
+              Hive.box("auth").get("username").toString(),
+              Hive.box("auth").get("password"),
+              usernameTxt.value.text,
+              "no"));
+        },
       ),
     );
   }

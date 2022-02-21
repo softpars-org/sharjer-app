@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:mojtama/pages/Admin/privilage.dart';
 import 'package:mojtama/pages/dashboard.dart';
 import 'package:mojtama/pages/settings.dart';
 import 'package:mojtama/pages/statusPage.dart';
@@ -138,7 +139,7 @@ class TabView extends StatelessWidget {
           // icon: Icon(Icons.perm_identity),
           icon: Icon(
             Icons.dashboard,
-            size: 30,
+            //size: 30,
           ),
           title: ("پیش‌خوان"),
           activeColorPrimary: box.get("is_dark")
@@ -151,7 +152,7 @@ class TabView extends StatelessWidget {
         PersistentBottomNavBarItem(
           icon: Icon(
             Icons.payment,
-            size: 30,
+            //size: 30,
           ),
           title: ("پرداخت شارژ"),
           activeColorPrimary: box.get("is_dark")
@@ -164,7 +165,7 @@ class TabView extends StatelessWidget {
         PersistentBottomNavBarItem(
           icon: Icon(
             Icons.assignment,
-            size: 30,
+            //size: 30,
           ),
           title: ("وضعیت شارژ"),
           activeColorPrimary: box.get("is_dark")
@@ -177,7 +178,7 @@ class TabView extends StatelessWidget {
         PersistentBottomNavBarItem(
           icon: Icon(
             Icons.settings,
-            size: 30,
+            //size: 30,
           ),
           title: ("تنظیمات"),
           activeColorPrimary: box.get("is_dark")

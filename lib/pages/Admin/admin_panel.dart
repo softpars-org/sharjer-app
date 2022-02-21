@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:mojtama/pages/Admin/change_sharge.dart';
 import 'package:mojtama/pages/Admin/privilage.dart';
 import 'package:mojtama/pages/Admin/users_list.dart';
 import 'package:mojtama/pages/settings.dart';
@@ -14,11 +15,11 @@ class AdminOptions extends StatelessWidget {
     int getadminstat() {
       if (admin_mode == "full") {
         return 100;
-      } else if (admin_mode == "bluck1admin") {
+      } else if (admin_mode == "bluck1") {
         return 1;
-      } else if (admin_mode == "bluck2admin") {
+      } else if (admin_mode == "bluck2") {
         return 2;
-      } else if (admin_mode == "bluck3admin") {
+      } else if (admin_mode == "bluck3") {
         return 3;
       }
     }
@@ -26,7 +27,7 @@ class AdminOptions extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "پنل ادمین",
+          "مدیریت",
           style: Theme.of(context).primaryTextTheme.headline6,
         ),
         leading: IconButton(
@@ -64,23 +65,17 @@ class AdminOptions extends StatelessWidget {
                   text: "لیست اعضای بلوک " + getadminstat().toString(),
                   icon: Icon(Icons.group),
                 ),
-          getadminstat() == 100
-              ? Choice(
-                  icon: Icon(Icons.accessibility),
-                  text: "تغییر دسترسی کاربرها",
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return PrivilagePage();
-                    }));
-                  },
-                )
-              : Container(),
+
           getadminstat() == 100
               ? Choice(
                   icon: Icon(Icons.change_circle),
                   text: "تغییر میزان شارژ",
-                )
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ChangeShargePrice()));
+                  })
               : Container(),
           getadminstat() == 100
               ? Choice(

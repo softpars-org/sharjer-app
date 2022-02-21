@@ -91,8 +91,49 @@ class Functions extends GetxController {
     box.put(key, value);
   }
 
+  static getUsersList() async {
+    var username = Hive.box("auth").get("username");
+    var password = Hive.box("auth").get("password");
+    Map payload = {"username": username, "password": password};
+    Uri url = Uri.parse(
+        "http://192.168.1.102/mojtama/sources/adminpanel/get_members_list.php");
+    http.Response req = await http.post(url, body: payload);
+    var js;
+    try {
+      js = jsonDecode(req.body);
+    } catch (e) {
+      Get.snackbar(
+        "وضعیت",
+        "خروجی نامعتبر است...",
+      );
+    }
+    return js;
+  }
+
+  static changePrivilege(
+      String username, String password, String target, String privilege) async {
+    Map payload = {
+      "username": username,
+      "password": password,
+      "target": target,
+      "privilege": privilege
+    };
+    var uri = Uri.parse(
+        "http://192.168.1.102/mojtama/sources/adminpanel/change_priv.php");
+
+    http.Response req;
+    try {
+      req = await http.post(uri, body: payload);
+    } catch (e) {
+      Get.snackbar("وضعیت", "خطا در برقراری ارتباط با سرور");
+    }
+
+    return req.body;
+  }
+
   static loginS(String username, String password, BuildContext context) async {
-    Uri url = Uri.parse("http://localhost/mojtama/sources/userapi/login.php");
+    Uri url =
+        Uri.parse("http://192.168.1.102/mojtama/sources/userapi/login.php");
     Map payload = {"username": username, "password": password};
     http.Response res;
     try {
@@ -121,11 +162,10 @@ class Functions extends GetxController {
         ///////////////////////////// this is for past...
 
         Digest hash = md5.convert(utf8.encode(password));
-        Digest hash2 = md5.convert(utf8.encode(hash.toString()));
         var box = Hive.box("auth");
 
         box.put("username", username);
-        box.put("password", hash2.toString());
+        box.put("password", hash.toString());
         box.put("name", ans["status"]["name"]);
         box.put("family", ans["status"]["family"]);
         box.put("passlen", password.length);
@@ -178,7 +218,8 @@ class Functions extends GetxController {
       "family": family,
     };
 
-    Uri url = Uri.parse("http://localhost/mojtama/sources/userapi/signup.php");
+    Uri url =
+        Uri.parse("http://192.168.1.102/mojtama/sources/userapi/signup.php");
     http.Response req = await http.post(url, body: payload);
     print(req.body.trim());
     Map response = json.decode(req.body.trim());
@@ -318,4 +359,29 @@ class Functions extends GetxController {
       return -1;
     }
   }
+
+  static changePrice(username, password, price) async {
+    Map payload = {"username": username, "password": password, "price": price};
+
+    Uri url = Uri.parse(
+        "http://192.168.1.102/mojtama/sources/adminpanel/change_price.php");
+    final req = await http.post(url, body: payload);
+    var js = jsonDecode(req.body);
+    print(js);
+    if (!js["status"]) {
+      Get.snackbar(
+        "وضعیت",
+        "خطایی پیش آمد.",
+      );
+    } else {
+      Get.snackbar(
+        "وضعیت",
+        "عملیات تغییر مبلغ شارژ با موفقیت انجام شد.",
+      );
+    }
+  }
 }
+
+
+
+//TODO: i'm here. i'm gonna code indicating charge of members of complex.

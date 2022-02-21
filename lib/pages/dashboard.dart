@@ -26,7 +26,7 @@ class LogginedPage extends StatelessWidget {
       Map data = {"username": Hive.box("auth").get("username")};
 
       http.Response req = await http.post(
-        Uri.parse("http://localhost/mojtama/userapi/isAdmin.php"),
+        Uri.parse("http://192.168.1.101/mojtama/userapi/isAdmin.php"),
         body: data,
       );
 
@@ -50,7 +50,7 @@ class LogginedPage extends StatelessWidget {
       var box = Hive.box("auth");
       if (box.get("is_admin") == "full") {
         return true;
-      } else if (box.get("is_admin").contains("admin")) {
+      } else if (box.get("is_admin").contains("bluck")) {
         return true;
       } else {
         return false;
@@ -72,6 +72,53 @@ class LogginedPage extends StatelessWidget {
           ),
           tooltip: "اعلان‌های ارسال شده",
         ),
+        actions: [
+          PopupMenuButton(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("مدیریت"),
+                      Icon(
+                        Icons.admin_panel_settings,
+                        color: Hive.box("theme").get("is_dark")
+                            ? Colors.amber
+                            : Colors.blue,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              PopupMenuItem(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(0, 5, 10, 5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("خروج"),
+                      Icon(
+                        Icons.exit_to_app,
+                        color: Hive.box("theme").get("is_dark")
+                            ? Colors.amber
+                            : Colors.blue,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+            icon: Icon(
+              Icons.more_vert,
+              color:
+                  Hive.box("theme").get("is_dark") ? Colors.amber : Colors.blue,
+            ),
+          ),
+        ],
       ),
       body: Container(
         child: RefreshIndicator(
@@ -123,7 +170,7 @@ class LogginedPage extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Icon(Icons.admin_panel_settings_rounded),
-                                  Text("پنل ادمین"),
+                                  Text("مدیریت"),
                                 ],
                               ),
                             ),
