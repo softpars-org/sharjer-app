@@ -13,7 +13,7 @@ class PaymentPage extends StatelessWidget {
   TextEditingController customizeTxt = TextEditingController();
   Widget build(BuildContext context) {
     Future<String> charge_update() async {
-      return "تمام شد.";
+      return await Functions.getPrice();
     }
 
     return Scaffold(
