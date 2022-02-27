@@ -380,8 +380,15 @@ class Functions extends GetxController {
       );
     }
   }
+
+  static getPrice() async {
+    //TODO: I SHOULD WRITE SOMETHING HERE!!!!!!!!
+    var url =
+        Uri.parse("http://localhost/mojtama/sources/userapi/get_price.php");
+    var request = await http.get(url);
+
+    return request.body.toString();
+  }
 }
-
-
 
 //TODO: i'm here. i'm gonna code indicating charge of members of complex.
