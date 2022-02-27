@@ -386,8 +386,10 @@ class Functions extends GetxController {
     var url =
         Uri.parse("http://localhost/mojtama/sources/userapi/get_price.php");
     var request = await http.get(url);
-
-    return request.body.toString();
+    var response = request.body.replaceAll(RegExp(r"0$"), "");
+    // response = response.replaceAll(RegExp(r"[0-9][0-9][0-9]$"), "/000");
+    // //response = response.split(RegExp(r"[0-9]$")).toString(); i was planning this codes for splitting the price for iranians.
+    return response + " تومان";
   }
 }
 
