@@ -59,7 +59,7 @@ class UsersListPage extends StatelessWidget {
               }
             } else {
               return Center(
-                child: SpinKitThreeBounce(
+                child: SpinKitChasingDots(
                   color: Hive.box("theme").get("is_dark")
                       ? Colors.amber
                       : Colors.blue,
