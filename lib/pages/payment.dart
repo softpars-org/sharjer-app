@@ -7,10 +7,13 @@ import 'package:hive/hive.dart';
 import 'package:mojtama/utils/util.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
+import 'package:animate_do/animate_do.dart';
 
 class PaymentPage extends StatelessWidget {
   @override
   TextEditingController customizeTxt = TextEditingController();
+  TextEditingController description = TextEditingController();
+  var is_empty = true.obs;
   Widget build(BuildContext context) {
     Future<String> charge_update() async {
       return await Functions.getPrice();
@@ -20,7 +23,7 @@ class PaymentPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           "پرداخت شارژ",
-          style: Get.theme.primaryTextTheme.headline6,
+          style: Theme.of(context).primaryTextTheme.headline6,
         ),
       ),
       body: Column(
@@ -34,6 +37,14 @@ class PaymentPage extends StatelessWidget {
               textAlign: TextAlign.right,
               style: TextStyleX.style,
               controller: customizeTxt,
+              onChanged: (string) {
+                if (string == "") {
+                  is_empty.value = true;
+                } else {
+                  is_empty.value = false;
+                }
+                print(is_empty);
+              },
               decoration: InputDecoration(
                 suffixIcon: Icon(Icons.monetization_on),
                 //hintText: "نام کاربری خود را وارد کنید",
@@ -48,6 +59,38 @@ class PaymentPage extends StatelessWidget {
                 ),
               ),
             ),
+          ),
+          Obx(
+            () => !is_empty.value
+                ? FadeIn(
+                    duration: Duration(milliseconds: 500),
+                    child: Padding(
+                      padding: EdgeInsets.all(30),
+                      child: TextFormField(
+                        textAlignVertical: TextAlignVertical.top,
+                        maxLines: 5,
+                        autofocus: false,
+                        cursorColor: Colors.blue,
+                        cursorWidth: 1.2,
+                        textAlign: TextAlign.right,
+                        style: TextStyleX.style,
+                        controller: description,
+                        decoration: InputDecoration(
+                          //hintText: "نام کاربری خود را وارد کنید",
+                          labelStyle: TextStyleX.style,
+                          labelText: "توضیحات شارژ را وارد کنید.",
+                          helperText: "برای مثال: شارژ بهمن ۱۴۰۰",
+                          helperMaxLines: 4,
+                          alignLabelWithHint: true,
+
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                : Container(),
           ),
           Padding(
             padding: EdgeInsets.all(30),
@@ -73,7 +116,6 @@ class PaymentPage extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(30),
             child: ElevatedButton(
-              clipBehavior: Clip.antiAlias,
               onPressed: () {},
               style: ButtonStyle(
                 shape: MaterialStateProperty.all(
@@ -82,7 +124,7 @@ class PaymentPage extends StatelessWidget {
                   ),
                 ),
               ),
-              child: Text("گرفتن مبلغ شارژ فعلی"),
+              child: Text("پرداخت شارژ"),
             ),
           )
         ],
