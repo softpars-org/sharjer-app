@@ -92,8 +92,10 @@ class Functions extends GetxController {
   }
 
   static getUsersList() async {
-    var username = Hive.box("auth").get("username");
-    var password = Hive.box("auth").get("password");
+    var username =
+        Hive.box("auth").get("username"); //get username from hive database
+    var password =
+        Hive.box("auth").get("password"); //get password from hive database
     Map payload = {"username": username, "password": password};
     Uri url = Uri.parse(
         "http://192.168.1.102/mojtama/sources/adminpanel/get_members_list.php");
