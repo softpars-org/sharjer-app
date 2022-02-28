@@ -11,12 +11,24 @@ import 'package:animate_do/animate_do.dart';
 
 class PaymentPage extends StatelessWidget {
   @override
-  TextEditingController customizeTxt = TextEditingController();
-  TextEditingController description = TextEditingController();
-  var is_empty = true.obs;
+  Rx<TextEditingController> customizeTxt = TextEditingController().obs;
+  Rx<TextEditingController> description = TextEditingController().obs;
+  var has_val1 = false.obs;
+  var has_val2 = false.obs;
+
   Widget build(BuildContext context) {
     Future<String> charge_update() async {
       return await Functions.getPrice();
+    }
+
+    updateButton() {
+      RxBool sth = true.obs; //a var for returning boolean.
+      if (customizeTxt.value.text == "" && description.value.text != "") {
+        sth.value = true;
+      } else {
+        sth.value = false;
+      }
+      return sth;
     }
 
     return Scaffold(
@@ -33,25 +45,26 @@ class PaymentPage extends StatelessWidget {
             child: TextFormField(
               autofocus: false,
               cursorColor: Colors.blue,
+              keyboardType: TextInputType.number,
               cursorWidth: 1.2,
               textAlign: TextAlign.right,
               style: TextStyleX.style,
-              controller: customizeTxt,
+              controller: customizeTxt.value,
               onChanged: (string) {
                 if (string == "") {
-                  is_empty.value = true;
+                  has_val1.value = false;
                 } else {
-                  is_empty.value = false;
+                  has_val1.value = true;
                 }
-                print(is_empty);
+                print(has_val1);
               },
               decoration: InputDecoration(
                 suffixIcon: Icon(Icons.monetization_on),
                 //hintText: "نام کاربری خود را وارد کنید",
                 labelStyle: TextStyleX.style,
-                labelText: "مقدار مبلغ شخصی‌سازی شده را وارد کنید.",
+                labelText: "مقدار مبلغ شارژ قبلی را وارد کنید.",
                 helperText:
-                    "نکته: اگر این فیلد خالی باشد، شارژ این ماه حساب می‌شود.",
+                    "نکته: اگر این فیلد خالی باشد، شارژ این ماه حساب می‌شود.\nمی‌توانید چند شارژ را همزمان حساب کرده و مبلغ آن را وارد نمایید.\nمبلغ را به تومان وارد کنید.",
                 helperMaxLines: 4,
 
                 border: OutlineInputBorder(
@@ -61,7 +74,7 @@ class PaymentPage extends StatelessWidget {
             ),
           ),
           Obx(
-            () => !is_empty.value
+            () => has_val1.value
                 ? FadeIn(
                     duration: Duration(milliseconds: 500),
                     child: Padding(
@@ -69,12 +82,19 @@ class PaymentPage extends StatelessWidget {
                       child: TextFormField(
                         textAlignVertical: TextAlignVertical.top,
                         maxLines: 5,
+                        onChanged: (string) {
+                          if (string == "") {
+                            has_val2.value = false;
+                          } else {
+                            has_val2.value = true;
+                          }
+                        },
                         autofocus: false,
                         cursorColor: Colors.blue,
                         cursorWidth: 1.2,
                         textAlign: TextAlign.right,
                         style: TextStyleX.style,
-                        controller: description,
+                        controller: description.value,
                         decoration: InputDecoration(
                           //hintText: "نام کاربری خود را وارد کنید",
                           labelStyle: TextStyleX.style,
@@ -95,8 +115,7 @@ class PaymentPage extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(30),
             child: FutureBuilder(
-              future:
-                  Future.delayed(Duration(seconds: 2), () => charge_update()),
+              future: charge_update(),
               // ignore: missing_return
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
@@ -115,16 +134,20 @@ class PaymentPage extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.all(30),
-            child: ElevatedButton(
-              onPressed: () {},
-              style: ButtonStyle(
-                shape: MaterialStateProperty.all(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
+            child: Obx(
+              () => ElevatedButton(
+                onPressed: (has_val1.value == true && has_val2.value == false)
+                    ? null
+                    : () {}, //check if the first field has value & the second field don't have value, then button will turn off
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                   ),
                 ),
+                child: Text("پرداخت شارژ"),
               ),
-              child: Text("پرداخت شارژ"),
             ),
           )
         ],
