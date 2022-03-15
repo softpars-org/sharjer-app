@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:mojtama/pages/login.dart';
 import 'package:mojtama/pages/settings.dart';
-import 'package:mojtama/pages/sharge_status.dart';
 import 'package:mojtama/utils/util.dart';
 import 'package:http/http.dart' as http;
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -150,7 +149,7 @@ class LogginedPage extends StatelessWidget {
                               top: 50,
                               bottom: 0,
                             ),
-                            child: ElevatedButton(
+                            child: OutlinedButton(
                               style: ElevatedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
@@ -187,7 +186,7 @@ class LogginedPage extends StatelessWidget {
                         top: 50,
                         bottom: 20,
                       ),
-                      child: ElevatedButton(
+                      child: OutlinedButton(
                         style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
                           shape: RoundedRectangleBorder(
