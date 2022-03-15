@@ -135,7 +135,7 @@ class PaymentPage extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(30),
             child: Obx(
-              () => ElevatedButton(
+              () => OutlinedButton(
                 onPressed: (has_val1.value == true && has_val2.value == false)
                     ? null
                     : () {}, //check if the first field has value & the second field don't have value, then button will turn off
@@ -145,6 +145,7 @@ class PaymentPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(15),
                     ),
                   ),
+                  padding: MaterialStateProperty.all(EdgeInsets.all(30)),
                 ),
                 child: Text("پرداخت شارژ"),
               ),
