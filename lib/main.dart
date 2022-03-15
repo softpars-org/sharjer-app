@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:mojtama/pages/Admin/admin_panel.dart';
 import 'package:mojtama/pages/Admin/privilage.dart';
 import 'package:mojtama/pages/dashboard.dart';
 import 'package:mojtama/pages/settings.dart';
@@ -76,6 +77,7 @@ class _MyAppState extends State<MyApp> {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+      defaultTransition: Transition.topLevel,
       locale: Locale('fa'),
       initialRoute: Hive.box("auth").get("is_loggined") ? "/home" : "/login",
       getPages: [
@@ -88,6 +90,7 @@ class _MyAppState extends State<MyApp> {
             );
           },
         ),
+        GetPage(name: "/adminoptions", page: () => AdminOptions()),
         GetPage(
           name: "/login",
           page: () {
