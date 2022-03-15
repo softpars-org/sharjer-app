@@ -121,7 +121,7 @@ class LoginPage extends StatelessWidget {
                 margin: EdgeInsets.fromLTRB(50, 20, 50, 20),
                 height: 60,
                 child: Obx(
-                  () => ElevatedButton(
+                  () => OutlinedButton(
                     onPressed: isLoading.value
                         ? null
                         : () async {
@@ -163,7 +163,6 @@ class LoginPage extends StatelessWidget {
                           : Text(
                               "ورود",
                               style: TextStyle(
-                                color: Colors.black,
                                 fontWeight: FontWeight.w100,
                               ),
                             ),
@@ -176,15 +175,16 @@ class LoginPage extends StatelessWidget {
               padding: EdgeInsets.all(10),
               child: TextButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                      builder: (context) => Directionality(
-                        textDirection: TextDirection.rtl,
-                        child: SignUpPage(),
-                      ),
-                    ),
-                  );
+                  // Navigator.push(
+                  //   context,
+                  //   CupertinoPageRoute(
+                  //     builder: (context) => Directionality(
+                  //       textDirection: TextDirection.rtl,
+                  //       child: SignUpPage(),
+                  //     ),
+                  //   ),
+                  // );
+                  Get.to(() => SignUpPage());
                 },
                 child: Text(
                   "حساب کاربری ندارید؟ ثبت نام",
