@@ -36,7 +36,7 @@ class SettingsPage extends StatelessWidget {
             padding: EdgeInsets.all(7),
             child: ListTile(
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30)),
+                  borderRadius: BorderRadius.circular(8)),
               title: Text(
                 "تم تیره: ",
                 style: TextStyle(fontSize: 14, color: Get.theme.accentColor),
