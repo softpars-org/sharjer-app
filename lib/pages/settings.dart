@@ -30,7 +30,9 @@ class SettingsPage extends StatelessWidget {
             ),
           ),
           Divider(
-            height: 1,
+            indent: 8,
+            endIndent: 8,
+            height: 0.5,
           ),
           Padding(
             padding: EdgeInsets.all(7),
@@ -64,7 +66,9 @@ class SettingsPage extends StatelessWidget {
             ),
           ),
           Divider(
-            height: 1,
+            height: 0.5,
+            indent: 8,
+            endIndent: 8,
           )
         ],
       ),

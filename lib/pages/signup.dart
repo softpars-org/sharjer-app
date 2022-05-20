@@ -272,7 +272,7 @@ class SignUpPage extends StatelessWidget {
               child: Container(
                 margin: EdgeInsets.fromLTRB(50, 20, 50, 20),
                 height: 60,
-                child: ElevatedButton(
+                child: OutlinedButton(
                   onPressed: () async {
                     final validate = await Functions.validate(
                       nameTxt.text,
@@ -306,16 +306,16 @@ class SignUpPage extends StatelessWidget {
                   style: ButtonStyle(
                       shape: MaterialStateProperty.all(
                     RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: BorderRadius.circular(15),
                     ),
                   )),
                   child: Obx(
                     () => isLoading.value
-                        ? SpinKitChasingDots(size: 20, color: Colors.black)
+                        ? SpinKitChasingDots(
+                            size: 20, color: Theme.of(context).accentColor)
                         : Text(
                             "ثبت نام",
                             style: TextStyle(
-                              color: Colors.black,
                               fontWeight: FontWeight.w100,
                             ),
                           ),
@@ -340,3 +340,5 @@ class SignUpPage extends StatelessWidget {
     );
   }
 }
+//TODO: it has to be changed because it has a dirty UI...
+// it has to be more convenient :) (hope i wrote it correctly lol XD) 

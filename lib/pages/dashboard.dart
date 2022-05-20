@@ -4,12 +4,14 @@ import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:mojtama/pages/login.dart';
+import 'package:mojtama/pages/profile.dart';
 import 'package:mojtama/pages/settings.dart';
 import 'package:mojtama/utils/util.dart';
 import 'package:http/http.dart' as http;
+import 'package:mojtama/widgets/widgets.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
-
+import 'package:mojtama/widgets/customedButton.dart';
 import 'Admin/admin_panel.dart';
 
 class LogginedPage extends StatelessWidget {
@@ -129,13 +131,30 @@ class LogginedPage extends StatelessWidget {
                 SizedBox(
                   height: Get.height / 4,
                 ),
+                // Center(
+                //   child: Text(
+                //     "نام کاربری: " +
+                //         Hive.box("auth").get("username") +
+                //         "\n" +
+                //         "گذرواژه: " +
+                //         getPassLen(),
+                //   ),
+                // ),
                 Center(
-                  child: Text(
-                    "نام کاربری: " +
-                        Hive.box("auth").get("username") +
-                        "\n" +
-                        "گذرواژه: " +
-                        getPassLen(),
+                  child: CustomedButton(
+                    child: Column(
+                      children: [
+                        Icon(Icons.person_outline),
+                        Text('پروفایل'),
+                      ],
+                    ),
+                    padding: EdgeInsets.all(30),
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (cnx) => ProfilePage(),
+                      ),
+                    ),
                   ),
                 ),
                 is_admin()
@@ -168,7 +187,7 @@ class LogginedPage extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Icon(Icons.admin_panel_settings_rounded),
+                                  Icon(Icons.admin_panel_settings_outlined),
                                   Text("مدیریت"),
                                 ],
                               ),

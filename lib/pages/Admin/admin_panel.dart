@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:mojtama/pages/Admin/change_month.dart';
 import 'package:mojtama/pages/Admin/change_sharge.dart';
 import 'package:mojtama/pages/Admin/privilage.dart';
 import 'package:mojtama/pages/Admin/users_list.dart';
@@ -79,13 +80,13 @@ class AdminOptions extends StatelessWidget {
               : Container(),
           getadminstat() == 100
               ? Choice(
-                  icon: Icon(Icons.list),
-                  text: "دیدن وضعیت شارژ اهالی مجتمع",
-                )
-              : Choice(
-                  icon: Icon(Icons.list),
-                  text: "دیدن وضعیت شارژ بلوک " + getadminstat().toString(),
-                ),
+                  icon: Icon(Icons.redo),
+                  text: "تغییر ماه شارژ",
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => ChangeMonth()));
+                  })
+              : Container(),
           //Choice(),
         ],
       ),
@@ -115,7 +116,7 @@ class Choice extends StatelessWidget {
               ),
               leading: icon,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(8),
               ),
               onTap: onPressed == null ? () {} : onPressed,
             ),
@@ -123,7 +124,7 @@ class Choice extends StatelessWidget {
               height: 3,
             ),
             Divider(
-              height: 1,
+              height: 0.5,
             ),
           ],
         ),

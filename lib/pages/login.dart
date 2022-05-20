@@ -5,10 +5,12 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:mojtama/main.dart';
 import 'package:mojtama/pages/signup.dart';
+import 'package:mojtama/widgets/widgets.dart';
 import '../utils/util.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:mojtama/widgets/customTextField.dart';
 
 class LoginPage extends StatelessWidget {
   var checkValue = false.obs;
@@ -55,46 +57,45 @@ class LoginPage extends StatelessWidget {
             // ),
             Padding(
               padding: EdgeInsets.all(30),
-              child: TextFormField(
-                autofocus: false,
-                cursorColor: Colors.blue,
-                cursorWidth: 1.2,
-                textAlign: TextAlign.left,
-                style: TextStyleX.style,
+              child: CustomedTextField(
+                label: "نام کاربری خود را وارد کنید",
+                style: TextStyle(fontFamily: 'Vazir', fontSize: 14),
+                icon: Icon(Icons.person_outline),
                 controller: usernameTxt,
-                decoration: InputDecoration(
-                  suffixIcon: Icon(Icons.person),
-                  //hintText: "نام کاربری خود را وارد کنید",
-                  labelStyle: TextStyleX.style,
-                  labelText: "نام کاربری خود را وارد کنید",
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
               ),
             ),
-            Obx(
-              () => Padding(
-                padding: EdgeInsets.all(30),
-                child: TextFormField(
-                  autofocus: false,
-                  controller: passwordTxt,
-                  cursorColor: Colors.blue,
-                  cursorWidth: 1.2,
-                  textAlign: TextAlign.left,
-                  style: TextStyleX.style,
+
+            Padding(
+              padding: EdgeInsets.all(30),
+              //   child: TextFormField(
+              //     autofocus: false,
+              //     controller: passwordTxt,
+              //     cursorColor: Colors.blue,
+              //     cursorWidth: 1.2,
+              //     textAlign: TextAlign.left,
+              //     style: TextStyleX.style,
+              //     obscureText: !checkValue.value,
+              //     textDirection: TextDirection.ltr,
+              //     decoration: InputDecoration(
+              //       //prefixIcon: Icon(Icons.lock),
+              //       suffixIcon: Icon(Icons.lock_rounded),
+              //       //hintText: "گذرواژه خود را وارد کنید",
+              //       labelStyle: TextStyleX.style,
+              //       labelText: "گذرواژه خود را وارد کنید",
+              //       border: OutlineInputBorder(
+              //         borderRadius: BorderRadius.circular(15),
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              child: Obx(
+                () => CustomedTextField(
+                  label: "گذرواژه خود را وارد کنید",
+                  icon: Icon(Icons.lock_outline_rounded),
                   obscureText: !checkValue.value,
-                  textDirection: TextDirection.ltr,
-                  decoration: InputDecoration(
-                    //prefixIcon: Icon(Icons.lock),
-                    suffixIcon: Icon(Icons.lock_rounded),
-                    //hintText: "گذرواژه خود را وارد کنید",
-                    labelStyle: TextStyleX.style,
-                    labelText: "گذرواژه خود را وارد کنید",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
+                  dir: TextDirection.ltr,
+                  controller: passwordTxt,
+                  style: TextStyle(fontFamily: 'Vazir', fontSize: 14),
                 ),
               ),
             ),

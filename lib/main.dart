@@ -140,10 +140,9 @@ class TabView extends StatelessWidget {
       return [
         PersistentBottomNavBarItem(
           // icon: Icon(Icons.perm_identity),
-          icon: Icon(
-            Icons.dashboard,
-            //size: 30,
-          ),
+          icon: Icon(Icons.dashboard_rounded
+              //size: 30,
+              ),
           title: ("پیش‌خوان"),
           activeColorPrimary: box.get("is_dark")
               ? activeColorPrimaryDark.value
@@ -154,7 +153,7 @@ class TabView extends StatelessWidget {
         ),
         PersistentBottomNavBarItem(
           icon: Icon(
-            Icons.payment,
+            Icons.payment_outlined,
             //size: 30,
           ),
           title: ("پرداخت شارژ"),
@@ -167,7 +166,7 @@ class TabView extends StatelessWidget {
         ),
         PersistentBottomNavBarItem(
           icon: Icon(
-            Icons.assignment,
+            Icons.assignment_outlined,
             //size: 30,
           ),
           title: ("وضعیت شارژ"),
@@ -180,7 +179,7 @@ class TabView extends StatelessWidget {
         ),
         PersistentBottomNavBarItem(
           icon: Icon(
-            Icons.settings,
+            Icons.settings_outlined,
             //size: 30,
           ),
           title: ("تنظیمات"),

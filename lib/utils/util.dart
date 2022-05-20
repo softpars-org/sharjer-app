@@ -29,6 +29,8 @@ class DrawerX {
 
 class ThemeX {
   static bool is_dark = false;
+  ThemeData ss = new ThemeData();
+
   static ThemeData lightTheme = ThemeData(
     primaryColor: Colors.blue,
     primaryColorDark: Color(0xFFFEA82F),
@@ -75,11 +77,13 @@ class ThemeX {
     fontFamily: 'Vazir',
     accentTextTheme: TextTheme(bodyText1: TextStyle(fontSize: 14)),
     buttonColor: Colors.amber[800],
-    dividerColor: Colors.grey,
+    dividerColor: Colors.grey.shade800,
     textTheme: TextTheme(button: TextStyle(fontSize: 14)),
     brightness: Brightness.dark,
     canvasColor: Colors.black,
     accentColor: Colors.amber,
+    checkboxTheme:
+        CheckboxThemeData(fillColor: MaterialStateProperty.all(Colors.amber)),
     shadowColor: Colors.grey,
     hoverColor: Colors.grey[800].withOpacity(0.6),
   );
@@ -91,14 +95,16 @@ class Functions extends GetxController {
     box.put(key, value);
   }
 
+  //static String host = "https://www.amolicomplex.ir/src";
+  static String host = "http://localhost/mojtama/src";
   static getUsersList() async {
     var username =
         Hive.box("auth").get("username"); //get username from hive database
     var password =
         Hive.box("auth").get("password"); //get password from hive database
+    print(password);
     Map payload = {"username": username, "password": password};
-    Uri url = Uri.parse(
-        "http://192.168.1.102/mojtama/sources/adminpanel/get_members_list.php");
+    Uri url = Uri.parse("${host}/adminpanel/get_members_list.php");
     http.Response req = await http.post(url, body: payload);
     var js;
     try {
@@ -106,7 +112,7 @@ class Functions extends GetxController {
     } catch (e) {
       Get.snackbar(
         "وضعیت",
-        "خروجی نامعتبر است...",
+        "خروجی دریافت شده نامعتبر می‌باشد.",
       );
     }
     return js;
@@ -120,8 +126,7 @@ class Functions extends GetxController {
       "target": target,
       "privilege": privilege
     };
-    var uri = Uri.parse(
-        "http://192.168.1.102/mojtama/sources/adminpanel/change_priv.php");
+    var uri = Uri.parse("$host/adminpanel/change_priv.php");
 
     http.Response req;
     try {
@@ -130,12 +135,11 @@ class Functions extends GetxController {
       Get.snackbar("وضعیت", "خطا در برقراری ارتباط با سرور");
     }
 
-    return req.body;
+    return jsonDecode(req.body);
   }
 
   static loginS(String username, String password, BuildContext context) async {
-    Uri url =
-        Uri.parse("http://192.168.1.102/mojtama/sources/userapi/login.php");
+    Uri url = Uri.parse("$host/userapi/login.php");
     Map payload = {"username": username, "password": password};
     http.Response res;
     try {
@@ -171,8 +175,12 @@ class Functions extends GetxController {
         box.put("name", ans["status"]["name"]);
         box.put("family", ans["status"]["family"]);
         box.put("passlen", password.length);
+        box.put("phone", ans["status"]["phone"]);
+        box.put("bluck", ans["status"]["bluck"]);
+        box.put("vahed", ans["status"]["vahed"]);
         box.put("is_admin", ans["status"]["is_admin"]);
-        print("ans is: ${ans["status"]["is_admin"]}");
+        box.put("startdate", ans["status"]["startdate"]);
+        box.put("enddate", ans["status"]["enddate"]);
         box.put("is_loggined", true);
 
         Get.offNamed("/home");
@@ -220,8 +228,7 @@ class Functions extends GetxController {
       "family": family,
     };
 
-    Uri url =
-        Uri.parse("http://192.168.1.102/mojtama/sources/userapi/signup.php");
+    Uri url = Uri.parse("$host/userapi/signup.php");
     http.Response req = await http.post(url, body: payload);
     print(req.body.trim());
     Map response = json.decode(req.body.trim());
@@ -237,13 +244,15 @@ class Functions extends GetxController {
         response["message"],
       );
       Digest hash = md5.convert(utf8.encode(password));
-      Digest hash2 = md5.convert(utf8.encode(hash.toString()));
       var box = Hive.box("auth");
       box.put("name", name);
       box.put("family", family);
       box.put("username", username);
-      box.put("password", hash2.toString());
+      box.put("password", password.toString());
       box.put("passlen", password.length);
+      box.put('vahed', vahed.toString());
+      box.put('bluck', bluck.toString());
+      box.put("phone", phoneNumber.toString());
       box.put("is_admin", "false");
       box.put("is_loggined", true);
       Navigator.pushReplacement(
@@ -251,6 +260,11 @@ class Functions extends GetxController {
         MaterialPageRoute(
           builder: (context) => TabView(),
         ),
+      );
+      Get.snackbar(
+        "وضعیت",
+        "${box.get('name')} ${box.get('family')} " +
+            "عزیز، به اپلیکیشن مجتمع آملی خوش آمدید!",
       );
     } else {
       // showTopSnackBar(
@@ -286,74 +300,36 @@ class Functions extends GetxController {
         vahed == "" ||
         bluck == '' ||
         phone == "") {
-      // showTopSnackBar(
-      //   context,
-      //   CustomSnackBar.error(message: "لطفا تمام فیلد ها را پر کنید"),
-      // );
-      //////////////this is for past
       Get.snackbar(
         "وضعیت",
         "لطفا تمام فیلد ها را پر کنید",
       );
       return -1;
     } else if (password != repassword) {
-      // showTopSnackBar(
-      //   context,
-      //   CustomSnackBar.error(
-      //     message:
-      //         "گذرواژه شما با هم مطابقت ندارد...\nلطفا آن را تصحیح نمایید.",
-      //   ),
-      // );
       Get.snackbar(
         "وضعیت",
         "گذرواژه شما با هم مطابقت ندارد...\nلطفا آن را تصحیح نمایید.",
       );
       return -1;
     } else if (password.length < 4) {
-      // showTopSnackBar(
-      //   context,
-      //   CustomSnackBar.error(
-      //     message: "گذرواژه نمیتواند کمتر از ۴ کاراکتر باشد",
-      //   ),
-      // );
-      /////////this is for past
       Get.snackbar(
         "وضعیت",
         "گذرواژه نمیتواند کمتر از ۴ کاراکتر باشد",
       );
       return -1;
     } else if ((int.tryParse(vahed) != null ? int.parse(vahed) : 5) > 20) {
-      // showTopSnackBar(
-      //   context,
-      //   CustomSnackBar.error(
-      //     message: "لطفا واحد خود را تصحیح نمایید(هر بلوک ۲۰ واحد دارد)",
-      //   ),
-      // );
-      /////////////this is for past
       Get.snackbar(
         "وضعیت",
-        "گذرواژه نمیتواند کمتر از ۴ کاراکتر باشد",
+        "لطفا واحد خود را تصحیح نمایید(هر بلوک ۲۰ واحد دارد)",
       );
       return -1;
     } else if ((int.tryParse(bluck) != null ? int.parse(bluck) : 5) > 3) {
-      // showTopSnackBar(
-      //   context,
-      //   CustomSnackBar.error(
-      //     message: "لطفا بلوک خود را تصحیح نمایید",
-      //   ),
-      // );
       Get.snackbar(
         "وضعیت",
         "لطفا بلوک خود را تصحیح نمایید",
       );
       return -1;
     } else if (phone.length != 11 || !phone.contains("09")) {
-      // showTopSnackBar(
-      //   context,
-      //   CustomSnackBar.error(
-      //     message: "الگوی شماره تلفن شما درست نمیباشد",
-      //   ),
-      // );
       Get.snackbar(
         "وضعیت",
         "الگوی شماره تلفن شما درست نمیباشد",
@@ -365,8 +341,7 @@ class Functions extends GetxController {
   static changePrice(username, password, price) async {
     Map payload = {"username": username, "password": password, "price": price};
 
-    Uri url = Uri.parse(
-        "http://192.168.1.102/mojtama/sources/adminpanel/change_price.php");
+    Uri url = Uri.parse("$host/adminpanel/change_price.php");
     final req = await http.post(url, body: payload);
     var js = jsonDecode(req.body);
     print(js);
@@ -385,14 +360,188 @@ class Functions extends GetxController {
 
   static getPrice() async {
     //TODO: I SHOULD WRITE SOMETHING HERE!!!!!!!!
-    var url =
-        Uri.parse("http://localhost/mojtama/sources/userapi/get_price.php");
+    var url = Uri.parse("$host/userapi/get_price.php");
     var request = await http.get(url);
     var response = request.body.replaceAll(RegExp(r"0$"), "");
-    // response = response.replaceAll(RegExp(r"[0-9][0-9][0-9]$"), "/000");
-    // //response = response.split(RegExp(r"[0-9]$")).toString(); i was planning this codes for splitting the price for iranians.
+
     return response + " تومان";
+  }
+
+  static checkUser() async {
+    var url = Uri.parse("$host/userapi/login.php");
+    var payload = {
+      "username": Hive.box("auth").get("username"),
+      "password": Hive.box("auth").get("password")
+    };
+    var request = await http.post(url, body: payload);
+    return request.body;
+  }
+
+  static getMyCharge() async {
+    var year = await getYear();
+    var url = Uri.parse(
+      "$host/userapi/get_charge_status.php",
+    );
+    var payload = {
+      "username": Hive.box("auth").get("username"),
+      "year": year,
+    };
+    var request = await http.post(url, body: payload);
+    return [request.body, year];
+  }
+
+  static getUserCharge(target) async {
+    var year = await getYear();
+    var name_family = await getUsersName(target);
+    var url = Uri.parse("$host/userapi/get_charge_status.php");
+    var payload = {"username": target, "year": year};
+    var request = await http.post(url, body: payload);
+    return [request.body, year, name_family];
+  }
+
+  static getYear() async {
+    var url = Uri.parse("http://api.aladhan.com/gToH");
+    var request = await http.get(url);
+    var json = jsonDecode(request.body);
+    return json["data"]["hijri"]["date"].split("-")[2];
+  }
+
+  static getUsersName(target) async {
+    var url = Uri.parse("$host/adminpanel/get_user_name.php");
+    var payload = {
+      "target": target,
+    };
+    var request = await http.post(url, body: payload);
+    return request.body;
+  }
+
+  static updateProfile(newusername, name, family, phone, bluck, vahed,
+      startdate, enddate) async {
+    Map payload = {
+      "username": Hive.box("auth").get("username"),
+      "password": Hive.box("auth").get("password"),
+      "newusername": newusername,
+      "name": name,
+      "family": family,
+      "phone": phone,
+      "bluck": bluck,
+      "vahed": vahed,
+      "startdate": startdate == "**/**/**" ? "" : startdate,
+      "enddate": enddate == "**/**/**" ? "" : enddate,
+    };
+    var url = Uri.parse("$host/userapi/update_profile.php");
+    var req = await http.post(url, body: payload);
+    return req.body;
+  }
+
+  static updateMonth(month) async {
+    var url = Uri.parse("$host/adminpanel/update_month.php");
+    var payload = {
+      "username": Hive.box("auth").get("username"),
+      "password": Hive.box("auth").get("password"),
+      "month": month,
+    };
+    var req = await http.post(url, body: payload);
+    return req.body;
+  }
+
+  static adminTypeChanger(type) {
+    //if we wanna set something for another complexes, we should edit this function.
+    if (type == "bluck1") {
+      return "مدیر بلوک۱";
+    } else if (type == "bluck2") {
+      return "مدیر بلوک۲";
+    } else if (type == "bluck3") {
+      return "مدیر بلوک۳";
+    } else if (type == "no") {
+      return "کاربر عادی";
+    }
+  }
+
+  static getCurrentMonthCharge() async {
+    var url = Uri.parse("$host/userapi/get_month.php");
+    var req = await http.get(url);
+    return jsonDecode(req.body)["result"];
+  }
+
+  static getDatabaseYears() async {
+    var url = Uri.parse("$host/userapi/get_years.php");
+    var req = await http.get(url);
+    return jsonDecode(req.body);
+  }
+
+  static getAbprice(target) async {
+    var url = Uri.parse("$host/userapi/get_abprice.php");
+    var payload = {
+      "username": target,
+    };
+    var req = await http.post(url, body: payload);
+    return jsonDecode(req.body);
   }
 }
 
+class PaymentController extends GetxController {
+  //initial vars.
+  Rx<TextEditingController> customizeTxt = TextEditingController().obs;
+  Rx<TextEditingController> description = TextEditingController().obs;
+  List months = [];
+  RxString year = "".obs;
+  var moharam = false.obs;
+  var safar = false.obs;
+  var rabiol1 = false.obs;
+  var rabiol2 = false.obs;
+  var jamadi1 = false.obs;
+  var jamadi2 = false.obs;
+  var rajab = false.obs;
+  var shaban = false.obs;
+  var ramezan = false.obs;
+  var shaval = false.obs;
+  var zighade = false.obs;
+  var zilhaje = false.obs;
+  RxList ymd = [].obs; //means year month description.
+  ///////////// functions.
+  getUrl() async {
+    String username = Hive.box("auth").get("username");
+    String month = await Functions.getCurrentMonthCharge();
+    String year = await Functions.getYear();
+    String url =
+        "http://localhost/mojtama/src/payment/simpleRequest.php?username=$username&month=$month&year=$year";
+    Uri uri = Uri.parse(url);
+    http.Response req = await http.post(uri);
+    Map response = json.decode(req.body);
+    return response["url"];
+  }
+
+  getCustomUrl(data) async {
+    //this function gets a valid url from zibal which is customized by the user's price.
+    String username = Hive.box("auth").get("username");
+    Uri url =
+        Uri.parse("http://localhost/mojtama/src/payment/customRequest.php");
+    var payload = {
+      "username": username,
+      "json": data,
+    };
+    //print(payload);
+    var req = await http.post(url, body: payload);
+    var js;
+    try {
+      js = json.decode(req.body);
+    } catch (e) {
+      Get.snackbar(
+        "وضعیت",
+        "خروجی نامعتبر است.",
+      );
+    }
+
+    print(req.body);
+    if (js["message"] == "amount<100 IRR") {
+      Get.snackbar(
+        "وضعیت",
+        "قیمت را کمتر از ۱۰۰۰ ریال وارد کرده‌اید.",
+      );
+    } else if (js["message"] == "success") {
+      return js["url"];
+    }
+  }
+}
 //TODO: i'm here. i'm gonna code indicating charge of members of complex.
