@@ -129,6 +129,7 @@ class MainWindow extends StatelessWidget {
 
 class TabView extends StatelessWidget {
   @override
+  PaymentController controller = Get.put(PaymentController());
   var box = Hive.box("theme");
 
   Widget build(BuildContext context) {

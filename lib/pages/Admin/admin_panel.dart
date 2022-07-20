@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:mojtama/pages/Admin/change_month.dart';
 import 'package:mojtama/pages/Admin/change_sharge.dart';
+import 'package:mojtama/pages/Admin/chargeAdder.dart';
 import 'package:mojtama/pages/Admin/privilage.dart';
 import 'package:mojtama/pages/Admin/users_list.dart';
+import 'package:mojtama/pages/chargeAdder.dart';
 import 'package:mojtama/pages/settings.dart';
 
 class AdminOptions extends StatelessWidget {
@@ -85,6 +87,15 @@ class AdminOptions extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => ChangeMonth()));
+                  })
+              : Container(),
+          getadminstat() == 100
+              ? Choice(
+                  icon: Icon(Icons.add_circle),
+                  text: "اضافه کردن شارژ(دستی)",
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => ChargeAdd()));
                   })
               : Container(),
           //Choice(),

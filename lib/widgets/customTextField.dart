@@ -11,6 +11,7 @@ class CustomedTextField extends StatelessWidget {
   TextDirection dir;
   TextEditingController controller;
   int maxLines;
+  TextInputType keyboardType;
   Function(String) onChanged;
   CustomedTextField({
     this.label,
@@ -32,6 +33,7 @@ class CustomedTextField extends StatelessWidget {
       cursorWidth: 1.2,
       textAlign: TextAlign.right,
       style: style,
+      keyboardType: keyboardType,
       obscureText: obscureText,
       controller: controller,
       textDirection: dir,

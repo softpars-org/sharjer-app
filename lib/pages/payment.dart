@@ -21,7 +21,7 @@ class PaymentPage extends StatelessWidget {
   var has_val2 = false.obs;
 
   Widget build(BuildContext context) {
-    PaymentController controller = Get.put(PaymentController());
+    PaymentController controller = Get.find();
     Future<String> charge_update() async {
       var price = await Functions.getPrice();
       var month = await Functions.getCurrentMonthCharge();

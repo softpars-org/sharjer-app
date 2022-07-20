@@ -478,6 +478,29 @@ class Functions extends GetxController {
     var req = await http.post(url, body: payload);
     return jsonDecode(req.body);
   }
+
+  static addCharge(
+    username,
+    password,
+    targetBluck,
+    targetVahed,
+    targetYear,
+    targetMonth,
+  ) async {
+    print(targetVahed);
+    Map data = {
+      "username": username,
+      "password": password,
+      "bluck": targetBluck,
+      "vahed": targetVahed,
+      "year": targetYear,
+      "month": targetMonth,
+    };
+    Uri url = Uri.parse("$host/adminpanel/addCharge.php");
+    var req = await http.post(url, body: data);
+    var js = jsonDecode(req.body);
+    return js["status"];
+  }
 }
 
 class PaymentController extends GetxController {
@@ -486,6 +509,7 @@ class PaymentController extends GetxController {
   Rx<TextEditingController> description = TextEditingController().obs;
   List months = [];
   RxString year = "".obs;
+  RxInt groupValue = 0.obs;
   var moharam = false.obs;
   var safar = false.obs;
   var rabiol1 = false.obs;
@@ -521,6 +545,8 @@ class PaymentController extends GetxController {
       "username": username,
       "json": data,
     };
+    print(data);
+
     //print(payload);
     var req = await http.post(url, body: payload);
     var js;

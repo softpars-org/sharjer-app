@@ -11,6 +11,7 @@ class CustomedPayment2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     PaymentController controller = Get.find();
+    RxBool visible = true.obs;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -30,6 +31,7 @@ class CustomedPayment2 extends StatelessWidget {
         () => ListView.builder(
           itemCount: controller.ymd.length,
           itemBuilder: (context, index) {
+            visible.value = index > 0;
             return ChargeMonth(
               year: controller.ymd[index][0].toString(),
               month: controller.ymd[index][1].toString(),
@@ -58,15 +60,19 @@ class CustomedPayment2 extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-          FloatingActionButton(
-            onPressed: () {
-              var js = json.encode(controller.ymd);
-              controller.getCustomUrl(js);
-              print(json.encode(controller.ymd));
-            },
-            tooltip: "پرداخت",
-            heroTag: null,
-            child: Icon(Icons.payment),
+          Visibility(
+            visible: visible.value,
+            child: FloatingActionButton(
+              onPressed: () {
+                print(visible.value);
+                var js = json.encode(controller.ymd);
+                controller.getCustomUrl(js);
+                print(json.encode(controller.ymd));
+              },
+              tooltip: "پرداخت",
+              heroTag: null,
+              child: Icon(Icons.payment),
+            ),
           ),
         ],
       ),

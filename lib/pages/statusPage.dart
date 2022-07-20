@@ -59,18 +59,12 @@ class Y extends StatelessWidget {
                   return Column(
                     children: [
                       CustomedButton(
-                        child: Text("دیدن وضعیت واریزی‌های شخصی‌سازی شده"),
+                        child: Text("بروزرسانی صفحه"),
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (cnx) => CustomStatusPage(
-                                username: Hive.box("auth").get("username"),
-                              ),
-                            ),
-                          );
+                          Get.forceAppUpdate();
                         },
-                      ), // as you see, i put a button above the Year table (at first) right? that's it ...
+                      ),
+                      // as you see, i put a button above the Year table (at first) right? that's it ...
                       YearTable(
                         year: int.parse(snapshot.data[1]) - index, //gives year
                         json: json[index], //gives json response of charge info

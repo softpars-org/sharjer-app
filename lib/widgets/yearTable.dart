@@ -39,6 +39,8 @@ class YearTable extends StatelessWidget {
             ),
             textDirection: TextDirection.rtl,
             children: List.generate(getKeys(json).length, (index) {
+              var value = json[getKeys(json)[index]].toString();
+
               return TableRow(children: [
                 Padding(
                   child: Text(
@@ -49,9 +51,7 @@ class YearTable extends StatelessWidget {
                 ),
                 Padding(
                   child: Text(
-                    json[getKeys(json)[index]]
-                        .toString()
-                        .replaceAll(RegExp(r"0$"), ""),
+                    value.replaceAll(RegExp(r".$"), ""),
                   ), //replace the last zero with null value
                   padding: EdgeInsets.all(8),
                 ),
