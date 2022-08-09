@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class CustomPriceTable extends StatelessWidget {
   var json;
-  int year;
-  String name;
+  int? year;
+  String? name;
   CustomPriceTable({this.json, this.year, this.name});
   @override
   //get keys of json which returns the status of charge!
@@ -31,7 +31,7 @@ class CustomPriceTable extends StatelessWidget {
         Padding(
           padding: EdgeInsets.all(20),
           child: Text(
-            name,
+            name!,
           ),
         ),
         Text(

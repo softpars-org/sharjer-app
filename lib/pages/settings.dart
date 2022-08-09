@@ -103,8 +103,8 @@ class _LDModeState extends State<LDMode> {
 
 class Controller extends GetxController {
   var box = Hive.box("theme");
-  bool is_darkMode = Hive.box("theme").get("is_dark");
-  var bvalue;
+  bool? is_darkMode = Hive.box("theme").get("is_dark");
+  late var bvalue;
 
   box_value() {
     bvalue.value = is_darkMode;

@@ -18,8 +18,8 @@ class LoginPage extends StatelessWidget {
   TextEditingController passwordTxt = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    void checkChanged(bool value) {
-      checkValue.value = value;
+    void checkChanged(bool? value) {
+      checkValue.value = value!;
     }
 
     var isLoading = false.obs;

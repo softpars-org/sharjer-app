@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:mojtama/utils/util.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mojtama/utils/validator.dart';
 import 'package:mojtama/widgets/widgets.dart';
 import 'package:mojtama/widgets/customedButton.dart';
 import 'package:mojtama/widgets/customTextField.dart';
@@ -32,8 +34,17 @@ class ProfilePage extends StatelessWidget {
           ? "**/**/**"
           : Hive.box("auth").get("enddate"));
 
+  FormController controller = Get.put(FormController());
+
   @override
   Widget build(BuildContext context) {
+    controller.name.value = name.text;
+    controller.family.value = family.text;
+    controller.bluck.value = bluck.text;
+    controller.vahed.value = vahed.text;
+    controller.phone.value = phone.text;
+    controller.startDate.value = startdate.text;
+    controller.endDate.value = enddate.text;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -75,11 +86,14 @@ class ProfilePage extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(5),
-                        child: CustomedTextField(
-                          icon: Icon(Icons.person),
-                          label: "نام خانوادگی من",
-                          style: TextStyleX.style,
-                          controller: family,
+                        child: Obx(
+                          () => CustomedTextField(
+                            icon: Icon(Icons.person),
+                            label: "نام خانوادگی من",
+                            style: TextStyleX.style,
+                            controller: family,
+                            errorMsg: controller.errorText.value,
+                          ),
                         ),
                       ),
                     ],
@@ -118,6 +132,7 @@ class ProfilePage extends StatelessWidget {
                           label: "شماره موبایل من",
                           style: TextStyleX.style,
                           controller: phone,
+                          //errorMsg: cont.errorText.value,
                         ),
                       ),
                     ],
@@ -178,6 +193,16 @@ class ProfilePage extends StatelessWidget {
                           icon: Icon(Icons.date_range_outlined),
                           label: "تاریخ ورود",
                           style: TextStyleX.style,
+                          inputFormatter: [
+                            FilteringTextInputFormatter(
+                              RegExp(r'(/|[0-9])'),
+                              allow: true,
+                            ),
+                            FilteringTextInputFormatter(
+                                RegExp(
+                                    r'([0-9][0-9][0-9][0-9]/[0-9][0-9]/[0-9][0-9])'),
+                                allow: false),
+                          ],
                           controller: startdate,
                           helper: "به صورت شمسی وارد شود: ۱۴۰۰/۲/۲",
                         ),
@@ -196,6 +221,12 @@ class ProfilePage extends StatelessWidget {
                           style: TextStyleX.style,
                           controller: enddate,
                           helper: "به صورت شمسی وارد شود: ۱۴۰۰/۲/۲",
+                          inputFormatter: [
+                            FilteringTextInputFormatter(
+                              RegExp(r'(/|[0-9])'),
+                              allow: true,
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -212,6 +243,7 @@ class ProfilePage extends StatelessWidget {
               padding: EdgeInsets.all(30),
               onPressed: () async {
                 // print(DateTime.now().toIso8601String());
+
                 print(phone.text);
                 var res = await Functions.updateProfile(
                   username.text,

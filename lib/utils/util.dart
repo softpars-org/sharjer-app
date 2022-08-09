@@ -17,10 +17,6 @@ class TextStyleX {
     fontFamily: 'Vazir',
     fontSize: 14,
   );
-  static var appBarStyle = TextStyle(
-    fontWeight: FontWeight.w300,
-    color: Hive.box("theme").get("is_dark") ? Colors.amber : Colors.blue,
-  );
 }
 
 class DrawerX {
@@ -85,7 +81,7 @@ class ThemeX {
     checkboxTheme:
         CheckboxThemeData(fillColor: MaterialStateProperty.all(Colors.amber)),
     shadowColor: Colors.grey,
-    hoverColor: Colors.grey[800].withOpacity(0.6),
+    hoverColor: Colors.grey[800]!.withOpacity(0.6),
   );
 }
 
@@ -119,7 +115,7 @@ class Functions extends GetxController {
   }
 
   static changePrivilege(
-      String username, String password, String target, String privilege) async {
+      String? username, String? password, String? target, String privilege) async {
     Map payload = {
       "username": username,
       "password": password,
@@ -128,7 +124,7 @@ class Functions extends GetxController {
     };
     var uri = Uri.parse("$host/adminpanel/change_priv.php");
 
-    http.Response req;
+    late http.Response req;
     try {
       req = await http.post(uri, body: payload);
     } catch (e) {
@@ -141,7 +137,7 @@ class Functions extends GetxController {
   static loginS(String username, String password, BuildContext context) async {
     Uri url = Uri.parse("$host/userapi/login.php");
     Map payload = {"username": username, "password": password};
-    http.Response res;
+    late http.Response res;
     try {
       res = await http.post(url, body: payload);
       Map ans = json.decode(res.body);
@@ -509,6 +505,7 @@ class PaymentController extends GetxController {
   Rx<TextEditingController> description = TextEditingController().obs;
   List months = [];
   RxString year = "".obs;
+  RxString year2 = "".obs;
   RxInt groupValue = 0.obs;
   var moharam = false.obs;
   var safar = false.obs;
@@ -525,7 +522,7 @@ class PaymentController extends GetxController {
   RxList ymd = [].obs; //means year month description.
   ///////////// functions.
   getUrl() async {
-    String username = Hive.box("auth").get("username");
+    String? username = Hive.box("auth").get("username");
     String month = await Functions.getCurrentMonthCharge();
     String year = await Functions.getYear();
     String url =
@@ -538,7 +535,7 @@ class PaymentController extends GetxController {
 
   getCustomUrl(data) async {
     //this function gets a valid url from zibal which is customized by the user's price.
-    String username = Hive.box("auth").get("username");
+    String? username = Hive.box("auth").get("username");
     Uri url =
         Uri.parse("http://localhost/mojtama/src/payment/customRequest.php");
     var payload = {

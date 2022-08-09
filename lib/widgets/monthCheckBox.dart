@@ -26,7 +26,7 @@ class MonthCheckBoxes extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8)),
                         value: controller.moharam.value,
                         onChanged: (s) {
-                          controller.moharam.value = s;
+                          controller.moharam.value = s!;
                           if (s) {
                             controller.months.add('محرم');
                           } else {
@@ -49,7 +49,7 @@ class MonthCheckBoxes extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8)),
                         value: controller.safar.value,
                         onChanged: (s) {
-                          controller.safar.value = s;
+                          controller.safar.value = s!;
                           if (s) {
                             controller.months.add('صفر');
                           } else {
@@ -74,7 +74,7 @@ class MonthCheckBoxes extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8)),
                         value: controller.rabiol1.value,
                         onChanged: (s) {
-                          controller.rabiol1.value = s;
+                          controller.rabiol1.value = s!;
                           if (s) {
                             controller.months.add('ربیع الاول');
                           } else {
@@ -97,7 +97,7 @@ class MonthCheckBoxes extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8)),
                         value: controller.rabiol2.value,
                         onChanged: (s) {
-                          controller.rabiol2.value = s;
+                          controller.rabiol2.value = s!;
                           if (s) {
                             controller.months.add('ربیع الثانی');
                           } else {
@@ -122,7 +122,7 @@ class MonthCheckBoxes extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8)),
                         value: controller.jamadi1.value,
                         onChanged: (s) {
-                          controller.jamadi1.value = s;
+                          controller.jamadi1.value = s!;
                           if (s) {
                             controller.months.add('جمادی الاول');
                           } else {
@@ -145,7 +145,7 @@ class MonthCheckBoxes extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8)),
                         value: controller.jamadi2.value,
                         onChanged: (s) {
-                          controller.jamadi2.value = s;
+                          controller.jamadi2.value = s!;
                           if (s) {
                             controller.months.add('جمادی الثانی');
                           } else {
@@ -170,7 +170,7 @@ class MonthCheckBoxes extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8)),
                         value: controller.rajab.value,
                         onChanged: (s) {
-                          controller.rajab.value = s;
+                          controller.rajab.value = s!;
                           if (s) {
                             controller.months.add('رجب');
                           } else {
@@ -193,7 +193,7 @@ class MonthCheckBoxes extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8)),
                         value: controller.shaban.value,
                         onChanged: (s) {
-                          controller.shaban.value = s;
+                          controller.shaban.value = s!;
                           if (s) {
                             controller.months.add('شعبان');
                           } else {
@@ -218,7 +218,7 @@ class MonthCheckBoxes extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8)),
                         value: controller.ramezan.value,
                         onChanged: (s) {
-                          controller.ramezan.value = s;
+                          controller.ramezan.value = s!;
                           if (s) {
                             controller.months.add('رمضان');
                           } else {
@@ -241,7 +241,7 @@ class MonthCheckBoxes extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8)),
                         value: controller.shaval.value,
                         onChanged: (s) {
-                          controller.shaval.value = s;
+                          controller.shaval.value = s!;
                           if (s) {
                             controller.months.add('شوال');
                           } else {
@@ -266,7 +266,7 @@ class MonthCheckBoxes extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8)),
                         value: controller.zighade.value,
                         onChanged: (s) {
-                          controller.zighade.value = s;
+                          controller.zighade.value = s!;
                           if (s) {
                             controller.months.add('ذی القعده');
                           } else {
@@ -289,7 +289,7 @@ class MonthCheckBoxes extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8)),
                         value: controller.zilhaje.value,
                         onChanged: (s) {
-                          controller.zilhaje.value = s;
+                          controller.zilhaje.value = s!;
                           if (s) {
                             controller.months.add('ذی الحجه');
                           } else {

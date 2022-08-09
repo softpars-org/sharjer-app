@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class CustomedButton extends StatelessWidget {
   @override
-  Widget child;
-  EdgeInsets padding;
-  Function() onPressed;
+  Widget? child;
+  EdgeInsets? padding;
+  Function()? onPressed;
   CustomedButton({this.child, this.padding, this.onPressed});
   Widget build(BuildContext context) {
     return Container(
@@ -17,7 +17,7 @@ class CustomedButton extends StatelessWidget {
               ),
             ),
             padding: MaterialStateProperty.all(padding)),
-        child: child,
+        child: child!,
       ),
     );
   }

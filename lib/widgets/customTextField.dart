@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mojtama/utils/util.dart';
 
 class CustomedTextField extends StatelessWidget {
   @override
-  TextStyle style = TextStyle();
-  String label;
-  String helper;
-  Icon icon;
+  TextStyle? style = TextStyle();
+  String? label;
+  String? helper;
+  Icon? icon;
   bool obscureText;
   TextDirection dir;
-  TextEditingController controller;
+  TextEditingController? controller;
   int maxLines;
-  TextInputType keyboardType;
-  Function(String) onChanged;
+  TextInputType? keyboardType;
+  Function(String)? onChanged;
+  List<TextInputFormatter>? inputFormatter;
+  String? errorMsg;
+
   CustomedTextField({
     this.label,
     this.style,
@@ -23,6 +27,8 @@ class CustomedTextField extends StatelessWidget {
     this.dir = TextDirection.rtl,
     this.maxLines = 1,
     this.onChanged,
+    this.inputFormatter,
+    this.errorMsg,
   });
 
   Widget build(BuildContext context) {
@@ -39,10 +45,12 @@ class CustomedTextField extends StatelessWidget {
       textDirection: dir,
       onChanged: onChanged,
       maxLines: maxLines,
+      inputFormatters: inputFormatter,
       decoration: InputDecoration(
         suffixIcon: icon,
         //hintText: "نام کاربری خود را وارد کنید",
         labelStyle: style,
+        errorText: errorMsg,
 
         labelText: label,
         helperText: helper,
@@ -57,10 +65,10 @@ class CustomedTextField extends StatelessWidget {
 }
 
 class CustomedTextFormField extends StatelessWidget {
-  TextEditingController controller;
-  String label;
-  String helperText;
-  Function(String) onChanged;
+  TextEditingController? controller;
+  String? label;
+  String? helperText;
+  Function(String)? onChanged;
   CustomedTextFormField({
     this.controller,
     this.label,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:mojtama/pages/Admin/change_month.dart';
 import 'package:mojtama/pages/Admin/change_sharge.dart';
+import 'package:mojtama/pages/Admin/changingMonths.dart';
 import 'package:mojtama/pages/Admin/chargeAdder.dart';
 import 'package:mojtama/pages/Admin/privilage.dart';
 import 'package:mojtama/pages/Admin/users_list.dart';
@@ -98,6 +99,17 @@ class AdminOptions extends StatelessWidget {
                         MaterialPageRoute(builder: (context) => ChargeAdd()));
                   })
               : Container(),
+          getadminstat() == 100
+              ? Choice(
+                  icon: Icon(Icons.change_circle),
+                  text: "تغییر مبلغ ماه‌های قبل",
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ChangingMonths()));
+                  })
+              : Container(),
           //Choice(),
         ],
       ),
@@ -107,10 +119,10 @@ class AdminOptions extends StatelessWidget {
 
 class Choice extends StatelessWidget {
   @override
-  String text;
-  Icon icon;
+  String? text;
+  Icon? icon;
   Function() onPressed;
-  Choice({this.text, this.icon, @required this.onPressed});
+  Choice({this.text, this.icon, required this.onPressed});
 
   Widget build(BuildContext context) {
     return Container(
@@ -122,7 +134,7 @@ class Choice extends StatelessWidget {
           children: [
             ListTile(
               title: Text(
-                text,
+                text!,
                 style: TextStyle(fontSize: 14, color: Get.theme.accentColor),
               ),
               leading: icon,

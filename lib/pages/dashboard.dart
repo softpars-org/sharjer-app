@@ -15,7 +15,7 @@ import 'package:mojtama/widgets/customedButton.dart';
 import 'Admin/admin_panel.dart';
 
 class LogginedPage extends StatelessWidget {
-  String title;
+  String? title;
   LogginedPage({this.title});
   @override
   Widget build(BuildContext context) {

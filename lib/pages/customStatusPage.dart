@@ -8,7 +8,7 @@ import 'package:mojtama/widgets/customPriceTable.dart';
 Well, What's CustomStatusPage? it is a kind of statusPage(which indicates the User's charges). but it's the customed version.
 */
 class CustomStatusPage extends StatelessWidget {
-  String username;
+  String? username;
   CustomStatusPage({this.username});
   @override
   Widget build(BuildContext context) {

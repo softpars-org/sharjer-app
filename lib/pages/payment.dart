@@ -189,7 +189,7 @@ class PaymentPage extends StatelessWidget {
                 onPressed: (has_val1.value == true && has_val2.value == false)
                     ? null
                     : () async {
-                        var url;
+                        late var url;
                         if (has_val1.value) {
                           print(controller.year);
                           print(controller.months);

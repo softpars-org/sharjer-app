@@ -21,7 +21,7 @@ class MonthRadioBoxes extends StatelessWidget {
                       ),
                       value: 1,
                       groupValue: controller.groupValue.value,
-                      onChanged: (value) {
+                      onChanged: (dynamic value) {
                         controller.groupValue.value = value;
                       },
                       title: Text("محرم"),
@@ -41,7 +41,7 @@ class MonthRadioBoxes extends StatelessWidget {
                       ),
                       value: 2,
                       groupValue: controller.groupValue.value,
-                      onChanged: (value) {
+                      onChanged: (dynamic value) {
                         controller.groupValue.value = value;
                       },
                       title: Text("صفر"),
@@ -62,7 +62,7 @@ class MonthRadioBoxes extends StatelessWidget {
                       ),
                       value: 3,
                       groupValue: controller.groupValue.value,
-                      onChanged: (value) {
+                      onChanged: (dynamic value) {
                         controller.groupValue.value = value;
                       },
                       title: Text("ربیع الاول"),
@@ -82,7 +82,7 @@ class MonthRadioBoxes extends StatelessWidget {
                       ),
                       value: 4,
                       groupValue: controller.groupValue.value,
-                      onChanged: (value) {
+                      onChanged: (dynamic value) {
                         controller.groupValue.value = value;
                       },
                       title: Text("ربیع الثانی"),
@@ -103,7 +103,7 @@ class MonthRadioBoxes extends StatelessWidget {
                       ),
                       value: 5,
                       groupValue: controller.groupValue.value,
-                      onChanged: (value) {
+                      onChanged: (dynamic value) {
                         controller.groupValue.value = value;
                       },
                       title: Text("جمادی الاول"),
@@ -123,7 +123,7 @@ class MonthRadioBoxes extends StatelessWidget {
                       ),
                       value: 6,
                       groupValue: controller.groupValue.value,
-                      onChanged: (value) {
+                      onChanged: (dynamic value) {
                         controller.groupValue.value = value;
                       },
                       title: Text("جمادی الثانی"),
@@ -144,7 +144,7 @@ class MonthRadioBoxes extends StatelessWidget {
                       ),
                       value: 7,
                       groupValue: controller.groupValue.value,
-                      onChanged: (value) {
+                      onChanged: (dynamic value) {
                         controller.groupValue.value = value;
                       },
                       title: Text("رجب"),
@@ -164,7 +164,7 @@ class MonthRadioBoxes extends StatelessWidget {
                       ),
                       value: 8,
                       groupValue: controller.groupValue.value,
-                      onChanged: (value) {
+                      onChanged: (dynamic value) {
                         controller.groupValue.value = value;
                       },
                       title: Text("شعبان"),
@@ -185,7 +185,7 @@ class MonthRadioBoxes extends StatelessWidget {
                       ),
                       value: 9,
                       groupValue: controller.groupValue.value,
-                      onChanged: (value) {
+                      onChanged: (dynamic value) {
                         controller.groupValue.value = value;
                       },
                       title: Text("رمضان"),
@@ -205,7 +205,7 @@ class MonthRadioBoxes extends StatelessWidget {
                       ),
                       value: 10,
                       groupValue: controller.groupValue.value,
-                      onChanged: (value) {
+                      onChanged: (dynamic value) {
                         controller.groupValue.value = value;
                       },
                       title: Text("شوال"),
@@ -226,7 +226,7 @@ class MonthRadioBoxes extends StatelessWidget {
                       ),
                       value: 11,
                       groupValue: controller.groupValue.value,
-                      onChanged: (value) {
+                      onChanged: (dynamic value) {
                         controller.groupValue.value = value;
                       },
                       title: Text("ذی‌القعده"),
@@ -246,7 +246,7 @@ class MonthRadioBoxes extends StatelessWidget {
                       ),
                       value: 12,
                       groupValue: controller.groupValue.value,
-                      onChanged: (value) {
+                      onChanged: (dynamic value) {
                         controller.groupValue.value = value;
                       },
                       title: Text("ذی‌الحجه"),

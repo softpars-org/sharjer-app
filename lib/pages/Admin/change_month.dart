@@ -67,8 +67,8 @@ class ChangeMonth extends StatelessWidget {
 }
 
 class MyRadioButton extends StatelessWidget {
-  RxInt value;
-  List titles;
+  RxInt? value;
+  List? titles;
   MyRadioButton({this.value, this.titles});
   @override
   Widget build(BuildContext context) {
@@ -78,11 +78,11 @@ class MyRadioButton extends StatelessWidget {
           () => RadioListTile(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-            value: value.value,
+            value: value!.value,
             groupValue: val.value,
             activeColor: Theme.of(context).accentColor,
-            title: Text(titles[value.value - 1]),
-            onChanged: (changedVal) {
+            title: Text(titles![value!.value - 1]),
+            onChanged: (dynamic changedVal) {
               val.value = changedVal;
               print("changed: $val");
             },

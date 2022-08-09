@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class YearTable extends StatelessWidget {
   var json;
-  int year;
-  String name;
+  int? year;
+  String? name;
   YearTable({this.json, this.year, this.name});
   @override
   //get keys of json which returns the status of charge!
@@ -21,7 +21,7 @@ class YearTable extends StatelessWidget {
         Padding(
           padding: EdgeInsets.all(20),
           child: Text(
-            name,
+            name!,
           ),
         ),
         Text(

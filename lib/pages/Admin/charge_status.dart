@@ -14,7 +14,7 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:mojtama/widgets/yearTable.dart';
 
 class StatusPageUser extends StatelessWidget {
-  String username;
+  String? username;
   StatusPageUser({this.username});
   @override
   var box1 = Hive.box("auth");

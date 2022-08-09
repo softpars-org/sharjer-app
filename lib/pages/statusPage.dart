@@ -20,7 +20,7 @@ class StatusPageUser extends StatelessWidget {
   var box1 = Hive.box("auth");
   var box2 = Hive.box("theme");
   Future<String> fetchShargeStatus() async {
-    String username = box1.get("username");
+    String? username = box1.get("username");
     Map payload = {"username": username};
     Map headers = {"Content-Type": "application/json"};
 

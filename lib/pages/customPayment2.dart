@@ -82,10 +82,10 @@ class CustomedPayment2 extends StatelessWidget {
 
 class ChargeMonth extends StatelessWidget {
   @override
-  String year;
-  String month;
-  int index;
-  String description;
+  String? year;
+  String? month;
+  int? index;
+  String? description;
   ChargeMonth({this.year, this.month, this.description, this.index});
   Widget build(BuildContext context) {
     PaymentController controller = Get.find();
@@ -112,7 +112,7 @@ class ChargeMonth extends StatelessWidget {
                 print("asdasd");
               },
               onLongPress: () {
-                controller.ymd.removeAt(index); //im here
+                controller.ymd.removeAt(index!); //im here
               },
               child: Padding(
                 padding: EdgeInsets.all(8),
@@ -120,7 +120,7 @@ class ChargeMonth extends StatelessWidget {
                   children: [
                     Text("سال: $year"),
                     Text("ماه‌ها: " +
-                        jsonDecode(month)
+                        jsonDecode(month!)
                             .toString()
                             .replaceAll("[", "")
                             .replaceAll("]", "")),

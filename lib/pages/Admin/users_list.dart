@@ -74,15 +74,15 @@ class UsersListPage extends StatelessWidget {
 
 class UserBox extends StatelessWidget {
   @override
-  String username;
-  String name;
-  String family;
-  String phonenumber;
-  String bluck;
-  String vahed;
-  String isAdmin;
-  String startDate;
-  String endDate;
+  String? username;
+  String? name;
+  String? family;
+  String? phonenumber;
+  String? bluck;
+  String? vahed;
+  String? isAdmin;
+  String? startDate;
+  String? endDate;
   UserBox({
     this.username,
     this.name,
@@ -135,11 +135,11 @@ class UserBox extends StatelessWidget {
 
 class PopUP extends StatelessWidget {
   @override
-  String target;
+  String? target;
   PopUP({this.target});
   Widget build(BuildContext context) {
     return PopupMenuButton(
-      onSelected: (privilege) async {
+      onSelected: (dynamic privilege) async {
         if (privilege == "charge_stats") {
           Navigator.push(
             context,

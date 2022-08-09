@@ -28,8 +28,8 @@ class SignUpPage extends StatelessWidget {
   var isLoading = false.obs;
   @override
   Widget build(BuildContext context) {
-    void checkChanged(bool value) {
-      checkValue.value = value;
+    void checkChanged(bool? value) {
+      checkValue.value = value!;
     }
 
     var box = Hive.box("theme");

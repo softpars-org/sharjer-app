@@ -12,7 +12,7 @@ class PrivilagePage extends StatelessWidget {
   var is_admin = false.obs;
   Rx<TextEditingController> usernameTxt = TextEditingController().obs;
 
-  String target;
+  String? target;
   var choice = 0.obs;
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +64,7 @@ class PrivilagePage extends StatelessWidget {
                       activeColor: Get.theme.accentColor,
                       groupValue: choice.value,
                       value: 1,
-                      onChanged: (changed) {
+                      onChanged: (dynamic changed) {
                         choice.value = changed;
                       },
                     ),
@@ -82,7 +82,7 @@ class PrivilagePage extends StatelessWidget {
                       activeColor: Get.theme.accentColor,
                       groupValue: choice.value,
                       value: 2,
-                      onChanged: (changed) {
+                      onChanged: (dynamic changed) {
                         choice.value = changed;
                       },
                     ),
@@ -100,7 +100,7 @@ class PrivilagePage extends StatelessWidget {
                       activeColor: Get.theme.accentColor,
                       groupValue: choice.value,
                       value: 3,
-                      onChanged: (changed) {
+                      onChanged: (dynamic changed) {
                         choice.value = changed;
                       },
                     ),
