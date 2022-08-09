@@ -48,7 +48,7 @@ class Y extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: Functions.getMyCharge(),
-      builder: (context, snapshot) {
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasData && snapshot.data.toString() != "-1") {
             var json = jsonDecode(snapshot.data[0]);
@@ -66,7 +66,7 @@ class Y extends StatelessWidget {
                       ),
                       // as you see, i put a button above the Year table (at first) right? that's it ...
                       YearTable(
-                        year: int.parse(snapshot.data[1]) - index, //gives year
+                        year: int.parse(snapshot.data![1]) - index, //gives year
                         json: json[index], //gives json response of charge info
                         name: Hive.box("auth").get("name") +
                             " " +

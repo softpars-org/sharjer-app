@@ -28,7 +28,7 @@ class CustomStatusPage extends StatelessWidget {
       ),
       body: FutureBuilder(
         future: Functions.getAbprice(username),
-        builder: (cnx, snapshot) {
+        builder: (BuildContext cnx, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasData) {
               return ListView(

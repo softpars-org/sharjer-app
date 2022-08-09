@@ -16,7 +16,7 @@ class AdminOptions extends StatelessWidget {
   var admin_mode = Hive.box("auth").get("is_admin");
 
   Widget build(BuildContext context) {
-    int getadminstat() {
+    int? getadminstat() {
       if (admin_mode == "full") {
         return 100;
       } else if (admin_mode == "bluck1") {

@@ -144,7 +144,7 @@ class PaymentPage extends StatelessWidget {
             child: FutureBuilder(
               future: charge_update(),
               // ignore: missing_return
-              builder: (context, snapshot) {
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
                   if (snapshot.hasData) {
                     // return Text("شارژ: ${snapshot.data}");

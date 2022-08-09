@@ -40,7 +40,7 @@ class StatusPageUser extends StatelessWidget {
       // ignore: missing_return
       body: FutureBuilder(
         future: Functions.getUserCharge(username),
-        builder: (context, snapshot) {
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             print(snapshot.data);
             if (snapshot.data[0] == null) {

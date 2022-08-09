@@ -9,7 +9,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 class UsersListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Future<void> updateList() {
+    Future<void>? updateList() {
       Functions.getUsersList();
       print("sth");
     }
@@ -35,7 +35,7 @@ class UsersListPage extends StatelessWidget {
             Duration(seconds: 1),
             () => Functions.getUsersList(),
           ),
-          builder: (context, snapshot) {
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasData) {
                 return ListView.builder(

@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
 class FormController extends GetxController {
-  RxString name, family, username, phone, bluck, vahed, startDate, endDate;
+  late RxString name, family, username, phone, bluck, vahed, startDate, endDate;
   late RxnString errorText;
 
   //RxnString errorText = RxnString(null);
