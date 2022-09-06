@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:mojtama/pages/Admin/change_month.dart';
-import 'package:mojtama/pages/Admin/change_sharge.dart';
-import 'package:mojtama/pages/Admin/changingMonths.dart';
-import 'package:mojtama/pages/Admin/chargeAdder.dart';
-import 'package:mojtama/pages/Admin/privilage.dart';
-import 'package:mojtama/pages/Admin/users_list.dart';
+import 'package:mojtama/pages/adminScreens/change_month.dart';
+import 'package:mojtama/pages/adminScreens/change_sharge.dart';
+import 'package:mojtama/pages/adminScreens/changingMonths.dart';
+import 'package:mojtama/pages/adminScreens/chargeAdder.dart';
+import 'package:mojtama/pages/adminScreens/privilage.dart';
+import 'package:mojtama/pages/adminScreens/users_list.dart';
 import 'package:mojtama/pages/chargeAdder.dart';
 import 'package:mojtama/pages/settings.dart';
 
@@ -54,17 +54,13 @@ class AdminOptions extends StatelessWidget {
                   text: "لیست اعضا",
                   onPressed: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => UsersListPage()));
+                        context, GetPageRoute(page: () => UsersListPage()));
                   },
                 )
               : Choice(
                   onPressed: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => UsersListPage()));
+                        context, GetPageRoute(page: () => UsersListPage()));
                   },
                   text: "لیست اعضای بلوک " + getadminstat().toString(),
                   icon: Icon(Icons.group),
@@ -76,9 +72,7 @@ class AdminOptions extends StatelessWidget {
                   text: "تغییر میزان شارژ",
                   onPressed: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ChangeShargePrice()));
+                        context, GetPageRoute(page: () => ChangeShargePrice()));
                   })
               : Container(),
           getadminstat() == 100
@@ -86,8 +80,8 @@ class AdminOptions extends StatelessWidget {
                   icon: Icon(Icons.redo),
                   text: "تغییر ماه شارژ",
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ChangeMonth()));
+                    Navigator.push(
+                        context, GetPageRoute(page: () => ChangeMonth()));
                   })
               : Container(),
           getadminstat() == 100
@@ -95,8 +89,8 @@ class AdminOptions extends StatelessWidget {
                   icon: Icon(Icons.add_circle),
                   text: "اضافه کردن شارژ(دستی)",
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ChargeAdd()));
+                    Navigator.push(
+                        context, GetPageRoute(page: () => ChargeAdd()));
                   })
               : Container(),
           getadminstat() == 100
@@ -105,9 +99,7 @@ class AdminOptions extends StatelessWidget {
                   text: "تغییر مبلغ ماه‌های قبل",
                   onPressed: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ChangingMonths()));
+                        context, GetPageRoute(page: () => ChangingMonths()));
                   })
               : Container(),
           //Choice(),

@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import 'package:mojtama/pages/Admin/charge_status.dart';
+import 'package:mojtama/pages/adminScreens/charge_status.dart';
+import 'package:mojtama/utils/functionController.dart';
 import 'package:mojtama/utils/util.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 
 class UsersListPage extends StatelessWidget {
   @override
+  AdminAPI adminAPI = AdminAPI();
   Widget build(BuildContext context) {
     Future<void>? updateList() {
-      Functions.getUsersList();
+      // Functions.getUsersList();
+
+      adminAPI.getUsersList();
       print("sth");
     }
 
@@ -31,10 +34,7 @@ class UsersListPage extends StatelessWidget {
       ),
       // ignore: missing_return
       body: FutureBuilder(
-          future: Future.delayed(
-            Duration(seconds: 1),
-            () => Functions.getUsersList(),
-          ),
+          future: adminAPI.getUsersList(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasData) {
@@ -143,8 +143,8 @@ class PopUP extends StatelessWidget {
         if (privilege == "charge_stats") {
           Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (context) => StatusPageUser(
+            GetPageRoute(
+              page: () => StatusPageUser(
                 username: target,
               ),
             ),
@@ -170,7 +170,7 @@ class PopUP extends StatelessWidget {
               });
         }
       },
-      icon: Icon(Icons.more_horiz),
+      icon: Icon(Icons.more_rounded),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       itemBuilder: (cnx) => [
         PopupMenuItem(

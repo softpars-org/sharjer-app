@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:mojtama/pages/dashboard.dart';
+import 'package:mojtama/widgets/bottomNavigationBar.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:hive/hive.dart';
@@ -23,68 +24,6 @@ class DrawerX {
   static const drawer = Drawer();
 }
 
-class ThemeX {
-  static bool is_dark = false;
-  ThemeData ss = new ThemeData();
-
-  static ThemeData lightTheme = ThemeData(
-    primaryColor: Colors.blue,
-    primaryColorDark: Color(0xFFFEA82F),
-    appBarTheme: AppBarTheme(
-      backgroundColor: Colors.white,
-      elevation: 0.5,
-      centerTitle: true,
-    ),
-    accentIconTheme: IconThemeData(
-      color: Colors.blue,
-    ),
-    primaryTextTheme: TextTheme(
-      headline6: TextStyle(color: Colors.blue, fontWeight: FontWeight.w300),
-    ),
-    fontFamily: 'Vazir',
-    buttonColor: Colors.blue,
-    textTheme: TextTheme(
-      bodyText1: TextStyle(color: Colors.amber),
-      button: TextStyle(
-        fontSize: 14,
-        fontWeight: FontWeight.w300,
-      ),
-    ),
-    brightness: Brightness.light,
-    canvasColor: Colors.white,
-    iconTheme: IconThemeData(color: Colors.blue),
-  );
-
-  static ThemeData darkTheme = ThemeData(
-    primaryColor: Colors.amber[800],
-    primarySwatch: Colors.amber,
-    appBarTheme: AppBarTheme(
-      backgroundColor: Colors.black,
-      elevation: 5.0,
-      centerTitle: true,
-    ),
-    accentIconTheme: IconThemeData(
-      color: Colors.amber,
-    ),
-    primaryTextTheme: TextTheme(
-      headline6: TextStyle(color: Colors.amber, fontWeight: FontWeight.w300),
-    ),
-    primaryColorDark: Colors.black,
-    fontFamily: 'Vazir',
-    accentTextTheme: TextTheme(bodyText1: TextStyle(fontSize: 14)),
-    buttonColor: Colors.amber[800],
-    dividerColor: Colors.grey.shade800,
-    textTheme: TextTheme(button: TextStyle(fontSize: 14)),
-    brightness: Brightness.dark,
-    canvasColor: Colors.black,
-    accentColor: Colors.amber,
-    checkboxTheme:
-        CheckboxThemeData(fillColor: MaterialStateProperty.all(Colors.amber)),
-    shadowColor: Colors.grey,
-    hoverColor: Colors.grey[800]!.withOpacity(0.6),
-  );
-}
-
 class Functions extends GetxController {
   var box = Hive.box("user");
   void put(key, value) {
@@ -93,29 +32,9 @@ class Functions extends GetxController {
 
   //static String host = "https://www.amolicomplex.ir/src";
   static String host = "http://localhost/mojtama/src";
-  static getUsersList() async {
-    var username =
-        Hive.box("auth").get("username"); //get username from hive database
-    var password =
-        Hive.box("auth").get("password"); //get password from hive database
-    print(password);
-    Map payload = {"username": username, "password": password};
-    Uri url = Uri.parse("${host}/adminpanel/get_members_list.php");
-    http.Response req = await http.post(url, body: payload);
-    var js;
-    try {
-      js = jsonDecode(req.body);
-    } catch (e) {
-      Get.snackbar(
-        "وضعیت",
-        "خروجی دریافت شده نامعتبر می‌باشد.",
-      );
-    }
-    return js;
-  }
 
-  static changePrivilege(
-      String? username, String? password, String? target, String privilege) async {
+  static changePrivilege(String? username, String? password, String? target,
+      String privilege) async {
     Map payload = {
       "username": username,
       "password": password,
@@ -229,12 +148,6 @@ class Functions extends GetxController {
     print(req.body.trim());
     Map response = json.decode(req.body.trim());
     if (response["info"] == "success") {
-      // showTopSnackBar(
-      //   context,
-      //   CustomSnackBar.success(
-      //     message: response["message"],
-      //   ),
-      // );
       Get.snackbar(
         "وضعیت",
         response["message"],
@@ -254,7 +167,7 @@ class Functions extends GetxController {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => TabView(),
+          builder: (context) => PersistentView(),
         ),
       );
       Get.snackbar(
@@ -355,7 +268,6 @@ class Functions extends GetxController {
   }
 
   static getPrice() async {
-    //TODO: I SHOULD WRITE SOMETHING HERE!!!!!!!!
     var url = Uri.parse("$host/userapi/get_price.php");
     var request = await http.get(url);
     var response = request.body.replaceAll(RegExp(r"0$"), "");
@@ -396,10 +308,10 @@ class Functions extends GetxController {
   }
 
   static getYear() async {
-    var url = Uri.parse("http://api.aladhan.com/gToH");
+    var url = Uri.parse("$host/userapi/yearInDatabase.php");
     var request = await http.get(url);
     var json = jsonDecode(request.body);
-    return json["data"]["hijri"]["date"].split("-")[2];
+    return json["maxNumber"]; //return max year in the database.
   }
 
   static getUsersName(target) async {
@@ -498,73 +410,3 @@ class Functions extends GetxController {
     return js["status"];
   }
 }
-
-class PaymentController extends GetxController {
-  //initial vars.
-  Rx<TextEditingController> customizeTxt = TextEditingController().obs;
-  Rx<TextEditingController> description = TextEditingController().obs;
-  List months = [];
-  RxString year = "".obs;
-  RxString year2 = "".obs;
-  RxInt groupValue = 0.obs;
-  var moharam = false.obs;
-  var safar = false.obs;
-  var rabiol1 = false.obs;
-  var rabiol2 = false.obs;
-  var jamadi1 = false.obs;
-  var jamadi2 = false.obs;
-  var rajab = false.obs;
-  var shaban = false.obs;
-  var ramezan = false.obs;
-  var shaval = false.obs;
-  var zighade = false.obs;
-  var zilhaje = false.obs;
-  RxList ymd = [].obs; //means year month description.
-  ///////////// functions.
-  getUrl() async {
-    String? username = Hive.box("auth").get("username");
-    String month = await Functions.getCurrentMonthCharge();
-    String year = await Functions.getYear();
-    String url =
-        "http://localhost/mojtama/src/payment/simpleRequest.php?username=$username&month=$month&year=$year";
-    Uri uri = Uri.parse(url);
-    http.Response req = await http.post(uri);
-    Map response = json.decode(req.body);
-    return response["url"];
-  }
-
-  getCustomUrl(data) async {
-    //this function gets a valid url from zibal which is customized by the user's price.
-    String? username = Hive.box("auth").get("username");
-    Uri url =
-        Uri.parse("http://localhost/mojtama/src/payment/customRequest.php");
-    var payload = {
-      "username": username,
-      "json": data,
-    };
-    print(data);
-
-    //print(payload);
-    var req = await http.post(url, body: payload);
-    var js;
-    try {
-      js = json.decode(req.body);
-    } catch (e) {
-      Get.snackbar(
-        "وضعیت",
-        "خروجی نامعتبر است.",
-      );
-    }
-
-    print(req.body);
-    if (js["message"] == "amount<100 IRR") {
-      Get.snackbar(
-        "وضعیت",
-        "قیمت را کمتر از ۱۰۰۰ ریال وارد کرده‌اید.",
-      );
-    } else if (js["message"] == "success") {
-      return js["url"];
-    }
-  }
-}
-//TODO: i'm here. i'm gonna code indicating charge of members of complex.

@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mojtama/pages/chargeAdder.dart';
 import 'package:mojtama/pages/customPayment.dart';
-import 'package:mojtama/utils/util.dart';
+import 'package:mojtama/utils/paymentController.dart';
+
 import 'package:mojtama/widgets/customTextField.dart';
 
 class CustomedPayment2 extends StatelessWidget {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mojtama/pages/payment.dart';
+import 'package:mojtama/utils/paymentController.dart';
 import 'package:mojtama/utils/util.dart';
-import 'package:mojtama/widgets/widgets.dart';
 import 'package:mojtama/widgets/yearsDrop.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:mojtama/widgets/customedButton.dart';

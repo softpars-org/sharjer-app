@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:mojtama/utils/functionController.dart';
+import 'package:mojtama/utils/paymentController.dart';
 import 'package:mojtama/utils/util.dart';
 import 'package:mojtama/widgets/customTextField.dart';
 import 'package:mojtama/widgets/monthCheckBox.dart';
@@ -10,6 +12,7 @@ import 'package:mojtama/widgets/yearsDrop.dart';
 class ChargeAdd extends StatelessWidget {
   @override
   PaymentController controller = Get.put(PaymentController());
+  AdminAPI adminAPI = AdminAPI();
   TextEditingController targetBluck = new TextEditingController();
   TextEditingController targetVahed = new TextEditingController();
   Widget build(BuildContext context) {
@@ -90,7 +93,7 @@ class ChargeAdd extends StatelessWidget {
               var targetYear = controller.year.value;
               var targetMonth = controller.groupValue.value.toString();
               if (targetBluck.text != "" && targetVahed.text != "") {
-                var ans = await Functions.addCharge(
+                var ans = await adminAPI.addCharge(
                   myUser,
                   password,
                   targetBluck.text,

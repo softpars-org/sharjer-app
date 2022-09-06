@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:mojtama/main.dart';
 import 'package:mojtama/pages/signup.dart';
-import 'package:mojtama/widgets/widgets.dart';
 import '../utils/util.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';

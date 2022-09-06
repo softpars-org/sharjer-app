@@ -2,12 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
+import 'package:mojtama/main.dart';
 import 'package:mojtama/utils/util.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mojtama/utils/validator.dart';
-import 'package:mojtama/widgets/widgets.dart';
+import 'package:mojtama/widgets/bottomNavigationBar.dart';
 import 'package:mojtama/widgets/customedButton.dart';
 import 'package:mojtama/widgets/customTextField.dart';
 // import 'package:hive/hive.dart';
@@ -15,8 +16,8 @@ import 'package:mojtama/widgets/customTextField.dart';
 class ProfilePage extends StatelessWidget {
   TextEditingController name =
       TextEditingController(text: Hive.box("auth").get('name'));
-  TextEditingController family =
-      TextEditingController(text: Hive.box("auth").get("family"));
+  Rx<TextEditingController> family =
+      TextEditingController(text: Hive.box("auth").get("family")).obs;
   TextEditingController username =
       TextEditingController(text: Hive.box("auth").get("username"));
   TextEditingController phone =
@@ -34,17 +35,8 @@ class ProfilePage extends StatelessWidget {
           ? "**/**/**"
           : Hive.box("auth").get("enddate"));
 
-  FormController controller = Get.put(FormController());
-
   @override
   Widget build(BuildContext context) {
-    controller.name.value = name.text;
-    controller.family.value = family.text;
-    controller.bluck.value = bluck.text;
-    controller.vahed.value = vahed.text;
-    controller.phone.value = phone.text;
-    controller.startDate.value = startdate.text;
-    controller.endDate.value = enddate.text;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -71,12 +63,22 @@ class ProfilePage extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(5),
-                        child: CustomedTextField(
-                          label: "نام من",
-                          style: TextStyleX.style,
-                          icon: Icon(Icons.person),
-                          controller: name,
-                        ),
+                        child: GetBuilder<FormValidator>(
+                            init: FormValidator(),
+                            builder: (_) {
+                              return CustomedTextField(
+                                label: "نام من",
+                                style: TextStyleX.style,
+                                icon: Icon(Icons.person),
+                                controller: name,
+                                onChanged: (val) {
+                                  _.value = val;
+                                  _.nullChecker();
+                                  _.updateState();
+                                },
+                                errorMsg: _.errorText,
+                              );
+                            }),
                       ),
                     ],
                   ),
@@ -85,17 +87,24 @@ class ProfilePage extends StatelessWidget {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Obx(
-                          () => CustomedTextField(
-                            icon: Icon(Icons.person),
-                            label: "نام خانوادگی من",
-                            style: TextStyleX.style,
-                            controller: family,
-                            errorMsg: controller.errorText.value,
-                          ),
-                        ),
-                      ),
+                          padding: const EdgeInsets.all(5),
+                          child: GetBuilder<NameFamilyValidator>(
+                            init: NameFamilyValidator(),
+                            builder: (_) {
+                              return CustomedTextField(
+                                icon: Icon(Icons.person),
+                                label: "نام خانوادگی من",
+                                style: TextStyleX.style,
+                                controller: family.value,
+                                errorMsg: _.errorText,
+                                onChanged: (val) {
+                                  _.value = val;
+                                  _.nameFamilyChecker();
+                                  _.updateState();
+                                },
+                              );
+                            },
+                          )),
                     ],
                   ),
                 ),
@@ -112,11 +121,24 @@ class ProfilePage extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(5),
-                        child: CustomedTextField(
-                          icon: Icon(Icons.perm_identity),
-                          label: "نام کاربری من",
-                          style: TextStyleX.style,
-                          controller: username,
+                        child: GetBuilder<UsernameValidator>(
+                          init: UsernameValidator(),
+                          builder: (_) {
+                            return CustomedTextField(
+                              icon: Icon(Icons.perm_identity),
+                              label: "نام کاربری من",
+                              helper: "به لاتین وارد شود.",
+                              style: TextStyleX.style,
+                              onChanged: (val) {
+                                _.value = val;
+                                _.charsChecker();
+                                //_.nullChecker();
+                                _.updateState();
+                              },
+                              errorMsg: _.errorText,
+                              controller: username,
+                            );
+                          },
                         ),
                       ),
                     ],
@@ -126,15 +148,26 @@ class ProfilePage extends StatelessWidget {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: CustomedTextField(
-                          icon: Icon(Icons.phone),
-                          label: "شماره موبایل من",
-                          style: TextStyleX.style,
-                          controller: phone,
-                          //errorMsg: cont.errorText.value,
-                        ),
-                      ),
+                          padding: const EdgeInsets.all(5),
+                          child: GetBuilder<MobileValidator>(
+                            init: MobileValidator(),
+                            builder: (_) {
+                              return CustomedTextField(
+                                icon: Icon(Icons.phone),
+                                label: "شماره موبایل من",
+                                helper: "نمونه: *******0996",
+                                style: TextStyleX.style,
+                                controller: phone,
+                                onChanged: (val) {
+                                  _.value = val;
+                                  _.mobileChecker();
+                                  print(_.value);
+                                  _.updateState();
+                                },
+                                errorMsg: _.errorText,
+                              );
+                            },
+                          )),
                     ],
                   ),
                 ),
@@ -221,6 +254,7 @@ class ProfilePage extends StatelessWidget {
                           style: TextStyleX.style,
                           controller: enddate,
                           helper: "به صورت شمسی وارد شود: ۱۴۰۰/۲/۲",
+                          keyboardType: TextInputType.datetime,
                           inputFormatter: [
                             FilteringTextInputFormatter(
                               RegExp(r'(/|[0-9])'),
@@ -242,13 +276,10 @@ class ProfilePage extends StatelessWidget {
               child: Text("آپدیت پروفایل"),
               padding: EdgeInsets.all(30),
               onPressed: () async {
-                // print(DateTime.now().toIso8601String());
-
-                print(phone.text);
                 var res = await Functions.updateProfile(
                   username.text,
                   name.text,
-                  family.text,
+                  family.value.text,
                   phone.text,
                   bluck.text,
                   vahed.text,
@@ -260,7 +291,7 @@ class ProfilePage extends StatelessWidget {
                 if (js["status"] == "ok") {
                   box.put("username", username.text);
                   box.put("name", name.text);
-                  box.put("family", family.text);
+                  box.put("family", family.value.text);
                   box.put("phone", phone.text);
                   box.put("bluck", bluck.text);
                   box.put("vahed", vahed.text);

@@ -4,15 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import 'package:mojtama/pages/Admin/change_month.dart';
+
 import 'package:mojtama/pages/customPayment.dart';
 import 'package:mojtama/pages/customPayment2.dart';
+import 'package:mojtama/utils/paymentController.dart';
 import 'package:mojtama/utils/util.dart';
-import 'package:mojtama/widgets/widgets.dart';
+import 'package:mojtama/widgets/customedButton.dart';
+
 import 'package:mojtama/widgets/yearsDrop.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:http/http.dart' as http;
-import 'package:animate_do/animate_do.dart';
+//import 'package:animate_do/animate_do.dart';
 import 'package:mojtama/widgets/monthCheckBox.dart';
 
 class PaymentPage extends StatelessWidget {
@@ -21,7 +22,7 @@ class PaymentPage extends StatelessWidget {
   var has_val2 = false.obs;
 
   Widget build(BuildContext context) {
-    PaymentController controller = Get.find();
+    PaymentController controller = Get.put(PaymentController());
     Future<String> charge_update() async {
       var price = await Functions.getPrice();
       var month = await Functions.getCurrentMonthCharge();
@@ -83,9 +84,19 @@ class PaymentPage extends StatelessWidget {
           //   ),
           // ),
           //it may be used in the future but now, it's not used.
+
+          CustomedButton(
+            margin: EdgeInsets.fromLTRB(100, 10, 100, 10),
+            //padding: EdgeInsets.all(10),
+            child: Text("بروزرسانی صفحه"),
+            onPressed: () {
+              Get.forceAppUpdate();
+            },
+          ),
           Obx(
             () => has_val1.value
-                ? FadeIn(
+                ? AnimatedOpacity(
+                    opacity: has_val1.value ? 1 : 0,
                     duration: Duration(milliseconds: 500),
                     child: Padding(
                       padding: EdgeInsets.all(30),
@@ -125,7 +136,8 @@ class PaymentPage extends StatelessWidget {
           ),
           Obx(
             () => has_val1.value
-                ? FadeIn(
+                ? AnimatedOpacity(
+                    opacity: has_val1.value ? 1 : 0,
                     child: MonthCheckBoxes(),
                     duration: Duration(milliseconds: 500),
                   )
@@ -133,7 +145,8 @@ class PaymentPage extends StatelessWidget {
           ),
           Obx(
             () => has_val1.value
-                ? FadeIn(
+                ? AnimatedOpacity(
+                    opacity: has_val1.value ? 1 : 0,
                     child: YearsDropDownButton(),
                     duration: Duration(milliseconds: 500),
                   )
@@ -149,7 +162,6 @@ class PaymentPage extends StatelessWidget {
                   if (snapshot.hasData) {
                     // return Text("شارژ: ${snapshot.data}");
                     var data = jsonDecode(snapshot.data);
-                    print(data[0]);
                     return Column(
                       children: [
                         Text(
@@ -231,8 +243,8 @@ class PaymentPage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (cnx) => CustomedPayment2(),
+                  GetPageRoute(
+                    page: () => CustomedPayment2(),
                   ),
                 );
               },

@@ -29,6 +29,7 @@ class CustomedTextField extends StatelessWidget {
     this.onChanged,
     this.inputFormatter,
     this.errorMsg,
+    this.keyboardType,
   });
 
   Widget build(BuildContext context) {

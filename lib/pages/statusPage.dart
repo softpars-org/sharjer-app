@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:mojtama/pages/customStatusPage.dart';
 import 'package:mojtama/utils/util.dart';
-import 'package:mojtama/widgets/widgets.dart';
+
 import 'package:mojtama/widgets/yearTable.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:http/http.dart' as http;

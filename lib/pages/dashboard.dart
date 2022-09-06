@@ -8,11 +8,10 @@ import 'package:mojtama/pages/profile.dart';
 import 'package:mojtama/pages/settings.dart';
 import 'package:mojtama/utils/util.dart';
 import 'package:http/http.dart' as http;
-import 'package:mojtama/widgets/widgets.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:mojtama/widgets/customedButton.dart';
-import 'Admin/admin_panel.dart';
+import 'adminScreens/admin_panel.dart';
 
 class LogginedPage extends StatelessWidget {
   String? title;
@@ -22,7 +21,6 @@ class LogginedPage extends StatelessWidget {
     // setState(() {
     //   getadminstatus();
     // });
-    Controller c = Get.put(Controller());
     Future<void> getadminstatus() async {
       Map data = {"username": Hive.box("auth").get("username")};
 
@@ -149,12 +147,8 @@ class LogginedPage extends StatelessWidget {
                       ],
                     ),
                     padding: EdgeInsets.all(30),
-                    onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (cnx) => ProfilePage(),
-                      ),
-                    ),
+                    onPressed: () => Navigator.of(context)
+                        .push(GetPageRoute(page: () => ProfilePage())),
                   ),
                 ),
                 is_admin()
@@ -178,8 +172,8 @@ class LogginedPage extends StatelessWidget {
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(
-                                    builder: (context) => AdminOptions(),
+                                  GetPageRoute(
+                                    page: () => AdminOptions(),
                                   ),
                                 );
                               },

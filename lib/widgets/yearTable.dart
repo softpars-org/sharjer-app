@@ -4,7 +4,7 @@ class YearTable extends StatelessWidget {
   var json;
   int? year;
   String? name;
-  YearTable({this.json, this.year, this.name});
+  YearTable({required this.json, required this.year, required this.name});
   @override
   //get keys of json which returns the status of charge!
   List getKeys(Map map) {

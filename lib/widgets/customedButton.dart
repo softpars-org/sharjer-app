@@ -4,10 +4,17 @@ class CustomedButton extends StatelessWidget {
   @override
   Widget? child;
   EdgeInsets? padding;
+  EdgeInsets? margin;
   Function()? onPressed;
-  CustomedButton({this.child, this.padding, this.onPressed});
+  CustomedButton({
+    this.child,
+    this.padding,
+    this.onPressed,
+    this.margin,
+  });
   Widget build(BuildContext context) {
     return Container(
+      margin: margin,
       child: OutlinedButton(
         onPressed: onPressed,
         style: ButtonStyle(

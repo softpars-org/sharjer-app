@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mojtama/pages/Admin/change_month.dart';
+import 'package:mojtama/pages/adminScreens/change_month.dart';
+import 'package:mojtama/utils/paymentController.dart';
 import 'package:mojtama/utils/util.dart';
 
 class MonthRadioBoxes extends StatelessWidget {
