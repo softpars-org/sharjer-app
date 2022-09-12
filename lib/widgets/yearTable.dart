@@ -28,6 +28,7 @@ class YearTable extends StatelessWidget {
           "سال $year",
           style: TextStyle(
             decoration: TextDecoration.underline,
+            fontWeight: FontWeight.bold,
           ),
         ),
         Container(

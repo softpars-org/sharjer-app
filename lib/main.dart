@@ -16,16 +16,12 @@ void main() async {
   await Hive.openBox("theme");
   await Hive.openBox("auth");
 
+  //final fcmToken = await FirebaseMessaging.instance.getToken();
   if (Hive.box("auth").get("is_loggined") == null) {
     Hive.box("auth").put("is_loggined", false);
   }
   runApp(MyApp());
 }
-
-Rx<MaterialColor> activeColorPrimaryDark = Colors.yellow.obs;
-Rx<MaterialColor> inactiveColorPrimaryDark = Colors.grey.obs;
-Rx<MaterialColor> activeColorPrimaryLight = Colors.blue.obs;
-Rx<MaterialColor> inactiveColorPrimaryLight = Colors.grey.obs;
 
 class ThemeService {
   var box = Hive.box("theme");

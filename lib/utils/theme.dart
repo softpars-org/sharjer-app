@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ThemeX {
   static bool is_dark = false;
@@ -12,6 +13,12 @@ class ThemeX {
     primaryColor: Colors.blue,
     primaryColorDark: Color(0xFFFEA82F),
     appBarTheme: AppBarTheme(
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: Colors.white,
+        statusBarIconBrightness: Brightness.dark,
+
+        // statusBarBrightness: Brightness.dark,
+      ),
       backgroundColor: Colors.white,
       elevation: 0.5,
       centerTitle: true,
@@ -43,6 +50,12 @@ class ThemeX {
     primaryColor: Colors.amber[800],
     primarySwatch: Colors.amber,
     appBarTheme: AppBarTheme(
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: Colors.black,
+        statusBarIconBrightness: Brightness.light,
+        // systemNavigationBarIconBrightness: Brightness.light,
+        systemNavigationBarColor: Colors.green,
+      ),
       backgroundColor: Colors.black,
       elevation: 5.0,
       centerTitle: true,

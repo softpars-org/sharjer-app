@@ -31,7 +31,7 @@ class Functions extends GetxController {
   }
 
   //static String host = "https://www.amolicomplex.ir/src";
-  static String host = "http://localhost/mojtama/src";
+  static String host = "http://192.168.1.102/mojtama/src";
 
   static changePrivilege(String? username, String? password, String? target,
       String privilege) async {

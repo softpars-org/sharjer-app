@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
 class AdminAPI extends GetConnect {
-  final host = "http://localhost/mojtama/src/adminpanel";
+  final host = "http://192.168.1.102/mojtama/src/adminpanel";
   // var host = "http://localhost/mojtama/src/adminpanel";
 
   changeMonthPrices(year, {List? months}) async {
@@ -111,7 +111,7 @@ class AdminAPI extends GetConnect {
 }
 
 class UserAPI extends GetConnect {
-  final host = "http://localhost/mojtama/src/userapi";
+  final host = "http://192.168.1.102/mojtama/src/userapi";
   getDatabaseYears() async {
     var url = Uri.parse("$host/get_years.php");
     Response req = await get(host);

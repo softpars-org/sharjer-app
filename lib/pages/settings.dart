@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/list_notifier.dart';
 import 'package:hive/hive.dart';
@@ -56,6 +57,9 @@ class SettingsPage extends StatelessWidget {
                 activeColor: Colors.green,
                 onChanged: (x) {
                   c.changeTheme();
+                  // SystemChrome.setSystemUIOverlayStyle(
+                  //   SystemUiOverlayStyle.light,
+                  // ); TODO after update flutter to 3.0
                 },
               ),
               horizontalTitleGap: 2,
