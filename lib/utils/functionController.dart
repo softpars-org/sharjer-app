@@ -2,11 +2,20 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
-class AdminAPI extends GetConnect {
-  final host = "http://192.168.1.102/mojtama/src/adminpanel";
-  // var host = "http://localhost/mojtama/src/adminpanel";
+class Config extends GetConnect {
+  var domain, host;
+  Config() {
+    domain = "http://amolicomplex.freehost.io";
+  }
+}
 
+class AdminAPI extends Config {
+  var host;
+  AdminAPI() {
+    host = "$domain/mojtama-server/adminpanel";
+  }
   changeMonthPrices(year, {List? months}) async {
     var moharam = months![0];
     var safar = months[1];
@@ -32,8 +41,8 @@ class AdminAPI extends GetConnect {
         "شعبان": shaban,
         "رمضان": ramezan,
         "شوال": shaval,
-        "ذی القعده": zighade,
-        "ذی الحجه": zihaje,
+        "ذیقعده": zighade,
+        "ذیحجه": zihaje,
       },
     };
 
@@ -48,7 +57,7 @@ class AdminAPI extends GetConnect {
     return request.body;
   }
 
-  Future<dynamic> getUsersList() async {
+  getUsersList() async {
     String username =
         Hive.box("auth").get("username"); //get username from hive database
     String password =
@@ -60,18 +69,8 @@ class AdminAPI extends GetConnect {
     };
     //Uri url = Uri.parse("${host}/adminpanel/get_members_list.php");
     Response req = await post(host + "/get_members_list.php", FormData(data));
-    var js;
 
-    try {
-      js = jsonDecode(req.body);
-    } catch (e) {
-      Get.snackbar(
-        "وضعیت",
-        "خروجی دریافت شده نامعتبر می‌باشد.",
-      );
-    }
-
-    return js;
+    return req.body;
   }
 
   addCharge(
@@ -110,11 +109,38 @@ class AdminAPI extends GetConnect {
   }
 }
 
-class UserAPI extends GetConnect {
-  final host = "http://192.168.1.102/mojtama/src/userapi";
+class UserAPI extends Config {
+  var host;
+  UserAPI() {
+    host = "$domain/mojtama-server/userapi";
+  }
+
   getDatabaseYears() async {
-    var url = Uri.parse("$host/get_years.php");
-    Response req = await get(host);
+    var url = "$host/get_years.php";
+    Response req = await get(url);
     return req.body;
+  }
+
+  checkApplicationVersion() async {
+    var url = "$host/version/index.php";
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    Response? req;
+
+    req = await get(url);
+    if (req.body == null || req.statusText!.contains("Failed host lookup")) {
+      return {
+        "status": "error",
+      };
+    }
+
+    if (packageInfo.version == req.body["version"]) {
+      return {"status": "updated"};
+    } else {
+      return {
+        "status": "not updated",
+        "version": packageInfo.version,
+        "link": req.body["link"],
+      };
+    }
   }
 }

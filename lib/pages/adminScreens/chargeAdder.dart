@@ -45,6 +45,7 @@ class ChargeAdd extends StatelessWidget {
                       icon: Icon(Icons.domain),
                       style: TextStyleX.style,
                       controller: targetBluck,
+                      keyboardType: TextInputType.number,
                     ),
                   ),
                 ),
@@ -57,6 +58,7 @@ class ChargeAdd extends StatelessWidget {
                       icon: Icon(Icons.account_balance),
                       style: TextStyleX.style,
                       controller: targetVahed,
+                      keyboardType: TextInputType.number,
                     ),
                   ),
                 ),
@@ -101,6 +103,7 @@ class ChargeAdd extends StatelessWidget {
                   targetYear,
                   targetMonth,
                 );
+                Get.back();
                 if (ans == "true") {
                   Get.snackbar(
                     "وضعیت",

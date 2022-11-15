@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
+import 'package:mojtama/utils/functionController.dart';
 import 'package:mojtama/utils/util.dart';
 
 class PaymentController extends GetxController {
@@ -32,19 +33,25 @@ class PaymentController extends GetxController {
     String? username = Hive.box("auth").get("username");
     String month = await Functions.getCurrentMonthCharge();
     String year = await Functions.getYear();
+    String domain = Config().domain;
     String url =
-        "http://localhost/mojtama/src/payment/simpleRequest.php?username=$username&month=$month&year=$year";
+        "$domain/mojtama-server/payment/simpleRequest.php?username=$username&month=$month&year=$year";
     Uri uri = Uri.parse(url);
     http.Response req = await http.post(uri);
     Map response = json.decode(req.body);
+    print(response);
+    if (response.containsKey("error")) {
+      Get.snackbar("وضعیت", response["error"]);
+    }
+
     return response["url"];
   }
 
   getCustomUrl(data) async {
     //this function gets a valid url from zibal which is customized by the user's price.
     String? username = Hive.box("auth").get("username");
-    Uri url =
-        Uri.parse("http://localhost/mojtama/src/payment/customRequest.php");
+    String domain = Config().domain;
+    Uri url = Uri.parse("$domain/mojtama-server/payment/customRequest.php");
     var payload = {
       "username": username,
       "json": data,
@@ -52,25 +59,24 @@ class PaymentController extends GetxController {
     print(data);
 
     //print(payload);
-    var req = await http.post(url, body: payload);
+    var req;
+    try {
+      req = await http.post(url, body: payload);
+    } catch (e) {
+      Get.snackbar("وضعیت", "به اینترنت متصل نیستید.");
+    }
+    print(req.body);
     var js;
     try {
-      js = json.decode(req.body);
+      js = jsonDecode(req.body);
     } catch (e) {
-      Get.snackbar(
-        "وضعیت",
-        "خروجی نامعتبر است.",
-      );
+      Get.snackbar("وضعیت", "اطلاعات دریافت شده از سمت سرور معتبر نیست!");
     }
 
-    print(req.body);
-    if (js["message"] == "amount<100 IRR") {
-      Get.snackbar(
-        "وضعیت",
-        "قیمت را کمتر از ۱۰۰۰ ریال وارد کرده‌اید.",
-      );
-    } else if (js["message"] == "success") {
-      return js["url"];
+    if (js['message'] == "success") {
+      return js['url'];
+    } else {
+      return js['errorCode'];
     }
   }
 }

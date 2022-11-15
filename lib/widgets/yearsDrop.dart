@@ -23,6 +23,7 @@ class YearsDropDownButton extends StatelessWidget {
               if (snapshot.hasData) {
                 if (snapshot.connectionState == ConnectionState.done) {
                   dropDownValue.value = snapshot.data[0].toString();
+                  print(dropDownValue.value);
                   controller.year.value = dropDownValue.value;
                   return Obx(
                     () => DropdownButtonHideUnderline(

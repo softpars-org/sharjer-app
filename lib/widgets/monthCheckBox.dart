@@ -269,9 +269,9 @@ class MonthCheckBoxes extends StatelessWidget {
                         onChanged: (s) {
                           controller.zighade.value = s!;
                           if (s) {
-                            controller.months.add('ذی القعده');
+                            controller.months.add('ذیقعده');
                           } else {
-                            controller.months.remove("ذی القعده");
+                            controller.months.remove("ذیقعده");
                           }
                         },
                         title: Text("ذی‌القعده"),
@@ -292,9 +292,9 @@ class MonthCheckBoxes extends StatelessWidget {
                         onChanged: (s) {
                           controller.zilhaje.value = s!;
                           if (s) {
-                            controller.months.add('ذی الحجه');
+                            controller.months.add('ذیحجه');
                           } else {
-                            controller.months.remove("ذی الحجه");
+                            controller.months.remove("ذیحجه");
                           }
                         },
                         title: Text("ذی‌الحجه"),

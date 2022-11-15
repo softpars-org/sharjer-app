@@ -7,6 +7,8 @@ import 'package:mojtama/pages/customPayment.dart';
 import 'package:mojtama/utils/paymentController.dart';
 
 import 'package:mojtama/widgets/customTextField.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class CustomedPayment2 extends StatelessWidget {
   @override
@@ -64,10 +66,19 @@ class CustomedPayment2 extends StatelessWidget {
           Visibility(
             visible: visible.value,
             child: FloatingActionButton(
-              onPressed: () {
-                print(visible.value);
+              onPressed: () async {
                 var js = json.encode(controller.ymd);
-                controller.getCustomUrl(js);
+                var url = await controller.getCustomUrl(js);
+                if (url == 105) {
+                  Get.snackbar(
+                    "وضعیت",
+                    "شارژ تمام ماه‌های انتخاب شده پرداخت شده است و یا ماهی انتخاب نکرده‌اید.",
+                  );
+                } else if (url == -5) {
+                  Get.snackbar("وضعیت", "هنوز مدیر قیمت را وارد نکرده است.");
+                } else {
+                  launchUrlString(url, mode: LaunchMode.externalApplication);
+                }
                 print(json.encode(controller.ymd));
               },
               tooltip: "پرداخت",

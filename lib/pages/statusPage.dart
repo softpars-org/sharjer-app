@@ -9,10 +9,7 @@ import 'package:mojtama/pages/customStatusPage.dart';
 import 'package:mojtama/utils/util.dart';
 
 import 'package:mojtama/widgets/yearTable.dart';
-import 'package:percent_indicator/percent_indicator.dart';
-import 'package:http/http.dart' as http;
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
+
 import 'package:mojtama/widgets/customedButton.dart';
 
 class StatusPageUser extends StatelessWidget {
@@ -36,8 +33,6 @@ class StatusPageUser extends StatelessWidget {
           style: Theme.of(context).primaryTextTheme.headline6,
         ),
       ),
-
-      // ignore: missing_return
       body: Y(),
     );
   }
@@ -86,10 +81,14 @@ class Y extends StatelessWidget {
             );
           } else {
             return Center(
-                child: Text(
-                    "تا به حال شارژی پرداخت نکرده‌اید(و یا مشکلی در دریافت پیش آمده است.)"));
+                child: Padding(
+              padding: EdgeInsets.all(20),
+              child: Text(
+                  "تا به حال شارژی پرداخت نکرده‌اید(و یا مشکلی در دریافت پیش آمده است.)"),
+            ));
           }
         } else {
+          print(snapshot.data);
           return SpinKitChasingDots(
             color: Theme.of(context).accentColor,
           );

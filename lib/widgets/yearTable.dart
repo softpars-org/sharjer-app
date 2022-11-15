@@ -25,7 +25,7 @@ class YearTable extends StatelessWidget {
           ),
         ),
         Text(
-          "سال $year",
+          "سال " + year.toString(),
           style: TextStyle(
             decoration: TextDecoration.underline,
             fontWeight: FontWeight.bold,
@@ -52,7 +52,7 @@ class YearTable extends StatelessWidget {
                 ),
                 Padding(
                   child: Text(
-                    value.replaceAll(RegExp(r".$"), ""),
+                    index != 0 ? value.replaceAll(RegExp(r".$"), "") : value,
                   ), //replace the last zero with null value
                   padding: EdgeInsets.all(8),
                 ),

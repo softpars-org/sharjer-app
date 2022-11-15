@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:mojtama/utils/bottomNavController.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:mojtama/utils/functionController.dart';
 import 'package:mojtama/utils/themeModel.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
@@ -10,6 +11,7 @@ class PersistentView extends StatelessWidget {
   PersistentView({Key? key}) : super(key: key);
   BottomNavController controller = Get.put(BottomNavController());
   PersistentTabController _controller = PersistentTabController();
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ThemeController>(

@@ -1,12 +1,11 @@
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:mojtama/utils/firebase_settings.dart';
+import 'firebase_options.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mojtama/pages/adminScreens/admin_panel.dart';
-import 'package:mojtama/pages/adminScreens/privilage.dart';
 
 import 'package:mojtama/widgets/bottomNavigationBar.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'pages/login.dart';
 import 'utils/theme.dart';
 import 'package:get/get.dart';
@@ -16,7 +15,15 @@ void main() async {
   await Hive.openBox("theme");
   await Hive.openBox("auth");
 
-  //final fcmToken = await FirebaseMessaging.instance.getToken();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  FirebaseSettings firebaseSettings = FirebaseSettings();
+  firebaseSettings.notificationSettings();
+  firebaseSettings.onTokenUpdate();
+  firebaseSettings.onMessageArrived();
+
   if (Hive.box("auth").get("is_loggined") == null) {
     Hive.box("auth").put("is_loggined", false);
   }

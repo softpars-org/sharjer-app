@@ -69,6 +69,7 @@ class ChangingMonths extends StatelessWidget {
                       child: CustomedTextField(
                         label: "محرم",
                         controller: moharam,
+                        keyboardType: TextInputType.number,
                       ),
                     ),
                   ),
@@ -78,6 +79,7 @@ class ChangingMonths extends StatelessWidget {
                       child: CustomedTextField(
                         label: "صفر",
                         controller: safar,
+                        keyboardType: TextInputType.number,
                       ),
                     ),
                   ),
@@ -91,6 +93,7 @@ class ChangingMonths extends StatelessWidget {
                       child: CustomedTextField(
                         label: "ربیع الاول",
                         controller: rabi1,
+                        keyboardType: TextInputType.number,
                       ),
                     ),
                   ),
@@ -100,6 +103,7 @@ class ChangingMonths extends StatelessWidget {
                       child: CustomedTextField(
                         label: "ربیع الثانی",
                         controller: rabi2,
+                        keyboardType: TextInputType.number,
                       ),
                     ),
                   ),
@@ -113,6 +117,7 @@ class ChangingMonths extends StatelessWidget {
                       child: CustomedTextField(
                         label: "جمادی الاول",
                         controller: jamadi1,
+                        keyboardType: TextInputType.number,
                       ),
                     ),
                   ),
@@ -122,6 +127,7 @@ class ChangingMonths extends StatelessWidget {
                       child: CustomedTextField(
                         label: "جمادی الثانی",
                         controller: jamadi2,
+                        keyboardType: TextInputType.number,
                       ),
                     ),
                   ),
@@ -135,6 +141,7 @@ class ChangingMonths extends StatelessWidget {
                       child: CustomedTextField(
                         label: "رجب",
                         controller: rajab,
+                        keyboardType: TextInputType.number,
                       ),
                     ),
                   ),
@@ -144,6 +151,7 @@ class ChangingMonths extends StatelessWidget {
                       child: CustomedTextField(
                         label: "شعبان",
                         controller: shaban,
+                        keyboardType: TextInputType.number,
                       ),
                     ),
                   ),
@@ -157,6 +165,7 @@ class ChangingMonths extends StatelessWidget {
                       child: CustomedTextField(
                         label: "رمضان",
                         controller: ramezan,
+                        keyboardType: TextInputType.number,
                       ),
                     ),
                   ),
@@ -166,6 +175,7 @@ class ChangingMonths extends StatelessWidget {
                       child: CustomedTextField(
                         label: "شوال",
                         controller: shaval,
+                        keyboardType: TextInputType.number,
                       ),
                     ),
                   ),
@@ -179,6 +189,7 @@ class ChangingMonths extends StatelessWidget {
                       child: CustomedTextField(
                         label: "ذی القعده",
                         controller: zighade,
+                        keyboardType: TextInputType.number,
                       ),
                     ),
                   ),
@@ -188,6 +199,7 @@ class ChangingMonths extends StatelessWidget {
                       child: CustomedTextField(
                         label: "ذی الحجه",
                         controller: zihaje,
+                        keyboardType: TextInputType.number,
                       ),
                     ),
                   ),
@@ -203,18 +215,18 @@ class ChangingMonths extends StatelessWidget {
           AdminAPI admin = new AdminAPI();
           var response =
               await admin.changeMonthPrices(controller.year.value, months: [
-            moharam.text,
-            safar.text,
-            rabi1.text,
-            rabi2.text,
-            jamadi1.text,
-            jamadi2.text,
-            rajab.text,
-            shaban.text,
-            ramezan.text,
-            shaval.text,
-            zighade.text,
-            zihaje.text,
+            moharam.text + "0",
+            safar.text + "0",
+            rabi1.text + "0",
+            rabi2.text + "0",
+            jamadi1.text + "0",
+            jamadi2.text + "0",
+            rajab.text + "0",
+            shaban.text + "0",
+            ramezan.text + "0",
+            shaval.text + "0",
+            zighade.text + "0",
+            zihaje.text + "0",
           ]);
           print(response);
         },
@@ -234,7 +246,6 @@ class YearDropDown extends StatelessWidget {
           value: controller.year.value,
           underline: Container(
             height: 2,
-            //color: Get.theme.accentColor,
           ),
           onChanged: (dynamic changed) {
             controller.year.value = changed;

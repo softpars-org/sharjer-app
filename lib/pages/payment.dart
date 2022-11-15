@@ -15,6 +15,7 @@ import 'package:mojtama/widgets/yearsDrop.dart';
 import 'package:url_launcher/url_launcher.dart';
 //import 'package:animate_do/animate_do.dart';
 import 'package:mojtama/widgets/monthCheckBox.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class PaymentPage extends StatelessWidget {
   @override
@@ -50,45 +51,10 @@ class PaymentPage extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          // Padding(
-          //   padding: EdgeInsets.all(30),
-          //   child: TextFormField(
-          //     autofocus: false,
-          //     cursorColor: Colors.blue,
-          //     keyboardType: TextInputType.number,
-          //     cursorWidth: 1.2,
-          //     textAlign: TextAlign.right,
-          //     style: TextStyleX.style,
-          //     controller: customizeTxt.value,
-          //     onChanged: (string) {
-          //       if (string == "") {
-          //         has_val1.value = false;
-          //       } else {
-          //         has_val1.value = true;
-          //       }
-          //       print(has_val1);
-          //     },
-          //     decoration: InputDecoration(
-          //       suffixIcon: Icon(Icons.monetization_on),
-          //       //hintText: "نام کاربری خود را وارد کنید",
-          //       labelStyle: TextStyleX.style,
-          //       labelText: "مقدار مبلغ شارژ قبلی را وارد کنید.",
-          //       helperText:
-          //           "نکته: اگر این فیلد خالی باشد، شارژ این ماه حساب می‌شود.\nمی‌توانید چند شارژ را همزمان حساب کرده و مبلغ آن را وارد نمایید.\nمبلغ را به تومان وارد کنید.",
-          //       helperMaxLines: 4,
-
-          //       border: OutlineInputBorder(
-          //         borderRadius: BorderRadius.circular(15),
-          //       ),
-          //     ),
-          //   ),
-          // ),
-          //it may be used in the future but now, it's not used.
-
           CustomedButton(
             margin: EdgeInsets.fromLTRB(100, 10, 100, 10),
             //padding: EdgeInsets.all(10),
-            child: Text("بروزرسانی صفحه"),
+            child: Text("بروزرسانی شارژ"),
             onPressed: () {
               Get.forceAppUpdate();
             },
@@ -183,7 +149,7 @@ class PaymentPage extends StatelessWidget {
                       ],
                     );
                   } else {
-                    return Text("مشکلی پیش آمد." + snapshot.data.toString());
+                    return Text("مشکلی پیش آمد.");
                   }
                 } else {
                   return SpinKitChasingDots(
@@ -212,7 +178,8 @@ class PaymentPage extends StatelessWidget {
                         } else {
                           url = await controller.getUrl();
                         }
-                        launch(url);
+                        launchUrlString(url,
+                            mode: LaunchMode.externalApplication);
                       }, //check if the first field has value & the second field don't have value, then button will turn off
                 style: ButtonStyle(
                   shape: MaterialStateProperty.all(
@@ -232,24 +199,10 @@ class PaymentPage extends StatelessWidget {
               child: Text("پرداخت شارژ معوقه"),
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (cnx) => CustomPayment()));
+                    MaterialPageRoute(builder: (cnx) => CustomedPayment2()));
               },
             ),
           ),
-          Padding(
-            padding: EdgeInsets.all(20),
-            child: TextButton(
-              child: Text("پرداخت شارژ ماه قبل و این ماه"),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  GetPageRoute(
-                    page: () => CustomedPayment2(),
-                  ),
-                );
-              },
-            ),
-          )
         ],
       ),
     );

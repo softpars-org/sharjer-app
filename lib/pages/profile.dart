@@ -271,7 +271,7 @@ class ProfilePage extends StatelessWidget {
           ),
 
           Padding(
-            padding: EdgeInsets.all(60),
+            padding: EdgeInsets.fromLTRB(60, 30, 60, 30),
             child: CustomedButton(
               child: Text("آپدیت پروفایل"),
               padding: EdgeInsets.all(30),

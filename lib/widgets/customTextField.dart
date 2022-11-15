@@ -14,10 +14,12 @@ class CustomedTextField extends StatelessWidget {
   int maxLines;
   TextInputType? keyboardType;
   Function(String)? onChanged;
+  bool? enabled;
   List<TextInputFormatter>? inputFormatter;
   String? errorMsg;
 
   CustomedTextField({
+    this.enabled,
     this.label,
     this.style,
     this.icon,

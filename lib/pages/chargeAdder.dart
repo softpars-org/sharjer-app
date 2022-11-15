@@ -2,11 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mojtama/pages/payment.dart';
 import 'package:mojtama/utils/paymentController.dart';
 import 'package:mojtama/utils/util.dart';
 import 'package:mojtama/widgets/yearsDrop.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:mojtama/widgets/customedButton.dart';
 import 'package:mojtama/widgets/monthCheckBox.dart';
 import 'package:mojtama/widgets/customTextField.dart';
@@ -102,6 +100,7 @@ class ChargeAdder extends StatelessWidget {
                             controller.description.value.text
                           ],
                         ); //adds year, months(will be added by json) and description.
+                        Navigator.pop(context);
                         Get.snackbar(
                           "وضعیت",
                           "تاریخ شارژ و مبلغ با موفقیت اضافه شد.",

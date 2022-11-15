@@ -1,17 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:mojtama/pages/dashboard.dart';
 import 'package:mojtama/widgets/bottomNavigationBar.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:hive/hive.dart';
 import 'package:crypto/crypto.dart';
 
-import '../main.dart';
+import 'functionController.dart';
 
 class TextStyleX {
   static const style = TextStyle(
@@ -31,7 +27,8 @@ class Functions extends GetxController {
   }
 
   //static String host = "https://www.amolicomplex.ir/src";
-  static String host = "http://192.168.1.102/mojtama/src";
+  static String domain = Config().domain;
+  static String host = "$domain/mojtama-server";
 
   static changePrivilege(String? username, String? password, String? target,
       String privilege) async {
@@ -62,26 +59,11 @@ class Functions extends GetxController {
       Map ans = json.decode(res.body);
       print(ans);
       if (ans["status"]["password"] == "false") {
-        // showTopSnackBar(
-        //   context,
-        //   CustomSnackBar.error(
-        //     message: "گذرواژه و یا نام کاربری شما نادرست میباشد",
-        //   ),
-        // );
-        ///////////////////////////// this is for past...
         Get.snackbar(
           "وضعیت",
           "گذرواژه و یا نام کاربری شما نادرست میباشد",
         );
       } else {
-        // showTopSnackBar(
-        //   context,
-        //   CustomSnackBar.success(
-        //     message: "ورود شما با موفقیت انجام شد",
-        //   ),
-        // );
-        ///////////////////////////// this is for past...
-
         Digest hash = md5.convert(utf8.encode(password));
         var box = Hive.box("auth");
 
@@ -115,11 +97,11 @@ class Functions extends GetxController {
       //   ),
       // );
       ///////////////////////////// this is for past...
+      print(e);
       Get.snackbar(
         "وضعیت",
         "خطا در برقراری ارتباط با سرور",
       );
-      print(res.body);
     }
   }
 
@@ -286,7 +268,7 @@ class Functions extends GetxController {
   }
 
   static getMyCharge() async {
-    var year = await getYear();
+    var year = await getYear(); //get the latest year.
     var url = Uri.parse(
       "$host/userapi/get_charge_status.php",
     );
@@ -299,19 +281,30 @@ class Functions extends GetxController {
   }
 
   static getUserCharge(target) async {
-    var year = await getYear();
+    var year = await getYear(); //get the lastest year in the database.
     var name_family = await getUsersName(target);
     var url = Uri.parse("$host/userapi/get_charge_status.php");
     var payload = {"username": target, "year": year};
     var request = await http.post(url, body: payload);
+    print(jsonDecode(request.body));
     return [request.body, year, name_family];
   }
 
   static getYear() async {
-    var url = Uri.parse("$host/userapi/yearInDatabase.php");
+    var url = Uri.parse("$host/userapi/get_years.php");
     var request = await http.get(url);
     var json = jsonDecode(request.body);
-    return json["maxNumber"]; //return max year in the database.
+    var max = 0;
+    print("Before loop");
+    for (int i = 0; i < json.length; i++) {
+      //Get maximum number.
+      print("In the loop");
+      if (int.parse(json[i]) > max) {
+        max = int.parse(json[i]);
+      }
+    }
+    print(max); //TODO having error.
+    return max.toString(); //return max year in the database.
   }
 
   static getUsersName(target) async {
@@ -375,6 +368,7 @@ class Functions extends GetxController {
   static getDatabaseYears() async {
     var url = Uri.parse("$host/userapi/get_years.php");
     var req = await http.get(url);
+    print(req.body);
     return jsonDecode(req.body);
   }
 

@@ -19,7 +19,7 @@ class BottomNavController extends GetxController {
   List<PersistentBottomNavBarItem> items = [
     PersistentBottomNavBarItem(
       icon: Icon(Icons.dashboard),
-      title: "پیش‌خوان",
+      title: "پیشخان",
       activeColorPrimary: Colors.cyan,
       inactiveColorPrimary: Colors.grey,
     ),
