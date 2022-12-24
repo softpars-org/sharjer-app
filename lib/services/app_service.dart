@@ -54,7 +54,12 @@ class AppService {
         children: [
           Icon(Icons.info),
           SizedBox(width: 10),
-          Text(text),
+          Text(
+            text,
+            style: TextStyle(
+              fontFamily: 'VazirLight',
+            ),
+          ),
         ],
       ),
       behavior: SnackBarBehavior.floating,
