@@ -16,8 +16,10 @@ import 'package:hive_flutter/hive_flutter.dart';
 void main() async {
   await Hive.initFlutter();
   await Hive.openBox("theme");
+  await Hive.openBox("auth");
   var box = Hive.box("theme");
   box.put("isDarkTheme", box.get("isDarkTheme") ?? false);
+  box.put("isLoggined", box.get("isLoggined") ?? false);
   var isDarkTheme = box.get("isDarkTheme");
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
