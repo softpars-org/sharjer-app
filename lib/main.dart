@@ -19,7 +19,7 @@ void main() async {
   await Hive.openBox("auth");
   var box = Hive.box("theme");
   box.put("isDarkTheme", box.get("isDarkTheme") ?? false);
-  box.put("isLoggined", box.get("isLoggined") ?? false);
+  box.put("is_loggined", box.get("is_loggined") ?? false);
   var isDarkTheme = box.get("isDarkTheme");
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         scrollBehavior: CustomScrollBehaviour(),
         theme: model.currentTheme,
-        initialRoute: "/login",
+        initialRoute: Hive.box("auth").get("is_loggined") ? "/home" : "/login",
         routes: {
           "/home": (context) => Directionality(
                 textDirection: TextDirection.rtl,

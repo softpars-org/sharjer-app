@@ -25,6 +25,7 @@ class UserProvider {
     try {
       request = await http.post(url, body: payload);
       if (request.statusCode == 200) {
+        _box.put("is_loggined", true);
         _box.put("username", username);
         _box.put(
           "password",

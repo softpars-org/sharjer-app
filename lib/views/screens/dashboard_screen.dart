@@ -86,6 +86,7 @@ class DashboardScreen extends StatelessWidget {
                 icon: Icons.exit_to_app_rounded,
                 onPressed: () {
                   AppService appService = AppService(context);
+                  appService.deleteAuthBox();
                   appService.navigateReplace(LoginPage());
                 },
                 text: "خروج",
