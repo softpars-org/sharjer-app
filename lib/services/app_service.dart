@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class AppService {
@@ -69,5 +70,12 @@ class AppService {
       ),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackbar);
+  }
+
+  deleteAuthBox() {
+    var box = Hive.box("auth");
+    box.put("username", "");
+    box.put("password", "");
+    box.put("is_loggined", false);
   }
 }
