@@ -22,7 +22,7 @@ class Rule {
         int.parse(ruleMap["edited_at"]) * 1000);
     Duration createdTimeDifference = now.difference(createdTime);
     Duration editedTimeDifference = now.difference(editedTime);
-    DateFormat formatter = DateFormat("h:m");
+    DateFormat formatter = DateFormat("HH:mm");
     String _createdTime = formatter.format(createdTime);
     String _editedTime = formatter.format(editedTime);
     return Rule(
