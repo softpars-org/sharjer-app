@@ -22,4 +22,21 @@ class AdminProvider {
       return false;
     }
   }
+
+  addOrUpdateMojtamaRule(String rule) async {
+    var url = Uri.parse("$host/adminpanel/add_mojtama_rules/");
+    Map<String, dynamic> payload = {
+      "username": _box.get("username"),
+      "password": _box.get("password"),
+      "rule": rule,
+    };
+    http.Response request;
+    request = await http.post(url, body: payload);
+    if (request.statusCode == 200) {
+      print(request.body);
+      return true; //TODO: implement it later
+    } else {
+      return false;
+    }
+  }
 }
