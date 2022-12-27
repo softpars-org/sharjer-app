@@ -53,12 +53,18 @@ class AppService {
     SnackBar snackbar = SnackBar(
       content: Row(
         children: [
-          Icon(Icons.info),
-          SizedBox(width: 10),
-          Text(
-            text,
-            style: TextStyle(
-              fontFamily: 'VazirLight',
+          Expanded(
+            flex: 1,
+            child: Icon(Icons.info),
+          ),
+          Expanded(child: SizedBox(width: 10)),
+          Expanded(
+            flex: 9,
+            child: Text(
+              text,
+              style: TextStyle(
+                fontFamily: 'VazirLight',
+              ),
             ),
           ),
         ],
