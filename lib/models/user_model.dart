@@ -1,20 +1,20 @@
 import 'dart:convert';
 
 class User {
-  String? username;
-  String? password;
-  String? name;
-  String? family;
-  String? phone;
-  String? phone2;
-  int? bluck;
-  int? vahed;
-  int? familyMembers;
-  String? carPlate;
-  String? startDate;
+  String username;
+  String password;
+  String name;
+  String family;
+  String phone;
+  String phone2;
+  int bluck;
+  int vahed;
+  int familyMembers;
+  String carPlate;
+  String startDate;
   String? endDate;
-  String? userType;
-  int? isOwner;
+  String userType;
+  int isOwner;
   User(
     this.username,
     this.password,
@@ -32,24 +32,23 @@ class User {
     this.isOwner,
   );
 
-  factory User.fromJson(String json) {
+  factory User.fromJson(Map<String, dynamic> decodedJson) {
     // not completed!
-    Map<String, dynamic> decodedJson = jsonDecode(json);
     return User(
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
+      decodedJson["username"],
+      decodedJson["password"],
+      decodedJson["name"],
+      decodedJson["family"],
+      decodedJson["phone"],
+      decodedJson["phone2"],
+      int.parse(decodedJson["bluck"]),
+      int.parse(decodedJson["vahed"]),
+      int.parse(decodedJson["family_members"]),
+      decodedJson["car_plate"],
+      decodedJson["startdate"],
+      decodedJson["enddate"],
+      decodedJson["is_admin"],
+      int.parse(decodedJson["is_owner"]),
     );
   }
 }
