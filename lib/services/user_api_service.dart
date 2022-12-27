@@ -96,4 +96,15 @@ class UserProvider {
       "link": "https://www.google.com",
     };
   }
+
+  Future<String?> getPaymentStatusMessageOfTheUsers() async {
+    var url = Uri.parse("$host/user/people_who_charged_this_month");
+    http.Response request;
+    request = await http.get(url);
+    Map<String, dynamic> response = jsonDecode(request.body);
+    if (request.statusCode == 200) {
+      return response["data"];
+    }
+    return null;
+  }
 }

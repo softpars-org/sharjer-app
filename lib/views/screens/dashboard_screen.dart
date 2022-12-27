@@ -1,13 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:mojtama/models/payment_model.dart';
 import 'package:mojtama/services/app_service.dart';
 import 'package:mojtama/views/screens/admin_panel/main_screen.dart';
 import 'package:mojtama/views/screens/auth_screens/login_screen.dart';
 import 'package:mojtama/views/screens/payment_history_screen.dart';
 import 'package:mojtama/views/screens/profile_screen.dart';
 import 'package:mojtama/views/widgets/button_widget.dart';
+import 'package:provider/provider.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
+
+  @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  didChangeDependencies() {
+    super.didChangeDependencies();
+    Future.delayed(Duration.zero, () => _loadResources());
+  }
+
+  _loadResources() async {
+    var provider = Provider.of<PaymentModel>(context, listen: false);
+    await provider.getPaymentStatusOfTheUsersInTheMonth();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,19 +33,23 @@ class DashboardScreen extends StatelessWidget {
         title: Text("پیشخان"),
       ),
       body: RefreshIndicator(
-        onRefresh: () async => print("refreshed!"),
+        onRefresh: () async => _loadResources(),
         child: ListView(
           children: [
             Padding(
               padding: EdgeInsets.all(20),
               child: Center(
-                child: Text(
-                  "۲۴ نفر در این ماه شارژ‌ را پرداخت کرده‌اند.",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).primaryColor,
-                    fontSize: 20,
-                  ),
+                child: Consumer<PaymentModel>(
+                  builder: (context, model, child) {
+                    return Text(
+                      model.paymentStat,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).primaryColor,
+                        fontSize: 20,
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
