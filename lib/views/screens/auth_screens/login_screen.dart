@@ -55,7 +55,8 @@ class LoginPage extends StatelessWidget {
                     AppService(context).snackBar("با موفقیت وارد شدید");
                     Navigator.pushReplacementNamed(context, "/home");
                   } else {
-                    AppService(context).snackBar("مشکلی پیش آمد");
+                    AppService(context).snackBar(
+                        "نام کاربری یا گذرواژه شما اشتباه و یا مشکلی در سمت سرور پیش آمده است.");
                   }
                 },
               ),
