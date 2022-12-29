@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:mojtama/models/charge_status_model.dart';
 import 'package:mojtama/services/user_api_service.dart';
 
 class PaymentModel extends ChangeNotifier {
@@ -8,6 +9,7 @@ class PaymentModel extends ChangeNotifier {
   String get text => _text!;
   List testMonths = ["ربیع", "تست", "علی"];
   String paymentStat = "";
+  List<ChargeRowStatus> chargeStatusOfTheUser = [];
   getPaymentStatusOfTheUsersInTheMonth() async {
     UserProvider userProvider = UserProvider();
     String? ans = await userProvider.getPaymentStatusMessageOfTheUsers();
@@ -23,5 +25,13 @@ class PaymentModel extends ChangeNotifier {
     int randomIndex = rand.nextInt(testMonths.length);
     _text = testMonths[randomIndex];
     notifyListeners();
+  }
+
+  getChargeStatusOfTheUser() async {
+    UserProvider userProvider = UserProvider();
+    chargeStatusOfTheUser = await userProvider.getUserChargeStatus();
+    if (chargeStatusOfTheUser != false) {
+      notifyListeners();
+    }
   }
 }
