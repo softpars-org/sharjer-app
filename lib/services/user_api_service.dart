@@ -112,7 +112,11 @@ class UserProvider {
   getUserChargeStatus() async {
     var url = Uri.parse("$host/user/user_pay_stat");
     http.Response request;
-    request = await http.get(url);
+    Map<String, dynamic> payload = {
+      "username": _box.get("username"),
+      "password": _box.get("password"),
+    };
+    request = await http.post(url, body: payload);
     List response = jsonDecode(request.body);
     List<ChargeRowStatus> chargeRows = [];
     if (request.statusCode == 200) {
