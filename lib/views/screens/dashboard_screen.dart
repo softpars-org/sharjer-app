@@ -37,7 +37,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         child: ListView(
           children: [
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: EdgeInsets.all(10),
               child: Center(
                 child: Consumer<PaymentModel>(
                   builder: (context, model, child) {
@@ -54,7 +54,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height / 6,
+              height: MediaQuery.of(context).size.height / 8,
             ),
             Padding(
               padding: EdgeInsets.all(20),

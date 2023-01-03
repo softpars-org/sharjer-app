@@ -73,4 +73,25 @@ class AdminProvider {
       return false;
     }
   }
+
+  addChargeToUser(String targetUsername, String jsonedChargeData) async {
+    var url = Uri.parse("$host/adminpanel/add_multiple_charge_to_user/");
+    http.Response request;
+    Map<String, dynamic> payload = {
+      "username": _box.get("username"),
+      "password": _box.get("password"),
+      "target_username": targetUsername,
+      "json": jsonedChargeData,
+    };
+    request = await http.post(url, body: payload);
+    Map<String, dynamic> response = jsonDecode(request.body);
+    print(response);
+    if (request.statusCode == 200) {
+      if (response["message"] == "charges were added") {
+        return response["months"];
+      }
+    } else {
+      return false;
+    }
+  }
 }
