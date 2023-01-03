@@ -1,34 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:mojtama/models/charge_status_model.dart';
 
 class PaymentStatusTable extends StatelessWidget {
-  Map<String, Map>? chargeStatusOfTheUser;
+  ChargeRowStatus chargeStatusOfTheUser;
   String year;
   PaymentStatusTable({
     super.key,
-    this.chargeStatusOfTheUser,
-    this.year = "1444",
+    required this.year,
+    required this.chargeStatusOfTheUser,
   });
 
   @override
   Widget build(BuildContext context) {
-    chargeStatusOfTheUser = {
-      "1444": {
-        "واحد": "13",
-        "ربیع الاول": "10000",
-      },
-      "1443": {
-        "واحدم": "دو هستش",
-      }
-    };
-    int chargeStatusOfTheUserLength = chargeStatusOfTheUser!.length;
-    Map chargeStatusOfTheUserInCurrentYear = chargeStatusOfTheUser![year]!;
+    // chargeStatusOfTheUser = {
+    //   "1444": {
+    //     "واحد": "13",
+    //     "ربیع الاول": "10000",
+    //   },
+    //   "1443": {
+    //     "واحدم": "دو هستش",
+    //   }
+    // };
+
     return Container(
       padding: EdgeInsets.all(30),
       child: Column(
         children: [
           Center(
             child: Text(
-              year,
+              chargeStatusOfTheUser.year,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 decoration: TextDecoration.underline,
@@ -46,14 +46,10 @@ class PaymentStatusTable extends StatelessWidget {
             ),
             children: [
               ...List.generate(
-                chargeStatusOfTheUserLength,
+                chargeStatusOfTheUser.months.length,
                 (index) {
-                  String title = chargeStatusOfTheUserInCurrentYear.keys
-                      .toList()[index]
-                      .toString();
-                  String value = chargeStatusOfTheUserInCurrentYear.values
-                      .toList()[index]
-                      .toString();
+                  String title = chargeStatusOfTheUser.months[index].toString();
+                  String value = chargeStatusOfTheUser.prices[index].toString();
                   return TableRow(
                     children: [
                       Padding(

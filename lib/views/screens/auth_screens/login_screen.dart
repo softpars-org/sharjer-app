@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mojtama/helpers/profile_helper.dart';
 import 'package:mojtama/services/app_service.dart';
+import 'package:mojtama/services/user_api_service.dart';
 import 'package:mojtama/views/screens/auth_screens/signup_screen.dart';
 import 'package:mojtama/views/widgets/button_widget.dart';
 import 'package:mojtama/views/widgets/textfield_widget.dart';
@@ -9,6 +10,8 @@ class LoginPage extends StatelessWidget {
   LoginPage({super.key});
   GlobalKey<FormState> _key = GlobalKey<FormState>();
   ProfileHelper profileHelper = ProfileHelper();
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,6 +29,7 @@ class LoginPage extends StatelessWidget {
               padding: EdgeInsets.all(20),
               child: CustomTextField(
                 label: "نام کاربری",
+                controller: usernameController,
                 suffixIcon: Icon(Icons.person_outlined),
               ),
             ),
@@ -33,6 +37,7 @@ class LoginPage extends StatelessWidget {
               padding: EdgeInsets.all(20),
               child: CustomTextField(
                 label: "گذرواژه",
+                controller: passwordController,
                 suffixIcon: Icon(Icons.password_outlined),
                 obscureText: true,
               ),
@@ -42,8 +47,17 @@ class LoginPage extends StatelessWidget {
               child: CustomButton(
                 text: "ورود",
                 icon: Icons.login,
-                onPressed: () {
-                  Navigator.pushReplacementNamed(context, "/home");
+                onPressed: () async {
+                  UserProvider api = UserProvider();
+                  bool isLoggined = await api.login(
+                      usernameController.text, passwordController.text);
+                  if (isLoggined) {
+                    AppService(context).snackBar("با موفقیت وارد شدید");
+                    Navigator.pushReplacementNamed(context, "/home");
+                  } else {
+                    AppService(context).snackBar(
+                        "نام کاربری یا گذرواژه شما اشتباه و یا مشکلی در سمت سرور پیش آمده است.");
+                  }
                 },
               ),
             ),

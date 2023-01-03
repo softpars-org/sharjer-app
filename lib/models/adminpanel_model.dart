@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:mojtama/models/user_model.dart';
+import 'package:mojtama/services/admin_api_service.dart';
 import 'package:mojtama/views/widgets/textfield_widget.dart';
 
 class AdminPanelModel extends ChangeNotifier {
   final List<Widget> _textFieldList = [];
+  bool isLoading = false;
   final List<Map<String, TextEditingController>>
       _textEditingControllersMapList = [];
   List<Widget> get textFieldList {
     return _textFieldList;
+  }
+
+  List<User> _users = [];
+  List<User> get users {
+    return _users;
   }
 
   addTextField() {
@@ -72,5 +80,31 @@ class AdminPanelModel extends ChangeNotifier {
       json.add(manipulatedMap);
     }
     return json;
+  }
+
+  getUsers() async {
+    AdminProvider api = AdminProvider();
+    toggleLoading();
+    var usersInDB = await api.getUsers();
+    if (usersInDB != null) {
+      _users = usersInDB;
+      notifyListeners();
+    }
+    toggleLoading();
+  }
+
+  toggleLoading() {
+    isLoading = !isLoading;
+    notifyListeners();
+  }
+
+  getUsersLengthOfBluck(int bluck) {
+    int usersLength = 0;
+    users.forEach((user) {
+      if (user.bluck == bluck) {
+        usersLength++;
+      }
+    });
+    return usersLength;
   }
 }

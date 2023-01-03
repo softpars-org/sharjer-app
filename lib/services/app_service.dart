@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class AppService {
@@ -52,9 +53,20 @@ class AppService {
     SnackBar snackbar = SnackBar(
       content: Row(
         children: [
-          Icon(Icons.info),
-          SizedBox(width: 10),
-          Text(text),
+          Expanded(
+            flex: 1,
+            child: Icon(Icons.info),
+          ),
+          Expanded(child: SizedBox(width: 10)),
+          Expanded(
+            flex: 9,
+            child: Text(
+              text,
+              style: TextStyle(
+                fontFamily: 'VazirLight',
+              ),
+            ),
+          ),
         ],
       ),
       behavior: SnackBarBehavior.floating,
@@ -64,5 +76,12 @@ class AppService {
       ),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackbar);
+  }
+
+  deleteAuthBox() {
+    var box = Hive.box("auth");
+    box.put("username", "");
+    box.put("password", "");
+    box.put("is_loggined", false);
   }
 }

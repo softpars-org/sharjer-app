@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mojtama/models/month_model.dart';
+import 'package:mojtama/services/admin_api_service.dart';
+import 'package:mojtama/services/app_service.dart';
+import 'package:mojtama/services/user_api_service.dart';
 import 'package:mojtama/views/widgets/radiobutton_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -21,8 +24,15 @@ class ChangeMonthScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          //TODO I'll implement it later.
+        onPressed: () async {
+          AdminProvider api = AdminProvider();
+          RadioMonthModel model =
+              Provider.of<RadioMonthModel>(context, listen: false);
+          int currentIndex = model.currentValue;
+          bool isUpdated = await api.updateMonth(model.months[currentIndex]);
+          if (isUpdated) {
+            AppService(context).snackBar("ماه شارژ با موفقیت تغییر کرد.");
+          } else {}
         },
         tooltip: "تعویض ماه",
         child: Icon(Icons.change_circle),
