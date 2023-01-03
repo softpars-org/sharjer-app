@@ -2,10 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:mojtama/models/year_model.dart';
 import 'package:provider/provider.dart';
 
-class YearDropDownWidget extends StatelessWidget {
+class YearDropDownWidget extends StatefulWidget {
   const YearDropDownWidget({super.key});
 
   @override
+  State<YearDropDownWidget> createState() => _YearDropDownWidgetState();
+}
+
+class _YearDropDownWidgetState extends State<YearDropDownWidget> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () => _loadResources());
+  }
+
+  _loadResources() async {
+    var provider = Provider.of<YearModel>(context, listen: false);
+    await provider.getYears();
+  }
+
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -34,9 +49,9 @@ class YearDropDownWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(15),
                 ),
               ),
-              items: ["One", "Two", "Three", "1444"]
+              items: model.years
                   .map<DropdownMenuItem>(
-                    (String value) => DropdownMenuItem(
+                    (dynamic value) => DropdownMenuItem(
                       child: Text(value),
                       value: value,
                     ),

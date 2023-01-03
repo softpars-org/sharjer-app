@@ -1,63 +1,58 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mojtama/helpers/profile_helper.dart';
 import 'package:mojtama/models/month_model.dart';
+import 'package:mojtama/models/year_model.dart';
+import 'package:mojtama/services/admin_api_service.dart';
+import 'package:mojtama/services/app_service.dart';
+import 'package:mojtama/views/widgets/months_checkbox_widget.dart';
 import 'package:mojtama/views/widgets/radiobutton_widget.dart';
 import 'package:mojtama/views/widgets/textfield_widget.dart';
 import 'package:mojtama/views/widgets/year_dropdown_widget.dart';
 import 'package:provider/provider.dart';
 
 class AddChargeToUserScreen extends StatelessWidget {
-  AddChargeToUserScreen({super.key});
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String username;
+  AddChargeToUserScreen({super.key, required this.username});
   ProfileHelper helper = ProfileHelper();
+  AdminProvider api = AdminProvider();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("اضافه کردن شارژ به کاربر"),
       ),
-      body: Form(
-        key: _formKey,
-        child: ListView(
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CustomTextField(
-                      label: "بلوک",
-                      validator: helper.isNonNullNumber,
-                      keyboardType: TextInputType.number,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CustomTextField(
-                      label: "واحد",
-                      validator: helper.isNonNullNumber,
-                      keyboardType: TextInputType.number,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Divider(),
-            YearDropDownWidget(),
-            ...List.generate(
-              12,
-              (index) => RadioButton(monthIndex: index),
-            ),
-            Divider(),
-          ],
-        ),
+      body: ListView(
+        children: [
+          YearDropDownWidget(),
+          Divider(),
+          MonthsCheckBox(),
+          Divider(),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          bool isOk = _formKey.currentState!.validate();
+        onPressed: () async {
+          var yearModel = Provider.of<YearModel>(context, listen: false);
+          var monthsModel = Provider.of<MonthsModel>(context, listen: false);
+          List chargeMonthEntryInfo = [
+            yearModel.year,
+            monthsModel.months.values.map((e) => e).toList(),
+          ];
+          String jsonedChargeData = jsonEncode(chargeMonthEntryInfo);
+          var addedMonths =
+              await api.addChargeToUser(username, jsonedChargeData);
+          AppService appService = AppService(context);
+          if (addedMonths != false && addedMonths.isNotEmpty) {
+            appService.snackBar("شارژ ماه $addedMonths به کاربر اضافه شد.");
+          } else if (addedMonths.isEmpty) {
+            appService.snackBar("شارژ هیچ ماهی به کاربر اضافه نشد.");
+          } else {
+            appService
+                .snackBar("شارژ ماه‌های $addedMonths به کاربر اضافه نشد.");
+          }
         },
         child: Icon(Icons.check_rounded),
       ),

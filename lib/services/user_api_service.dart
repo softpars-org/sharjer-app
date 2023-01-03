@@ -128,4 +128,12 @@ class UserProvider {
     }
     return false;
   }
+
+  Future<List<dynamic>> getYears() async {
+    var url = Uri.parse("$host/user/get_years");
+    http.Response request;
+    request = await http.get(url);
+    List<dynamic> years = jsonDecode(request.body);
+    return years;
+  }
 }

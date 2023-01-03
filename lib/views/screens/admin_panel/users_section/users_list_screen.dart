@@ -4,6 +4,7 @@ import 'package:mojtama/models/adminpanel_model.dart';
 import 'package:mojtama/models/month_model.dart';
 import 'package:mojtama/models/user_model.dart';
 import 'package:mojtama/services/app_service.dart';
+import 'package:mojtama/views/screens/admin_panel/users_section/add_charge_to_user_screen.dart';
 import 'package:provider/provider.dart';
 
 class UsersListScreen extends StatefulWidget {
@@ -107,7 +108,9 @@ class UserCard extends StatelessWidget {
           //     ),
           //   ),
           // ),
-          ThreeDots(),
+          ThreeDots(
+            username: user.username,
+          ),
           Text("نام کاربری: ${user.username}"),
           Text("نام و نام خانوادگی: ${user.family}"),
           Text("بلوک: ${user.bluck}"),
@@ -127,15 +130,18 @@ class UserCard extends StatelessWidget {
 }
 
 class ThreeDots extends StatelessWidget {
-  const ThreeDots({
-    Key? key,
-  }) : super(key: key);
+  String username;
+  ThreeDots({Key? key, required this.username}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    AppService appService = AppService(context);
+
     Map<String, List> popupItems = {
       "strings": [
-        "وضعیت شارژ کاربر",
+        "وضعیت شارژ",
+        "اضافه کردن شارژ",
+        "حذف شارژ",
         "تبدیل به مدیر بلوک۱",
         "تبدیل به مدیر بلوک۲",
         "تبدیل به مدیر بلوک۳",
@@ -143,6 +149,8 @@ class ThreeDots extends StatelessWidget {
       ],
       "icons": [
         Icons.assignment,
+        Icons.add_card,
+        Icons.credit_card_off,
         Icons.admin_panel_settings,
         Icons.admin_panel_settings,
         Icons.admin_panel_settings,
@@ -150,9 +158,7 @@ class ThreeDots extends StatelessWidget {
       ],
     };
     return InkWell(
-      onTap: () {
-        AppService appService = AppService(context);
-      },
+      onTap: () {},
       borderRadius: BorderRadius.circular(8),
       child: Container(
         decoration: BoxDecoration(
@@ -165,7 +171,13 @@ class ThreeDots extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           ),
           tooltip: "تنظیمات کاربر",
-          onSelected: (value) {},
+          onSelected: (value) {
+            if (value == "اضافه کردن شارژ") {
+              appService.navigate(AddChargeToUserScreen(
+                username: username,
+              ));
+            }
+          },
           itemBuilder: (context) {
             List<PopupMenuItem> popItems = [];
             for (int i = 0; i < popupItems["strings"]!.length; i++) {
