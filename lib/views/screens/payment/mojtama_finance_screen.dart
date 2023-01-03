@@ -1,9 +1,31 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:mojtama/models/state_model.dart';
+
+import 'package:mojtama/views/widgets/custom_table_widget.dart';
 import 'package:provider/provider.dart';
 
-class MojtamaFinanceScreen extends StatelessWidget {
+class MojtamaFinanceScreen extends StatefulWidget {
   const MojtamaFinanceScreen({super.key});
+
+  @override
+  State<MojtamaFinanceScreen> createState() => _MojtamaFinanceScreenState();
+}
+
+class _MojtamaFinanceScreenState extends State<MojtamaFinanceScreen> {
+  @override
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
+    Future.delayed(Duration.zero, () => _loadResources());
+  }
+
+  _loadResources() async {
+    var provider =
+        Provider.of<MojtamaStatusExpansionModel>(context, listen: false);
+    await provider.getFinancialStatus();
+    await provider.getRules();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,52 +33,84 @@ class MojtamaFinanceScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("وضعیت مالی مجتمع"),
       ),
-      body: ListView(
-        children: [
-          Consumer<MojtamaStatusExpansionModel>(
-            builder: (context, model, child) {
-              return ExpansionPanelList(
-                expansionCallback: (index, isExpanded) {
-                  model.changeIsOpen(index, !isExpanded);
-                },
-                children: [
-                  ExpansionPanel(
-                    headerBuilder: (context, isOpen) {
-                      return Center(
-                        child: Text(
-                          'قوانین مجتمع',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+      body: RefreshIndicator(
+        onRefresh: () => _loadResources(),
+        child: ListView(
+          children: [
+            Consumer<MojtamaStatusExpansionModel>(
+              builder: (context, model, child) {
+                return ExpansionPanelList(
+                  expansionCallback: (index, isExpanded) {
+                    model.changeIsOpen(index, !isExpanded);
+                    print(model.mojtamaRule.createdOn);
+                  },
+                  children: [
+                    ExpansionPanel(
+                      headerBuilder: (context, isOpen) {
+                        return Center(
+                          child: Text(
+                            'قوانین مجتمع',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        );
+                      },
+                      body: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            model.isLoading
+                                ? CircularProgressIndicator()
+                                : RichText(
+                                    text: TextSpan(
+                                      style: DefaultTextStyle.of(context).style,
+                                      children: [
+                                        TextSpan(
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                            text:
+                                                "${model.mojtamaRule.rule}\n\n"),
+                                        TextSpan(
+                                          text:
+                                              '${model.mojtamaRule.createdOn} روز پیش، در ساعت ${model.mojtamaRule.createdTime} ساخته شد.\n',
+                                        ),
+                                        TextSpan(
+                                          text:
+                                              '${model.mojtamaRule.editedOn} روز پیش، در ساعت ${model.mojtamaRule.editedTime} ویرایش شد.\n',
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                          ],
                         ),
-                      );
-                    },
-                    body: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                          "لورم ایپسوم یا طرح‌نما (به انگلیسی: Lorem ipsum) به متنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود. طراح گرافیک از این متن به عنوان عنصری از ترکیب بندی برای پر کردن صفحه و ارایه اولیه شکل ظاهری و کلی طرح سفارش گرفته شده استفاده می نماید، تا از نظر گرافیکی نشانگر چگونگی نوع و اندازه فونت و ظاهر متن باشد. معمولا طراحان گرافیک برای صفحه‌آرایی، نخست از متن‌های آزمایشی و بی‌معنی استفاده می‌کنند تا صرفا به مشتری یا صاحب کار خود نشان دهند که صفحه طراحی یا صفحه بندی شده بعد از اینکه متن در آن قرار گیرد چگونه به نظر می‌رسد و قلم‌ها و اندازه‌بندی‌ها چگونه در نظر گرفته شده‌است. از آنجایی که طراحان عموما نویسنده متن نیستند و وظیفه رعایت حق تکثیر متون را ندارند و در همان حال کار آنها به نوعی وابسته به متن می‌باشد آنها با استفاده از محتویات ساختگی، صفحه گرافیکی خود را صفحه‌آرایی می‌کنند تا مرحله طراحی و صفحه‌بندی را به پایان برند."),
+                      ),
+                      isExpanded: model.isOpen[0],
                     ),
-                    isExpanded: model.isOpen[0],
-                  ),
-                  ExpansionPanel(
-                    headerBuilder: (context, isOpen) {
-                      return Center(
-                        child: Text(
-                          'وضعیت مالی مجتمع',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      );
-                    },
-                    body: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                          "لورم ایپسوم یا طرح‌نما (به انگلیسی: Lorem ipsum) به متنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود. طراح گرافیک از این متن به عنوان عنصری از ترکیب بندی برای پر کردن صفحه و ارایه اولیه شکل ظاهری و کلی طرح سفارش گرفته شده استفاده می نماید، تا از نظر گرافیکی نشانگر چگونگی نوع و اندازه فونت و ظاهر متن باشد. معمولا طراحان گرافیک برای صفحه‌آرایی، نخست از متن‌های آزمایشی و بی‌معنی استفاده می‌کنند تا صرفا به مشتری یا صاحب کار خود نشان دهند که صفحه طراحی یا صفحه بندی شده بعد از اینکه متن در آن قرار گیرد چگونه به نظر می‌رسد و قلم‌ها و اندازه‌بندی‌ها چگونه در نظر گرفته شده‌است. از آنجایی که طراحان عموما نویسنده متن نیستند و وظیفه رعایت حق تکثیر متون را ندارند و در همان حال کار آنها به نوعی وابسته به متن می‌باشد آنها با استفاده از محتویات ساختگی، صفحه گرافیکی خود را صفحه‌آرایی می‌کنند تا مرحله طراحی و صفحه‌بندی را به پایان برند."),
+                    ExpansionPanel(
+                      headerBuilder: (context, isOpen) {
+                        return const Center(
+                          child: Text(
+                            'وضعیت مالی مجتمع',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        );
+                      },
+                      body: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: model.isLoading
+                            ? CircularProgressIndicator()
+                            : CustomTable(
+                                decodedJson:
+                                    jsonDecode(model.financialStatusText),
+                              ),
+                      ),
+                      isExpanded: model.isOpen[1],
                     ),
-                    isExpanded: model.isOpen[1],
-                  ),
-                ],
-              );
-            },
-          )
-        ],
+                  ],
+                );
+              },
+            )
+          ],
+        ),
       ),
     );
   }

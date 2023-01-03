@@ -52,14 +52,6 @@ class AdminPanelScreen extends StatelessWidget {
       {
         "onPressed": () {
           AppService service = AppService(context);
-          service.navigate(AddChargeToUserScreen());
-        },
-        "title": "اضافه کردن شارژ به کاربر",
-        "icon": Icons.add_rounded,
-      },
-      {
-        "onPressed": () {
-          AppService service = AppService(context);
           service.navigate(RemoveChargeFromUserScreen());
         },
         "title": "حذف شارژ کاربر",
