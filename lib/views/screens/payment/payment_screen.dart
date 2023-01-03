@@ -5,22 +5,32 @@ import 'package:mojtama/views/screens/payment/custompay_screen.dart';
 import 'package:mojtama/views/widgets/button_widget.dart';
 import 'package:provider/provider.dart';
 
-class PaymentScreen extends StatelessWidget {
+class PaymentScreen extends StatefulWidget {
   const PaymentScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    Future<void> onRefreshFunction() async {
-      Provider.of<PaymentModel>(context, listen: false).randomText();
-      print(Provider.of<PaymentModel>(context, listen: false).text);
-    }
+  State<PaymentScreen> createState() => _PaymentScreenState();
+}
 
+class _PaymentScreenState extends State<PaymentScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () => _loadResources());
+  }
+
+  _loadResources() async {
+    var provider = Provider.of<PaymentModel>(context, listen: false);
+    await provider.getCurrentMonth();
+  }
+
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("پرداخت شارژ"),
       ),
       body: RefreshIndicator(
-        onRefresh: onRefreshFunction,
+        onRefresh: () => _loadResources(),
         child: ListView(
           children: [
             Padding(
@@ -28,13 +38,15 @@ class PaymentScreen extends StatelessWidget {
               child: Center(
                 child: Consumer<PaymentModel>(
                   builder: (context, model, child) {
-                    return Text(
-                      model.text,
-                      style: TextStyle(
-                        fontSize: 40,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    );
+                    return model.isLoading
+                        ? CircularProgressIndicator()
+                        : Text(
+                            model.currentMonth,
+                            style: TextStyle(
+                              fontSize: 40,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          );
                   },
                 ),
               ),
