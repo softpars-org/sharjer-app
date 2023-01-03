@@ -5,6 +5,7 @@ import 'package:mojtama/models/month_model.dart';
 import 'package:mojtama/models/user_model.dart';
 import 'package:mojtama/services/app_service.dart';
 import 'package:mojtama/views/screens/admin_panel/users_section/add_charge_to_user_screen.dart';
+import 'package:mojtama/views/screens/admin_panel/users_section/remove_charge_from_user_screen.dart';
 import 'package:provider/provider.dart';
 
 class UsersListScreen extends StatefulWidget {
@@ -174,6 +175,10 @@ class ThreeDots extends StatelessWidget {
           onSelected: (value) {
             if (value == "اضافه کردن شارژ") {
               appService.navigate(AddChargeToUserScreen(
+                username: username,
+              ));
+            } else if (value == "حذف شارژ") {
+              appService.navigate(RemoveChargeFromUserScreen(
                 username: username,
               ));
             }
