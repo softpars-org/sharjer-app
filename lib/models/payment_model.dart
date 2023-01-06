@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:mojtama/models/charge_status_model.dart';
+import 'package:mojtama/models/history_model.dart';
 import 'package:mojtama/services/payment_api_service.dart';
 import 'package:mojtama/services/user_api_service.dart';
 
@@ -10,6 +11,7 @@ class PaymentModel extends ChangeNotifier {
   bool isLoading = false;
 
   String paymentStat = "";
+  List<History> paymentHistory = [];
   List<ChargeRowStatus> chargeStatusOfTheUser = [];
 
   getPaymentStatusOfTheUsersInTheMonth() async {
@@ -42,5 +44,14 @@ class PaymentModel extends ChangeNotifier {
   toggleLoading() {
     isLoading = !isLoading;
     notifyListeners();
+  }
+
+  getPaymentHistory() async {
+    PaymentProvider provider = PaymentProvider();
+    var histories = await provider.getPaymentHistory();
+    if (histories != false) {
+      paymentHistory = histories;
+      notifyListeners();
+    }
   }
 }
