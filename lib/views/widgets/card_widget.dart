@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:mojtama/models/history_model.dart';
 
 class CustomCard extends StatelessWidget {
-  String name;
-  String content;
-  String date;
-  CustomCard({
-    super.key,
-    required this.name,
-    required this.content,
-    required this.date,
-  });
+  History history;
+  CustomCard({super.key, required this.history});
 
   @override
   Widget build(BuildContext context) {
+    // DateTime date = DateTime.parse(history.date);
+    // DateFormat dateFormatter = DateFormat("HH:mm,");
+    // String paidAt = dateFormatter.format(date);
     return Container(
       padding: EdgeInsets.all(25),
       child: Card(
@@ -39,13 +37,13 @@ class CustomCard extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  child: Text(date),
+                  child: Text(history.date),
                 ),
                 // SizedBox(
                 //   width: 10,
                 // ),
                 Expanded(
-                  child: Text(name),
+                  child: Text(history.fullName),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
@@ -74,7 +72,7 @@ class CustomCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                content,
+                history.message,
               ),
             ),
           ],
