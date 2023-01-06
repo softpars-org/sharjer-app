@@ -52,14 +52,6 @@ class AdminPanelScreen extends StatelessWidget {
       {
         "onPressed": () {
           AppService service = AppService(context);
-          service.navigate(RemoveChargeFromUserScreen());
-        },
-        "title": "حذف شارژ کاربر",
-        "icon": Icons.delete_sweep_rounded,
-      },
-      {
-        "onPressed": () {
-          AppService service = AppService(context);
           service.navigate(MojtamaRulesScreen());
         },
         "title": "قوانین مجتمع",

@@ -10,6 +10,7 @@ import 'package:mojtama/models/theme_model.dart';
 import 'package:mojtama/models/year_model.dart';
 import 'package:mojtama/views/screens/auth_screens/login_screen.dart';
 import 'package:mojtama/views/screens/home_screen.dart';
+import 'package:mojtama/views/screens/payment/custompay_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 

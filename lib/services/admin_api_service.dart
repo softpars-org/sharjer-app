@@ -94,4 +94,22 @@ class AdminProvider {
       return false;
     }
   }
+
+  removeChargeFromUser(
+    String targetUsername,
+    String year,
+    String month,
+  ) async {
+    var url = Uri.parse("$host/adminpanel/remove_charge_from_user");
+    http.Response request;
+    Map<String, dynamic> body = {
+      "username": _box.get("username"),
+      "password": _box.get("password"),
+      "target_username": targetUsername,
+      "year": year,
+      "month": month,
+    };
+    request = await http.post(url, body: body);
+    return (request.statusCode == 200);
+  }
 }
