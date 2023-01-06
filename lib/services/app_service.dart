@@ -22,6 +22,7 @@ class AppService {
   navigateWithNav(Widget page) {
     PersistentNavBarNavigator.pushNewScreen(
       context,
+      pageTransitionAnimation: PageTransitionAnimation.fade,
       screen: page,
       withNavBar: true,
     );

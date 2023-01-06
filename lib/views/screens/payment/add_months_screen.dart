@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mojtama/models/month_model.dart';
 import 'package:mojtama/models/year_model.dart';
+import 'package:mojtama/services/app_service.dart';
 import 'package:mojtama/views/widgets/months_checkbox_widget.dart';
 import 'package:mojtama/views/widgets/year_dropdown_widget.dart';
 import 'package:provider/provider.dart';
@@ -34,7 +35,7 @@ class AddMonthsPage extends StatelessWidget {
         ],
       ),
       floatingActionButton: Consumer<MonthsModel>(
-        builder: (context, model, child) {
+        builder: (_, model, child) {
           return model.months.isEmpty
               ? Container()
               : FloatingActionButton(
@@ -47,7 +48,8 @@ class AddMonthsPage extends StatelessWidget {
                     var months = model.months;
 
                     model.yearMonthsDetails.add([year, months.values.toList()]);
-                    print(model.yearMonthsDetails);
+                    AppService _appService = AppService(context);
+                    _appService.snackBar("شارژ معوقه به لیست اضافه شد.");
                     model.update();
                   },
                   tooltip: "اضافه کردن",

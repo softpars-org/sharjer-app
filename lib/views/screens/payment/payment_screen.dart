@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mojtama/models/payment_model.dart';
 import 'package:mojtama/services/app_service.dart';
+import 'package:mojtama/services/payment_api_service.dart';
 import 'package:mojtama/views/screens/payment/custompay_screen.dart';
 import 'package:mojtama/views/widgets/button_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({super.key});
@@ -37,7 +40,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               padding: EdgeInsets.all(20),
               child: Center(
                 child: Consumer<PaymentModel>(
-                  builder: (context, model, child) {
+                  builder: (_, model, child) {
                     return model.isLoading
                         ? CircularProgressIndicator()
                         : Text(
@@ -60,7 +63,23 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 child: CustomButton(
                   text: "پرداخت شارژ",
                   icon: Icons.credit_card,
-                  onPressed: () {},
+                  onPressed: () async {
+                    AppService appService = AppService(context);
+                    PaymentProvider paymentProvider = PaymentProvider();
+                    var url = await paymentProvider.getChargeUrl();
+                    if (url != false && url != "charge_paid") {
+                      await launchUrlString(
+                        url,
+                        mode: LaunchMode.externalApplication,
+                      );
+                    } else if (url == "charge_paid") {
+                      appService
+                          .snackBar("شما شارژ این ماه را پرداخت کرده‌اید.");
+                    } else {
+                      appService
+                          .snackBar("گرفتن لینک پرداخت شارژ با شکست مواجه شد.");
+                    }
+                  },
                 ),
               ),
             ),
