@@ -1,9 +1,12 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:mojtama/models/month_model.dart';
 import 'package:mojtama/services/app_service.dart';
+import 'package:mojtama/services/payment_api_service.dart';
 import 'package:mojtama/views/screens/payment/add_months_screen.dart';
-import 'package:mojtama/views/widgets/months_checkbox_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 class CustomPayPage extends StatefulWidget {
   const CustomPayPage({super.key});
@@ -12,69 +15,67 @@ class CustomPayPage extends StatefulWidget {
   State<CustomPayPage> createState() => _CustomPayPageState();
 }
 
-class _CustomPayPageState extends State<CustomPayPage>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
+class _CustomPayPageState extends State<CustomPayPage> {
   @override
-  void initState() {
-    _animationController = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 500),
-    );
-    _animationController.forward();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
   Widget build(BuildContext context) {
+    AppService _appService = AppService(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("شارژ معوقه"),
       ),
       body: Consumer<MonthsModel>(
-        builder: (context, model, child) {
+        builder: (_, model, child) {
           return ListView.builder(
             itemCount: model.yearMonthsDetails.length,
-            itemBuilder: (context, index) => FadeTransition(
-              opacity: _animationController,
-              child: CartShower(
-                model: model,
-                index: index,
-              ),
+            itemBuilder: (__, index) => CartShower(
+              model: model,
+              index: index,
             ),
           );
         },
       ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: SpeedDial(
+        direction: SpeedDialDirection.up,
+        animatedIcon: AnimatedIcons.menu_close,
+        overlayColor: Colors.black,
+        overlayOpacity: 0.4,
+        tooltip: "باز کردن منو...",
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: FloatingActionButton.small(
-              heroTag: null,
-              onPressed: () {
-                AppService appService = AppService(context);
-                appService.navigate(AddMonthsPage());
-              },
-              tooltip: "اضافه کردن ماه‌های جدید",
-              child: Icon(
-                Icons.add,
-              ),
+          SpeedDialChild(
+            backgroundColor: Theme.of(context).primaryColor,
+            label: "پرداخت",
+            onTap: () async {
+              PaymentProvider paymentProvider = PaymentProvider();
+              var provider = Provider.of<MonthsModel>(context, listen: false);
+              String jsonYearMonthsChargeInfo = jsonEncode(
+                provider.yearMonthsDetails,
+              );
+              String response = await paymentProvider
+                  .getCustomChargeUrl(jsonYearMonthsChargeInfo);
+              if (response == "price shouldn't be 0 Rial") {
+                _appService.snackBar(
+                    "شما شارژهای ماه‌هایی که انتخاب کرده‌اید را پرداخت کرده‌اید.");
+              } else if (response == "try changing your months") {
+                _appService.snackBar("ماه‌های شارژ خود را تغییر دهید.");
+              } else {
+                String url = response;
+                await launchUrlString(url,
+                    mode: LaunchMode.externalApplication);
+              }
+            },
+            child: Icon(
+              Icons.payment,
+              color: Theme.of(context).canvasColor,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: FloatingActionButton(
-              onPressed: () {},
-              heroTag: null,
-              tooltip: "پرداخت",
-              child: Icon(Icons.payment),
-            ),
+          SpeedDialChild(
+            backgroundColor: Theme.of(context).primaryColor,
+            label: "اضافه کردن شارژ معوقه",
+            onTap: () {
+              _appService.navigate(AddMonthsPage());
+            },
+            child: Icon(Icons.add_card, color: Theme.of(context).canvasColor),
           ),
         ],
       ),
