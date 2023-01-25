@@ -3,9 +3,31 @@ import 'package:flutter/material.dart';
 class MonthsModel extends ChangeNotifier {
   List<bool> checkMonths = List<bool>.generate(12, (index) => false);
   Map<int, String> months = Map<int, String>();
-  List yearMonthsDetails = [];
+  Map<String, int> monthsPricesDetails = {};
+  List<String> monthsStrings = [
+    "محرم",
+    "صفر",
+    "ربیع الاول",
+    "ربیع الثانی",
+    "جمادی الاول",
+    "جمادی الثانی",
+    "رجب",
+    "شعبان",
+    "رمضان",
+    "شوال",
+    "ذیحجه",
+    "ذیقعده"
+  ];
+  List yearMonthsDetails =
+      []; /* to implement a concept which 
+  can communicate with server side */
 
   update() {
+    notifyListeners();
+  }
+
+  changeMonthsPricesValue(Map<String, int> newMonthsPricesValue) {
+    monthsPricesDetails = newMonthsPricesValue;
     notifyListeners();
   }
 
