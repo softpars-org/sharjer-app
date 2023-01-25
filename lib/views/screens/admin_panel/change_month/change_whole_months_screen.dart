@@ -270,7 +270,8 @@ class _ChangeWholeMonthsScreenState extends State<ChangeWholeMonthsScreen> {
             if (monthController.text != "0") {
               int? price = int.tryParse(monthController.text);
               if (price == null) continue;
-              monthsPricesDetails[month] = price;
+              int priceByRial = (price * 10);
+              monthsPricesDetails[month] = priceByRial;
             }
             i++;
           }
