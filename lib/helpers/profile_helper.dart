@@ -21,7 +21,7 @@ class ProfileHelper {
     return "الگوی شماره تلفن اشتباه میباشد.";
   }
 
-  String? isNonNullNumber(String? value) {
+  String? isNotNull(String? value) {
     if (value!.isEmpty) {
       return "فیلد خالی است!";
     }
