@@ -40,34 +40,46 @@ class PlakInputWidget extends StatelessWidget {
           children: [
             Expanded(
               flex: 1,
-              child: CustomTextField(
-                label: "ایران",
-                helper: "مثال: ۱۶",
-                validator: numValidator,
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: CustomTextField(
+                  label: "ایران",
+                  helper: "مثال: ۱۶",
+                  validator: numValidator,
+                ),
               ),
             ),
             Expanded(
               flex: 2,
-              child: CustomTextField(
-                label: "سه رقم بعدی",
-                helper: "مثال: ۶۷۸",
-                validator: numValidator,
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: CustomTextField(
+                  label: "سه رقم بعدی",
+                  helper: "مثال: ۶۷۸",
+                  validator: numValidator,
+                ),
               ),
             ),
             Expanded(
               flex: 1,
-              child: CustomTextField(
-                label: "حرف",
-                helper: "مثال: د",
-                validator: farsiValidator,
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: CustomTextField(
+                  label: "حرف",
+                  helper: "مثال: د",
+                  validator: farsiValidator,
+                ),
               ),
             ),
             Expanded(
               flex: 1,
-              child: CustomTextField(
-                label: "عدد آخر",
-                helper: "مثال: ۵۲",
-                validator: numValidator,
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: CustomTextField(
+                  label: "عدد آخر",
+                  helper: "مثال: ۵۲",
+                  validator: numValidator,
+                ),
               ),
             ),
           ],
