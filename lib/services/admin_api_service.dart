@@ -112,4 +112,27 @@ class AdminProvider {
     request = await http.post(url, body: body);
     return (request.statusCode == 200);
   }
+
+  changeMonthsPriceOfYear(String year, Map<String, int> months) async {
+    var url = Uri.parse("$host/adminpanel/change_months_price/");
+    String jsonMonths = jsonEncode(months);
+    Map<String, dynamic> payload = {
+      "username": _box.get("username"),
+      "password": _box.get("password"),
+      "year": year,
+      "months": jsonMonths
+    };
+    http.Response request;
+    request = await http.post(url, body: payload);
+    print(request.body);
+    return true;
+  }
+
+  getMonthsPricesInfo() async {
+    var url = Uri.parse("$host/adminpanel/months_price");
+    http.Response request;
+    request = await http.get(url);
+    Map<String, dynamic> response = jsonDecode(request.body);
+    return response;
+  }
 }

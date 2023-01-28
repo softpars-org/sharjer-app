@@ -13,6 +13,21 @@ class AdminPanelModel extends ChangeNotifier {
   }
 
   List<User> _users = [];
+  List<User> _bluck1Users = [];
+  List<User> _bluck2Users = [];
+  List<User> _bluck3Users = [];
+  List<User> get bluck1Users {
+    return _bluck1Users;
+  }
+
+  List<User> get bluck2Users {
+    return _bluck2Users;
+  }
+
+  List<User> get bluck3Users {
+    return _bluck3Users;
+  }
+
   List<User> get users {
     return _users;
   }
@@ -91,6 +106,7 @@ class AdminPanelModel extends ChangeNotifier {
       notifyListeners();
     }
     toggleLoading();
+    return _users;
   }
 
   toggleLoading() {
@@ -106,5 +122,18 @@ class AdminPanelModel extends ChangeNotifier {
       }
     });
     return usersLength;
+  }
+
+  filterUsersByBluck() {
+    users.forEach((user) {
+      if (user.bluck == 1) {
+        _bluck1Users.add(user);
+      } else if (user.bluck == 2) {
+        _bluck2Users.add(user);
+      } else if (user.bluck == 3) {
+        _bluck3Users.add(user);
+      }
+    });
+    notifyListeners();
   }
 }

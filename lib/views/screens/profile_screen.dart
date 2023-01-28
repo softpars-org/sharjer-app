@@ -127,7 +127,7 @@ class ProfileScreen extends StatelessWidget {
                       label: "بلوک",
                       suffixIcon: Icon(Icons.domain_outlined),
                       keyboardType: TextInputType.number,
-                      validator: profileHelper.isNonNullNumber,
+                      validator: profileHelper.isNotNull,
                     ),
                   ),
                 ),
@@ -138,7 +138,7 @@ class ProfileScreen extends StatelessWidget {
                       label: "واحد",
                       suffixIcon: Icon(Icons.account_balance_outlined),
                       keyboardType: TextInputType.number,
-                      validator: profileHelper.isNonNullNumber,
+                      validator: profileHelper.isNotNull,
                     ),
                   ),
                 ),
@@ -181,7 +181,7 @@ class ProfileScreen extends StatelessWidget {
               ],
             ),
             PlakInputWidget(
-              numValidator: profileHelper.isNonNullNumber,
+              numValidator: profileHelper.isNotNull,
               farsiValidator: profileHelper.checkFarsi,
             ),
             OwnerStatusCheckbox(),
@@ -223,7 +223,6 @@ class OwnerStatusCheckbox extends StatelessWidget {
             title: Text("مالک هستم."),
             value: checkModel.isOwner,
             onChanged: (newValue) {
-              themeModel.toggleTheme();
               checkModel.toggleCheckbox();
             },
           ),

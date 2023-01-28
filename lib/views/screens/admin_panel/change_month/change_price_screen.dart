@@ -34,7 +34,7 @@ class ChangePriceScreen extends StatelessWidget {
                 suffixIcon: Icon(Icons.price_change),
                 helper: "مبلغ را به تومان وارد کنید.",
                 keyboardType: TextInputType.number,
-                validator: helper.isNonNullNumber,
+                validator: helper.isNotNull,
               ),
             ),
           )
