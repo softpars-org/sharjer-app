@@ -53,7 +53,7 @@ class LoginPage extends StatelessWidget {
                       usernameController.text, passwordController.text);
                   if (isLoggined) {
                     AppService(context).snackBar("با موفقیت وارد شدید");
-                    Navigator.pushReplacementNamed(context, "/home");
+                    AppService(context).navigateReplaceNamed("/home");
                   } else {
                     AppService(context).snackBar(
                         "نام کاربری یا گذرواژه شما اشتباه و یا مشکلی در سمت سرور پیش آمده است.");

@@ -5,22 +5,22 @@ import 'package:http/http.dart' as http;
 import 'package:mojtama/models/charge_status_model.dart';
 import 'package:mojtama/models/rule_model.dart';
 import 'package:mojtama/models/user_model.dart';
+import 'package:mojtama/services/encryption_service.dart';
 
 class UserProvider {
   String? host;
   final _box = Hive.box("auth");
   UserProvider() {
-    host = "http://localhost/mojtama-server-mvc/";
+    host = "http://localhost/mojtama-server-mvc";
   }
 
   login(String username, String password) async {
     var url = Uri.parse("$host/authentication/login");
-    List<int> passwordBytes = utf8.encode(password);
-    String md5hashedPassword = md5.convert(passwordBytes).toString();
-
+    Encryption encryption = Encryption();
+    password = await encryption.encrypt(password);
     Map<String, dynamic> payload = {
       "username": username,
-      "password": md5hashedPassword,
+      "password": password,
     };
     http.Response request;
     try {
@@ -30,7 +30,7 @@ class UserProvider {
         _box.put("username", username);
         _box.put(
           "password",
-          md5hashedPassword,
+          password,
         );
         return true;
       }
@@ -40,8 +40,10 @@ class UserProvider {
     return false;
   }
 
-  signup(User userInfo) async {
+  Future<int> signup(User userInfo) async {
     var url = Uri.parse("$host/authentication/signup");
+    Encryption encryption = Encryption();
+    userInfo.password = await encryption.encrypt(userInfo.password);
     Map<String, dynamic> payload = {
       "username": userInfo.username,
       "password": userInfo.password,
@@ -49,20 +51,30 @@ class UserProvider {
       "family": userInfo.family,
       "phone": userInfo.phone,
       "phone2": userInfo.phone2,
-      "bluck": userInfo.bluck,
-      "vahed": userInfo.vahed,
-      "family_members": userInfo.familyMembers,
+      "bluck": userInfo.bluck.toString(),
+      "vahed": userInfo.vahed.toString(),
+      "family_members": userInfo.familyMembers.toString(),
       "car_plate": userInfo.carPlate,
       "start_date": userInfo.startDate,
       "end_date": userInfo.endDate,
-      "is_owner": userInfo.isOwner,
+      "is_owner": userInfo.isOwner.toString(),
     };
     http.Response request;
     request = await http.post(url, body: payload);
+    print(request.body);
+    Map<String, dynamic> response = jsonDecode(request.body);
     if (request.statusCode == 200) {
-      return true; //TODO: needs to be completed
+      _box.put("is_loggined", true);
+      _box.put("username", userInfo.username);
+      _box.put(
+        "password",
+        userInfo.password,
+      );
+      return 1; //everything works fine!
+    } else if (response["message"] == "user is in the database") {
+      return -1; //means user exists
     } else {
-      return false;
+      return 0; //means there is a problem.
     }
   }
 
