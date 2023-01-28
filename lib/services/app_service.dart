@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:cryptography/cryptography.dart';
 
 class AppService {
   BuildContext context;

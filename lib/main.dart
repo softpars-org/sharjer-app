@@ -4,6 +4,7 @@ import 'package:mojtama/models/adminpanel_model.dart';
 import 'package:mojtama/models/month_model.dart';
 import 'package:mojtama/models/navbar_model.dart';
 import 'package:mojtama/models/payment_model.dart';
+import 'package:mojtama/models/plak_model.dart';
 import 'package:mojtama/models/scroll_model.dart';
 import 'package:mojtama/models/state_model.dart';
 import 'package:mojtama/models/theme_model.dart';
@@ -36,6 +37,7 @@ void main() async {
     MultiProvider(
       providers: [
         Provider(create: (_) => NavBarModel()),
+        ChangeNotifierProvider(create: (_) => PlakModel()),
         ChangeNotifierProvider(create: (_) => CheckboxModel()),
         ChangeNotifierProvider(create: (_) => PaymentModel()),
         ChangeNotifierProvider(create: (_) => ThemeModel()),
