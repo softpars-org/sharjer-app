@@ -24,7 +24,11 @@ class _UsersListScreenState extends State<UsersListScreen> {
 
   _loadResources() async {
     var provider = Provider.of<AdminPanelModel>(context, listen: false);
-    provider.getUsers();
+    List<User> users = await provider.getUsers();
+    users.sort((a, b) => a.bluck.compareTo(1));
+    users.sort((a, b) => a.bluck.compareTo(2));
+    users.sort((a, b) => a.bluck.compareTo(3));
+    provider.filterUsersByBluck();
   }
 
   @override
@@ -59,19 +63,19 @@ class _UsersListScreenState extends State<UsersListScreen> {
                       ListView.builder(
                         itemCount: model.getUsersLengthOfBluck(1),
                         itemBuilder: (context, index) => UserCard(
-                          user: model.users[index],
+                          user: model.bluck1Users[index],
                         ),
                       ),
                       ListView.builder(
                         itemCount: model.getUsersLengthOfBluck(2),
                         itemBuilder: (context, index) => UserCard(
-                          user: model.users[index],
+                          user: model.bluck2Users[index],
                         ),
                       ),
                       ListView.builder(
                         itemCount: model.getUsersLengthOfBluck(3),
                         itemBuilder: (context, index) => UserCard(
-                          user: model.users[index],
+                          user: model.bluck3Users[index],
                         ),
                       ),
                     ],
