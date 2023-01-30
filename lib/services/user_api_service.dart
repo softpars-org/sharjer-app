@@ -114,6 +114,7 @@ class UserProvider {
     var url = Uri.parse("$host/user/people_who_charged_this_month");
     http.Response request;
     request = await http.get(url);
+    print(request.body);
     Map<String, dynamic> response = jsonDecode(request.body);
     if (request.statusCode == 200) {
       return response["data"];
@@ -132,10 +133,10 @@ class UserProvider {
     List response = jsonDecode(request.body);
     List<ChargeRowStatus> chargeRows = [];
     if (request.statusCode == 200) {
-      response.forEach((jsonedChargeRow) {
+      for (var jsonedChargeRow in response) {
         ChargeRowStatus chargeRow = ChargeRowStatus.fromJson(jsonedChargeRow);
         chargeRows.add(chargeRow);
-      });
+      }
       return chargeRows;
     }
     return false;
@@ -147,5 +148,29 @@ class UserProvider {
     request = await http.get(url);
     List<dynamic> years = jsonDecode(request.body);
     return years;
+  }
+
+  Future<dynamic> getMyProfile() async {
+    var url = Uri.parse("$host/user/get_me");
+    Map<String, dynamic> body = {
+      "username": _box.get("username"),
+      "password": _box.get("password")
+    };
+    http.Response request = await http.post(url, body: body);
+    Map<String, dynamic> response = jsonDecode(request.body);
+    if (request.statusCode == 200) {
+      return User.fromJson(response["data"]);
+    }
+    return false;
+  }
+
+  Future<String> getMyPermission() async {
+    var getProfileResponse = await getMyProfile();
+    if (getProfileResponse == false) {
+      return "no"; //means no permission
+    } else {
+      String myPermission = getProfileResponse.userType;
+      return myPermission;
+    }
   }
 }
