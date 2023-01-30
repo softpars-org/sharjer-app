@@ -6,6 +6,7 @@ import 'package:mojtama/models/history_model.dart';
 import 'package:mojtama/services/payment_api_service.dart';
 import 'package:mojtama/services/user_api_service.dart';
 
+//this model is used for payment functionalities
 class PaymentModel extends ChangeNotifier {
   String currentMonth = "";
   bool isLoading = false;
@@ -17,7 +18,6 @@ class PaymentModel extends ChangeNotifier {
   getPaymentStatusOfTheUsersInTheMonth() async {
     UserProvider userProvider = UserProvider();
     String? ans = await userProvider.getPaymentStatusMessageOfTheUsers();
-    print(ans);
     if (ans != null) {
       paymentStat = ans;
       notifyListeners();

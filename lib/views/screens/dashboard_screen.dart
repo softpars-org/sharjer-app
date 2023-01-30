@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mojtama/models/payment_model.dart';
+import 'package:mojtama/models/permission_model.dart';
 import 'package:mojtama/services/app_service.dart';
 import 'package:mojtama/views/screens/admin_panel/main_screen.dart';
 import 'package:mojtama/views/screens/auth_screens/login_screen.dart';
@@ -22,8 +23,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   _loadResources() async {
-    var provider = Provider.of<PaymentModel>(context, listen: false);
-    await provider.getPaymentStatusOfTheUsersInTheMonth();
+    var paymentProvider = Provider.of<PaymentModel>(context, listen: false);
+    var permissionProvider =
+        Provider.of<PermissionModel>(context, listen: false);
+    await paymentProvider.getPaymentStatusOfTheUsersInTheMonth();
+    await permissionProvider.fetchUserType();
   }
 
   @override
@@ -56,21 +60,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
             SizedBox(
               height: MediaQuery.of(context).size.height / 8,
             ),
-            Padding(
-              padding: EdgeInsets.all(20),
-              child: CustomButton(
-                icon: Icons.admin_panel_settings_outlined,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AdminPanelScreen(),
-                    ),
-                  );
-                },
-                text: "مدیریت",
-              ),
-            ),
+            Consumer<PermissionModel>(builder: (context, model, child) {
+              return model.userPermissionType != "no"
+                  ? Padding(
+                      padding: EdgeInsets.all(20),
+                      child: CustomButton(
+                        icon: Icons.admin_panel_settings_outlined,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AdminPanelScreen(),
+                            ),
+                          );
+                        },
+                        text: "مدیریت",
+                      ),
+                    )
+                  : Container();
+            }),
             Padding(
               padding: EdgeInsets.all(20),
               child: CustomButton(

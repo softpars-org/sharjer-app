@@ -4,6 +4,7 @@ import 'package:mojtama/models/adminpanel_model.dart';
 import 'package:mojtama/models/month_model.dart';
 import 'package:mojtama/models/navbar_model.dart';
 import 'package:mojtama/models/payment_model.dart';
+import 'package:mojtama/models/permission_model.dart';
 import 'package:mojtama/models/plak_model.dart';
 import 'package:mojtama/models/scroll_model.dart';
 import 'package:mojtama/models/state_model.dart';
@@ -46,6 +47,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => RadioMonthModel()),
         ChangeNotifierProvider(create: (_) => AdminPanelModel()),
         ChangeNotifierProvider(create: (_) => MojtamaStatusExpansionModel()),
+        ChangeNotifierProvider(create: (_) => PermissionModel()),
       ],
       child: MyApp(),
     ),
