@@ -1,21 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:mojtama/models/permission_model.dart';
 import 'package:mojtama/services/app_service.dart';
 import 'package:mojtama/views/screens/admin_panel/change_month/change_month_screen.dart';
 import 'package:mojtama/views/screens/admin_panel/change_month/change_price_screen.dart';
 import 'package:mojtama/views/screens/admin_panel/change_month/change_whole_months_screen.dart';
 import 'package:mojtama/views/screens/admin_panel/financial_status/financial_status_screen.dart';
 import 'package:mojtama/views/screens/admin_panel/mojtama_rules/mojtama_rules_screen.dart';
-import 'package:mojtama/views/screens/admin_panel/users_section/add_charge_to_user_screen.dart';
-import 'package:mojtama/views/screens/admin_panel/users_section/remove_charge_from_user_screen.dart';
 import 'package:mojtama/views/screens/admin_panel/users_section/users_list_screen.dart';
-import 'package:mojtama/views/screens/auth_screens/login_screen.dart';
 import 'package:mojtama/views/widgets/button_widget.dart';
+import 'package:provider/provider.dart';
 
-class AdminPanelScreen extends StatelessWidget {
+class AdminPanelScreen extends StatefulWidget {
   AdminPanelScreen({super.key});
 
   @override
+  State<AdminPanelScreen> createState() => _AdminPanelScreenState();
+}
+
+class _AdminPanelScreenState extends State<AdminPanelScreen> {
+  late PermissionModel provider;
+  @override
+  void initState() {
+    super.initState();
+    provider = Provider.of<PermissionModel>(context, listen: false);
+  }
+
   Widget build(BuildContext context) {
+    bool isFullAdmin = provider.userPermissionType == "full";
     List items = [
       {
         "onPressed": () {
@@ -26,42 +37,52 @@ class AdminPanelScreen extends StatelessWidget {
         "icon": Icons.group_outlined,
       },
       {
-        "onPressed": () {
-          AppService service = AppService(context);
-          service.navigate(ChangeMonthScreen());
-        },
+        "onPressed": isFullAdmin
+            ? () {
+                AppService service = AppService(context);
+                service.navigate(ChangeMonthScreen());
+              }
+            : null,
         "title": "تغییر ماه شارژ",
         "icon": Icons.date_range,
       },
       {
-        "onPressed": () {
-          AppService service = AppService(context);
-          service.navigate(ChangePriceScreen());
-        },
+        "onPressed": isFullAdmin
+            ? () {
+                AppService service = AppService(context);
+                service.navigate(ChangePriceScreen());
+              }
+            : null,
         "title": "تغییر میزان شارژ",
         "icon": Icons.change_circle_outlined,
       },
       {
-        "onPressed": () {
-          AppService service = AppService(context);
-          service.navigate(ChangeWholeMonthsScreen());
-        },
+        "onPressed": isFullAdmin
+            ? () {
+                AppService service = AppService(context);
+                service.navigate(ChangeWholeMonthsScreen());
+              }
+            : null,
         "title": "تغییر ماه‌های شارژ",
         "icon": Icons.change_circle_outlined,
       },
       {
-        "onPressed": () {
-          AppService service = AppService(context);
-          service.navigate(MojtamaRulesScreen());
-        },
+        "onPressed": isFullAdmin
+            ? () {
+                AppService service = AppService(context);
+                service.navigate(MojtamaRulesScreen());
+              }
+            : null,
         "title": "قوانین مجتمع",
         "icon": Icons.rule,
       },
       {
-        "onPressed": () {
-          AppService service = AppService(context);
-          service.navigate(FinancialAdminStatusScreen());
-        },
+        "onPressed": isFullAdmin
+            ? () {
+                AppService service = AppService(context);
+                service.navigate(FinancialAdminStatusScreen());
+              }
+            : null,
         "title": "وضعیت مالی مجتمع",
         "icon": Icons.assignment,
       },
@@ -93,7 +114,7 @@ class Item extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: CustomButton(
-        onPressed: onPressed ?? () {},
+        onPressed: onPressed,
         text: title,
         icon: icon,
       ),
