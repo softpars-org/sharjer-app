@@ -61,23 +61,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
               height: MediaQuery.of(context).size.height / 8,
             ),
             Consumer<PermissionModel>(builder: (context, model, child) {
-              return model.userPermissionType != "no"
-                  ? Padding(
-                      padding: EdgeInsets.all(20),
-                      child: CustomButton(
-                        icon: Icons.admin_panel_settings_outlined,
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => AdminPanelScreen(),
-                            ),
-                          );
-                        },
-                        text: "مدیریت",
-                      ),
-                    )
-                  : Container();
+              if (model.userPermissionType != "no") {
+                return Padding(
+                  padding: EdgeInsets.all(20),
+                  child: CustomButton(
+                    icon: Icons.admin_panel_settings_outlined,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AdminPanelScreen(),
+                        ),
+                      );
+                    },
+                    text: "مدیریت",
+                  ),
+                );
+              } else {
+                return Container();
+              }
             }),
             Padding(
               padding: EdgeInsets.all(20),

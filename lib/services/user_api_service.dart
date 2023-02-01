@@ -150,7 +150,7 @@ class UserProvider {
   }
 
   Future<dynamic> getMyProfile() async {
-    var url = Uri.parse("$host/user/get_me");
+    var url = Uri.parse("$host/user/get_myself");
     Map<String, dynamic> body = {
       "username": _box.get("username"),
       "password": _box.get("password")
@@ -171,5 +171,17 @@ class UserProvider {
       String myPermission = getProfileResponse.userType;
       return myPermission;
     }
+  }
+
+  Future<dynamic> updateInformation(Map<String, dynamic> information) async {
+    var url = Uri.parse("$host/user/update_myself");
+    http.Response request;
+    request = await http.post(url, body: information);
+    if (request.statusCode == 200) {
+      print(request.body);
+      return true;
+    }
+    print(request.body);
+    return false;
   }
 }
