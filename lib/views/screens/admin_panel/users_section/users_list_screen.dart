@@ -7,6 +7,7 @@ import 'package:mojtama/services/app_service.dart';
 import 'package:mojtama/services/user_api_service.dart';
 import 'package:mojtama/views/screens/admin_panel/users_section/add_charge_to_user_screen.dart';
 import 'package:mojtama/views/screens/admin_panel/users_section/remove_charge_from_user_screen.dart';
+import 'package:mojtama/views/widgets/car_plate_shower_widget.dart';
 import 'package:provider/provider.dart';
 
 class UsersListScreen extends StatefulWidget {
@@ -123,7 +124,19 @@ class UserCard extends StatelessWidget {
           Text("واحد: ${user.vahed}"),
           SelectableText("شمارهٔ همراه: ${user.phone}"),
           SelectableText("شمارهٔ همراه۲: ${user.phone2}"),
-          Text("پلاک خودرو: ${user.carPlate}"),
+          Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: CarPlateShower(
+                  carPlate: user.carPlate,
+                ),
+              ),
+              Expanded(
+                child: SizedBox(),
+              )
+            ],
+          )
         ],
       ),
     );
