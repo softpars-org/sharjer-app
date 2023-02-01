@@ -49,4 +49,23 @@ class User {
       decodedJson["is_owner"] as int,
     );
   }
+
+  static Map<String, dynamic> toJson(User user) {
+    return {
+      "username": user.username,
+      "password": user.password,
+      "name": user.name,
+      "family": user.family,
+      "phone": user.phone,
+      "phone2": user.phone2,
+      "bluck": user.bluck,
+      "vahed": user.vahed,
+      "family_members": user.familyMembers,
+      "car_plate": user.carPlate,
+      "startdate": user.startDate,
+      "enddate": user.endDate,
+      "is_admin": user.userType,
+      "is_owner": user.isOwner,
+    };
+  }
 }
