@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mojtama/models/history_model.dart';
 import 'package:mojtama/models/payment_model.dart';
 import 'package:mojtama/views/widgets/card_widget.dart';
 import 'package:provider/provider.dart';
@@ -23,10 +22,11 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
     await provider.getPaymentHistory();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("آخرین پرداختی‌های شارژ"),
+        title: const Text("آخرین پرداختی‌های شارژ"),
       ),
       body: RefreshIndicator(
         onRefresh: () => _loadResources(),

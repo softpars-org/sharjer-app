@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mojtama/models/month_model.dart';
-import 'package:mojtama/models/state_model.dart';
 import 'package:provider/provider.dart';
 
 class MonthsCheckBox extends StatelessWidget {
@@ -26,7 +25,7 @@ class MonthsCheckBox extends StatelessWidget {
                     },
                   ),
                 ),
-                VerticalDivider(),
+                const VerticalDivider(),
                 Expanded(
                   child: MonthCheckBox(
                     name: "صفر",
@@ -55,7 +54,7 @@ class MonthsCheckBox extends StatelessWidget {
                     },
                   ),
                 ),
-                VerticalDivider(),
+                const VerticalDivider(),
                 Expanded(
                   child: MonthCheckBox(
                     name: "ربیع الثانی",
@@ -84,7 +83,7 @@ class MonthsCheckBox extends StatelessWidget {
                     },
                   ),
                 ),
-                VerticalDivider(),
+                const VerticalDivider(),
                 Expanded(
                     child: MonthCheckBox(
                   name: "جمادی الثانی",
@@ -111,7 +110,7 @@ class MonthsCheckBox extends StatelessWidget {
                     newVal! ? model.add(month) : model.remove(month);
                   },
                 )),
-                VerticalDivider(),
+                const VerticalDivider(),
                 Expanded(
                     child: MonthCheckBox(
                   name: "شعبان",
@@ -138,7 +137,7 @@ class MonthsCheckBox extends StatelessWidget {
                     newVal! ? model.add(month) : model.remove(month);
                   },
                 )),
-                VerticalDivider(),
+                const VerticalDivider(),
                 Expanded(
                     child: MonthCheckBox(
                   name: "شوال",
@@ -165,7 +164,7 @@ class MonthsCheckBox extends StatelessWidget {
                     newVal! ? model.add(month) : model.remove(month);
                   },
                 )),
-                VerticalDivider(),
+                const VerticalDivider(),
                 Expanded(
                     child: MonthCheckBox(
                   name: "ذیحجه",

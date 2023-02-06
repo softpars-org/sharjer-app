@@ -4,7 +4,6 @@ import 'package:mojtama/models/year_model.dart';
 import 'package:mojtama/services/admin_api_service.dart';
 import 'package:mojtama/services/app_service.dart';
 import 'package:mojtama/views/widgets/radiobutton_widget.dart';
-import 'package:mojtama/views/widgets/textfield_widget.dart';
 import 'package:mojtama/views/widgets/year_dropdown_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -16,13 +15,13 @@ class RemoveChargeFromUserScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("حذف شارژ کاربر"),
+        title: const Text("حذف شارژ کاربر"),
       ),
       body: ListView(
         children: [
-          Divider(),
-          YearDropDownWidget(),
-          Divider(),
+          const Divider(),
+          const YearDropDownWidget(),
+          const Divider(),
           ...List.generate(
             12,
             (index) => RadioButton(monthIndex: index),
@@ -49,7 +48,7 @@ class RemoveChargeFromUserScreen extends StatelessWidget {
             appService.snackBar("ثبت ماه $month با مشکلی مواجه گردید.");
           }
         },
-        child: Icon(Icons.check_rounded),
+        child: const Icon(Icons.check_rounded),
       ),
     );
   }

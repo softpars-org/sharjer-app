@@ -1,9 +1,7 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-import 'package:cryptography/cryptography.dart';
 
 class AppService {
   BuildContext context;
@@ -57,16 +55,16 @@ class AppService {
     SnackBar snackbar = SnackBar(
       content: Row(
         children: [
-          Expanded(
+          const Expanded(
             flex: 1,
             child: Icon(Icons.info),
           ),
-          Expanded(child: SizedBox(width: 10)),
+          const Expanded(child: SizedBox(width: 10)),
           Expanded(
             flex: 9,
             child: Text(
               text,
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: 'VazirLight',
               ),
             ),

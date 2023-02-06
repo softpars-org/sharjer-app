@@ -13,9 +13,9 @@ class AdminPanelModel extends ChangeNotifier {
   }
 
   List<User> _users = [];
-  List<User> _bluck1Users = [];
-  List<User> _bluck2Users = [];
-  List<User> _bluck3Users = [];
+  final List<User> _bluck1Users = [];
+  final List<User> _bluck2Users = [];
+  final List<User> _bluck3Users = [];
   List<User> get bluck1Users {
     return _bluck1Users;
   }
@@ -48,14 +48,14 @@ class AdminPanelModel extends ChangeNotifier {
     TextEditingController titleController,
     TextEditingController priceController,
   ) {
-    final Widget _textField = Row(
+    final Widget textField = Row(
       children: [
         Expanded(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: CustomTextField(
               label: "عنوان",
-              suffixIcon: Icon(Icons.title_outlined),
+              suffixIcon: const Icon(Icons.title_outlined),
               controller: titleController,
             ),
           ),
@@ -66,7 +66,7 @@ class AdminPanelModel extends ChangeNotifier {
             child: CustomTextField(
               label: "مبلغ",
               keyboardType: TextInputType.number,
-              suffixIcon: Icon(Icons.price_check_outlined),
+              suffixIcon: const Icon(Icons.price_check_outlined),
               controller: priceController,
             ),
           ),
@@ -74,7 +74,7 @@ class AdminPanelModel extends ChangeNotifier {
       ],
     );
 
-    return _textField;
+    return textField;
   }
 
   removeTextField() {
@@ -116,16 +116,16 @@ class AdminPanelModel extends ChangeNotifier {
 
   getUsersLengthOfBluck(int bluck) {
     int usersLength = 0;
-    users.forEach((user) {
+    for (var user in users) {
       if (user.bluck == bluck) {
         usersLength++;
       }
-    });
+    }
     return usersLength;
   }
 
   filterUsersByBluck() {
-    users.forEach((user) {
+    for (var user in users) {
       if (user.bluck == 1) {
         _bluck1Users.add(user);
       } else if (user.bluck == 2) {
@@ -133,7 +133,7 @@ class AdminPanelModel extends ChangeNotifier {
       } else if (user.bluck == 3) {
         _bluck3Users.add(user);
       }
-    });
+    }
     notifyListeners();
   }
 }

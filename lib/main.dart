@@ -12,7 +12,6 @@ import 'package:mojtama/models/theme_model.dart';
 import 'package:mojtama/models/year_model.dart';
 import 'package:mojtama/views/screens/auth_screens/login_screen.dart';
 import 'package:mojtama/views/screens/home_screen.dart';
-import 'package:mojtama/views/screens/payment/custompay_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -27,10 +26,10 @@ void main() async {
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
       systemNavigationBarColor:
-          isDarkTheme ? Color(0xff282a36) : Color(0xffece5dd),
+          isDarkTheme ? const Color(0xff282a36) : const Color(0xffece5dd),
       systemNavigationBarIconBrightness:
           isDarkTheme ? Brightness.light : Brightness.dark,
-      statusBarColor: isDarkTheme ? Color(0xff282a36) : Color(0xff075e54),
+      statusBarColor: isDarkTheme ? const Color(0xff282a36) : const Color(0xff075e54),
       statusBarBrightness: isDarkTheme ? Brightness.light : Brightness.dark,
     ),
   );
@@ -49,7 +48,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => MojtamaStatusExpansionModel()),
         ChangeNotifierProvider(create: (_) => PermissionModel()),
       ],
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
   // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(

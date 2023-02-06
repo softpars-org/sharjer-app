@@ -11,7 +11,7 @@ import 'package:mojtama/views/widgets/year_dropdown_widget.dart';
 import 'package:provider/provider.dart';
 
 class ChangeWholeMonthsScreen extends StatefulWidget {
-  ChangeWholeMonthsScreen({super.key});
+  const ChangeWholeMonthsScreen({super.key});
 
   @override
   State<ChangeWholeMonthsScreen> createState() =>
@@ -20,8 +20,8 @@ class ChangeWholeMonthsScreen extends StatefulWidget {
 
 class _ChangeWholeMonthsScreenState extends State<ChangeWholeMonthsScreen> {
   ProfileHelper helper = ProfileHelper();
-  GlobalKey<FormState> _key = GlobalKey<FormState>();
-  List<TextEditingController> _controllers = [];
+  final GlobalKey<FormState> _key = GlobalKey<FormState>();
+  final List<TextEditingController> _controllers = [];
   Map<String, int> monthsPricesDetails = {};
   late AdminProvider adminProvider;
   late YearModel yearProvider;
@@ -50,7 +50,7 @@ class _ChangeWholeMonthsScreenState extends State<ChangeWholeMonthsScreen> {
     Map<String, dynamic> response = await adminProvider.getMonthsPricesInfo();
     int i = 0;
 
-    _controllers.forEach((monthController) {
+    for (var monthController in _controllers) {
       String month = monthsStrings[i];
       //validate year and month in response
       bool validation =
@@ -66,7 +66,7 @@ class _ChangeWholeMonthsScreenState extends State<ChangeWholeMonthsScreen> {
         monthController.text = "0";
       }
       i++;
-    });
+    }
   }
 
   @override
@@ -76,10 +76,11 @@ class _ChangeWholeMonthsScreenState extends State<ChangeWholeMonthsScreen> {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("تغییر ماه‌های شارژ"),
+        title: const Text("تغییر ماه‌های شارژ"),
       ),
       body: Form(
         key: _key,
@@ -92,7 +93,7 @@ class _ChangeWholeMonthsScreenState extends State<ChangeWholeMonthsScreen> {
                 child: CustomButton(
                   onPressed: () {
                     AppService appService = AppService(context);
-                    appService.navigate(ShowMonthPricesScreen());
+                    appService.navigate(const ShowMonthPricesScreen());
                   },
                   text: "لیست مبالغ شارژ",
                   icon: Icons.list,
@@ -254,7 +255,7 @@ class _ChangeWholeMonthsScreenState extends State<ChangeWholeMonthsScreen> {
                   ),
                 ],
               ),
-              YearDropDownWidget()
+              const YearDropDownWidget()
             ],
           ),
         ),
@@ -280,7 +281,7 @@ class _ChangeWholeMonthsScreenState extends State<ChangeWholeMonthsScreen> {
             monthsPricesDetails,
           );
         },
-        child: Icon(Icons.check_rounded),
+        child: const Icon(Icons.check_rounded),
       ),
     );
   }

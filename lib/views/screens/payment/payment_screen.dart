@@ -5,7 +5,6 @@ import 'package:mojtama/services/payment_api_service.dart';
 import 'package:mojtama/views/screens/payment/custompay_screen.dart';
 import 'package:mojtama/views/widgets/button_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class PaymentScreen extends StatefulWidget {
@@ -27,22 +26,23 @@ class _PaymentScreenState extends State<PaymentScreen> {
     await provider.getCurrentMonth();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("پرداخت شارژ"),
+        title: const Text("پرداخت شارژ"),
       ),
       body: RefreshIndicator(
         onRefresh: () => _loadResources(),
         child: ListView(
           children: [
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Center(
                 child: Consumer<PaymentModel>(
                   builder: (_, model, child) {
                     return model.isLoading
-                        ? CircularProgressIndicator()
+                        ? const CircularProgressIndicator()
                         : Text(
                             model.currentMonth,
                             style: TextStyle(
@@ -58,7 +58,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               height: MediaQuery.of(context).size.height / 3,
             ),
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Center(
                 child: CustomButton(
                   text: "پرداخت شارژ",
@@ -84,14 +84,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Center(
                 child: TextButton(
                   onPressed: () {
                     AppService appService = AppService(context);
-                    appService.navigate(CustomPayPage());
+                    appService.navigate(const CustomPayPage());
                   },
-                  child: Text("پرداخت شارژ معوقه"),
+                  child: const Text("پرداخت شارژ معوقه"),
                 ),
               ),
             )

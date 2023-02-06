@@ -17,6 +17,7 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  @override
   didChangeDependencies() {
     super.didChangeDependencies();
     Future.delayed(Duration.zero, () => _loadResources());
@@ -34,14 +35,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("پیشخان"),
+        title: const Text("پیشخان"),
       ),
       body: RefreshIndicator(
         onRefresh: () async => _loadResources(),
         child: ListView(
           children: [
             Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Center(
                 child: Consumer<PaymentModel>(
                   builder: (context, model, child) {
@@ -63,14 +64,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Consumer<PermissionModel>(builder: (context, model, child) {
               if (model.userPermissionType != "no") {
                 return Padding(
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   child: CustomButton(
                     icon: Icons.admin_panel_settings_outlined,
                     onPressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => AdminPanelScreen(),
+                          builder: (context) => const AdminPanelScreen(),
                         ),
                       );
                     },
@@ -82,14 +83,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
               }
             }),
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: CustomButton(
                 icon: Icons.person_outline,
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ProfileScreen(),
+                      builder: (context) => const ProfileScreen(),
                     ),
                   );
                 },
@@ -97,13 +98,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: CustomButton(
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => PaymentHistoryScreen(),
+                      builder: (context) => const PaymentHistoryScreen(),
                     ),
                   );
                 },
@@ -112,7 +113,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: CustomButton(
                 icon: Icons.exit_to_app_rounded,
                 onPressed: () {

@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,9 +11,9 @@ class ThemeModel extends ChangeNotifier {
   }
 
   ThemeData lightTheme = ThemeData(
-    primaryColor: Color(0xff075e54),
+    primaryColor: const Color(0xff075e54),
     fontFamily: "VazirLight",
-    colorScheme: ColorScheme.light(
+    colorScheme: const ColorScheme.light(
       primary: Color(0xff075e54),
       secondary: Color(0xff075e54),
     ),
@@ -32,28 +31,28 @@ class ThemeModel extends ChangeNotifier {
     ),
     checkboxTheme: CheckboxThemeData(
       fillColor: MaterialStateProperty.all(
-        Color(0xff075e54),
+        const Color(0xff075e54),
       ),
     ),
     radioTheme: RadioThemeData(
       fillColor: MaterialStateProperty.all(
-        Color(0xff075e54),
+        const Color(0xff075e54),
       ),
     ),
-    backgroundColor: Color(0xffece5dd),
-    iconTheme: IconThemeData(color: Colors.white),
+    backgroundColor: const Color(0xffece5dd),
+    iconTheme: const IconThemeData(color: Colors.white),
     floatingActionButtonTheme:
-        FloatingActionButtonThemeData(foregroundColor: Colors.white),
+        const FloatingActionButtonThemeData(foregroundColor: Colors.white),
   );
 
   ThemeData darkTheme = ThemeData(
-    primaryColor: Color(0xffbd93f9),
+    primaryColor: const Color(0xffbd93f9),
     fontFamily: "VazirLight",
-    colorScheme: ColorScheme.dark(
+    colorScheme: const ColorScheme.dark(
       primary: Color(0xffbd93f9),
       secondary: Color(0xffff79c6),
     ),
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
       foregroundColor: Color(0xffbd93f9),
       titleTextStyle: TextStyle(
         color: Color(0xffbd93f9),
@@ -64,20 +63,20 @@ class ThemeModel extends ChangeNotifier {
       elevation: 1.0,
       centerTitle: true,
     ),
-    cardColor: Color(0xff44475a),
-    scaffoldBackgroundColor: Color(0xff282a36),
+    cardColor: const Color(0xff44475a),
+    scaffoldBackgroundColor: const Color(0xff282a36),
     checkboxTheme: CheckboxThemeData(
-      fillColor: MaterialStateProperty.all(Color(0xffbd93f9)),
+      fillColor: MaterialStateProperty.all(const Color(0xffbd93f9)),
     ),
     radioTheme: RadioThemeData(
       fillColor: MaterialStateProperty.all(
-        Color(0xffbd93f9),
+        const Color(0xffbd93f9),
       ),
     ),
-    iconTheme: IconThemeData(
+    iconTheme: const IconThemeData(
       color: Color(0xffbd93f9),
     ),
-    tabBarTheme: TabBarTheme(
+    tabBarTheme: const TabBarTheme(
       labelColor: Color(0xffbd93f9),
     ),
   );
@@ -91,7 +90,7 @@ class ThemeModel extends ChangeNotifier {
       box.put("isDarkTheme", !isDarkMode);
       currentTheme = lightTheme;
       SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        systemNavigationBarColor: Color(0xffece5dd),
+        systemNavigationBarColor: const Color(0xffece5dd),
         systemNavigationBarIconBrightness: Brightness.dark,
         statusBarColor: lightTheme.primaryColor,
         statusBarBrightness: Brightness.dark,

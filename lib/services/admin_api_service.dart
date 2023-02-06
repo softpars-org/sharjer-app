@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
+import 'package:mojtama/models/charge_status_model.dart';
 import 'package:mojtama/models/user_model.dart';
 
 class AdminProvider {
@@ -64,10 +65,10 @@ class AdminProvider {
     List<User> users = [];
     if (request.statusCode == 200) {
       List listUsers = jsonDecode(request.body);
-      listUsers.forEach((arrUser) {
+      for (var arrUser in listUsers) {
         User user = User.fromJson(arrUser);
         users.add(user);
-      });
+      }
       return users;
     } else {
       return false;
@@ -134,5 +135,22 @@ class AdminProvider {
     request = await http.get(url);
     Map<String, dynamic> response = jsonDecode(request.body);
     return response;
+  }
+
+  getChargeStatusOfAMember(String username) async {
+    var url = Uri.parse("$host/adminpanel/get_charge_status_of/$username");
+    http.Response request;
+
+    request = await http.post(url);
+    List<dynamic> response = jsonDecode(request.body);
+    if (request.statusCode == 200) {
+      List<ChargeRowStatus> charges = [];
+      for (var element in response) {
+        ChargeRowStatus chargeRow = ChargeRowStatus.fromJson(element);
+        charges.add(chargeRow);
+      }
+      return charges;
+    } else if (request.statusCode == 401) {
+    } else {}
   }
 }

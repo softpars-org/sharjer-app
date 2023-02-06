@@ -12,7 +12,7 @@ class FinancialAdminStatusScreen extends StatelessWidget {
     final providerModel = Provider.of<AdminPanelModel>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        title: Text("وضعیت مالی مجتمع"),
+        title: const Text("وضعیت مالی مجتمع"),
       ),
       body: Consumer<AdminPanelModel>(
         builder: (context, model, child) {
@@ -30,7 +30,7 @@ class FinancialAdminStatusScreen extends StatelessWidget {
                 onPressed: () {
                   providerModel.removeTextField();
                 },
-                child: Text("حذف آخرین فیلد"),
+                child: const Text("حذف آخرین فیلد"),
               ),
             ),
             Expanded(
@@ -38,7 +38,7 @@ class FinancialAdminStatusScreen extends StatelessWidget {
                 onPressed: () {
                   providerModel.addTextField();
                 },
-                child: Text("اضافه کردن فیلد جدید"),
+                child: const Text("اضافه کردن فیلد جدید"),
               ),
             ),
           ],
@@ -50,7 +50,7 @@ class FinancialAdminStatusScreen extends StatelessWidget {
           print(test);
         },
         tooltip: "ثبت مبالغ",
-        child: Icon(Icons.save_outlined),
+        child: const Icon(Icons.save_outlined),
       ),
     );
   }

@@ -12,7 +12,7 @@ class CarPlateShower extends StatelessWidget {
     List<String> carPlateValues = carPlate.split("|");
 
     return Container(
-      padding: EdgeInsets.all(4),
+      padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(
@@ -25,7 +25,7 @@ class CarPlateShower extends StatelessWidget {
           children: [
             Column(
               children: [
-                Expanded(
+                const Expanded(
                   flex: 1,
                   child: Text(
                     "ایـــران",
@@ -36,12 +36,12 @@ class CarPlateShower extends StatelessWidget {
                   flex: 2,
                   child: Text(
                     carPlateValues[0],
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
               ],
             ),
-            VerticalDivider(),
+            const VerticalDivider(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -50,15 +50,15 @@ class CarPlateShower extends StatelessWidget {
                 ),
                 Text(
                   carPlateValues[1],
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text(
                   carPlateValues[2],
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text(
                   carPlateValues[3],
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],
             ),

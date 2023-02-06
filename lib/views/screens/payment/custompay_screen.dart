@@ -18,10 +18,10 @@ class CustomPayPage extends StatefulWidget {
 class _CustomPayPageState extends State<CustomPayPage> {
   @override
   Widget build(BuildContext context) {
-    AppService _appService = AppService(context);
+    AppService appService = AppService(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("شارژ معوقه"),
+        title: const Text("شارژ معوقه"),
       ),
       body: Consumer<MonthsModel>(
         builder: (_, model, child) {
@@ -54,10 +54,10 @@ class _CustomPayPageState extends State<CustomPayPage> {
               String response = await paymentProvider
                   .getCustomChargeUrl(jsonYearMonthsChargeInfo);
               if (response == "price shouldn't be 0 Rial") {
-                _appService.snackBar(
+                appService.snackBar(
                     "شما شارژهای ماه‌هایی که انتخاب کرده‌اید را پرداخت کرده‌اید.");
               } else if (response == "try changing your months") {
-                _appService.snackBar("ماه‌های شارژ خود را تغییر دهید.");
+                appService.snackBar("ماه‌های شارژ خود را تغییر دهید.");
               } else {
                 String url = response;
                 await launchUrlString(url,
@@ -73,7 +73,7 @@ class _CustomPayPageState extends State<CustomPayPage> {
             backgroundColor: Theme.of(context).primaryColor,
             label: "اضافه کردن شارژ معوقه",
             onTap: () {
-              _appService.navigate(AddMonthsPage());
+              appService.navigate(const AddMonthsPage());
             },
             child: Icon(Icons.add_card, color: Theme.of(context).canvasColor),
           ),
@@ -92,7 +92,7 @@ class CartShower extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
@@ -122,8 +122,7 @@ class CartShower extends StatelessWidget {
                 ),
                 Expanded(
                   flex: 5,
-                  child: Text("سال: ${model.yearMonthsDetails[index][0]}\n" +
-                      "ماه‌ها: ${model.yearMonthsDetails[index][1].join('، ')}"),
+                  child: Text("سال: ${model.yearMonthsDetails[index][0]}\n" "ماه‌ها: ${model.yearMonthsDetails[index][1].join('، ')}"),
                 ),
               ],
             ),

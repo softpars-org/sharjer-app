@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:mojtama/helpers/profile_helper.dart';
@@ -6,9 +5,7 @@ import 'package:mojtama/models/plak_model.dart';
 import 'package:mojtama/models/state_model.dart';
 import 'package:mojtama/models/user_model.dart';
 import 'package:mojtama/services/app_service.dart';
-import 'package:mojtama/services/encryption_service.dart';
 import 'package:mojtama/services/user_api_service.dart';
-import 'package:mojtama/views/screens/home_screen.dart';
 import 'package:mojtama/views/screens/profile_screen.dart';
 import 'package:mojtama/views/widgets/button_widget.dart';
 import 'package:mojtama/views/widgets/plakinput_widget.dart';
@@ -17,7 +14,7 @@ import 'package:provider/provider.dart';
 
 class SignupPage extends StatelessWidget {
   SignupPage({super.key});
-  GlobalKey<FormState> _formKey = GlobalKey();
+  final GlobalKey<FormState> _formKey = GlobalKey();
   TextEditingController nameTxt = TextEditingController();
   TextEditingController familyTxt = TextEditingController();
   TextEditingController familyMembersTxt = TextEditingController();
@@ -37,7 +34,7 @@ class SignupPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("صفحه ثبت نام"),
+        title: const Text("صفحه ثبت نام"),
       ),
       body: Form(
         key: _formKey,
@@ -51,7 +48,7 @@ class SignupPage extends StatelessWidget {
                     child: CustomTextField(
                       controller: nameTxt,
                       label: "نام",
-                      suffixIcon: Icon(Icons.person_outline),
+                      suffixIcon: const Icon(Icons.person_outline),
                       helper: "به صورت فارسی",
                       validator: profileHelper.checkFarsi,
                     ),
@@ -64,7 +61,7 @@ class SignupPage extends StatelessWidget {
                       label: "نام خانوادگی",
                       controller: familyTxt,
                       validator: profileHelper.checkFarsi,
-                      suffixIcon: Icon(Icons.person_outline),
+                      suffixIcon: const Icon(Icons.person_outline),
                       helper: "به صورت فارسی",
                     ),
                   ),
@@ -78,7 +75,7 @@ class SignupPage extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: CustomTextField(
                       label: "نام کاربری",
-                      suffixIcon: Icon(Icons.person_pin_outlined),
+                      suffixIcon: const Icon(Icons.person_pin_outlined),
                       controller: usernameTxt,
                       helper: "به صورت لاتین",
                       validator: profileHelper.checkLatin,
@@ -90,7 +87,7 @@ class SignupPage extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: CustomTextField(
                       label: "تعداد نفرات",
-                      suffixIcon: Icon(Icons.group_outlined),
+                      suffixIcon: const Icon(Icons.group_outlined),
                       helper: "",
                       controller: familyMembersTxt,
                       validator: profileHelper.isNotNull,
@@ -108,7 +105,7 @@ class SignupPage extends StatelessWidget {
                       label: "شماره همراه",
                       controller: phoneTxt,
                       validator: profileHelper.checkPhone,
-                      suffixIcon: Icon(Icons.phone),
+                      suffixIcon: const Icon(Icons.phone),
                       helper: "شماره برای ثبت در ریموت",
                     ),
                   ),
@@ -120,7 +117,7 @@ class SignupPage extends StatelessWidget {
                       label: "شماره همراه ۲",
                       validator: profileHelper.checkPhone,
                       controller: phone2Txt,
-                      suffixIcon: Icon(Icons.phone),
+                      suffixIcon: const Icon(Icons.phone),
                       helper: "شماره برای ثبت در ریموت",
                     ),
                   ),
@@ -135,7 +132,7 @@ class SignupPage extends StatelessWidget {
                     child: CustomTextField(
                       controller: bluckTxt,
                       label: "بلوک",
-                      suffixIcon: Icon(Icons.domain_outlined),
+                      suffixIcon: const Icon(Icons.domain_outlined),
                       keyboardType: TextInputType.number,
                       validator: profileHelper.isNotNull,
                     ),
@@ -147,7 +144,7 @@ class SignupPage extends StatelessWidget {
                     child: CustomTextField(
                       controller: vahedTxt,
                       label: "واحد",
-                      suffixIcon: Icon(Icons.account_balance_outlined),
+                      suffixIcon: const Icon(Icons.account_balance_outlined),
                       keyboardType: TextInputType.number,
                       validator: profileHelper.isNotNull,
                     ),
@@ -165,7 +162,7 @@ class SignupPage extends StatelessWidget {
                       helper: "تاریخ ورود به مجتمع",
                       controller: startdateTxt,
                       validator: profileHelper.isDate,
-                      suffixIcon: Icon(Icons.date_range_outlined),
+                      suffixIcon: const Icon(Icons.date_range_outlined),
                       keyboardType: TextInputType.datetime,
                     ),
                   ),
@@ -184,7 +181,7 @@ class SignupPage extends StatelessWidget {
                         }
                       },
                       helper: "تاریخ خروج از مجتمع",
-                      suffixIcon: Icon(Icons.date_range_outlined),
+                      suffixIcon: const Icon(Icons.date_range_outlined),
                       keyboardType: TextInputType.datetime,
                     ),
                   ),
@@ -205,7 +202,7 @@ class SignupPage extends StatelessWidget {
               numValidator: profileHelper.isNotNull,
               farsiValidator: profileHelper.checkFarsi,
             ),
-            OwnerStatusCheckbox(),
+            const OwnerStatusCheckbox(),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: CustomButton(

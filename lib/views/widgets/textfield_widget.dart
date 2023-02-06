@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 
@@ -32,7 +31,7 @@ class CustomTextField extends StatelessWidget {
       keyboardType: keyboardType,
       obscureText: obscureText,
       maxLines: maxLines,
-      cursorRadius: Radius.circular(50),
+      cursorRadius: const Radius.circular(50),
       decoration: InputDecoration(
         label: Text(
           label ?? "هیچ",

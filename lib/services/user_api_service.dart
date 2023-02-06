@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:crypto/crypto.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:mojtama/models/charge_status_model.dart';
@@ -102,7 +101,7 @@ class UserProvider {
   }
 
   checkApplicationVersion() async {
-    Future.delayed(Duration(seconds: 2), () => print("Checking version..."));
+    Future.delayed(const Duration(seconds: 2), () => print("Checking version..."));
     return {
       "status": "not updated",
       "version": "1.1.1",

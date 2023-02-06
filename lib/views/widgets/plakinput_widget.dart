@@ -20,7 +20,7 @@ class PlakInputWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
                 color: Theme.of(context).primaryColor.withOpacity(0.15),
@@ -93,21 +93,21 @@ class PlakInputWidget extends StatelessWidget {
 
   List<DropdownMenuItem<dynamic>>? get _items {
     return [
-      DropdownMenuItem(
-        child: Text("تست"),
+      const DropdownMenuItem(
         value: 1,
-      ),
-      DropdownMenuItem(
         child: Text("تست"),
+      ),
+      const DropdownMenuItem(
         value: 2,
-      ),
-      DropdownMenuItem(
         child: Text("تست"),
+      ),
+      const DropdownMenuItem(
         value: 3,
-      ),
-      DropdownMenuItem(
         child: Text("تست"),
+      ),
+      const DropdownMenuItem(
         value: 4,
+        child: Text("تست"),
       ),
     ];
   }

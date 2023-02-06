@@ -5,7 +5,7 @@ import 'package:mojtama/views/widgets/payment_status_table.dart';
 import 'package:provider/provider.dart';
 
 class PaymentStatusScreen extends StatefulWidget {
-  PaymentStatusScreen({super.key});
+  const PaymentStatusScreen({super.key});
 
   @override
   State<PaymentStatusScreen> createState() => _PaymentStatusScreenState();
@@ -32,7 +32,7 @@ class _PaymentStatusScreenState extends State<PaymentStatusScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("وضعیت شارژ"),
+        title: const Text("وضعیت شارژ"),
       ),
       body: RefreshIndicator(
         onRefresh: () => _loadResources(),
@@ -45,6 +45,7 @@ class _PaymentStatusScreenState extends State<PaymentStatusScreen> {
                   (index) {
                     return PaymentStatusTable(
                       year: "1444",
+                      name: "TESTNAME",
                       chargeStatusOfTheUser: model.chargeStatusOfTheUser[index],
                     );
                   },

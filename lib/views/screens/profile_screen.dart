@@ -14,7 +14,7 @@ import 'package:mojtama/views/widgets/textfield_widget.dart';
 import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {
-  ProfileScreen({super.key});
+  const ProfileScreen({super.key});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -22,7 +22,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
-  GlobalKey<FormState> _formKey = GlobalKey();
+  final GlobalKey<FormState> _formKey = GlobalKey();
   FocusNode nameNode = FocusNode();
   TextEditingController nameTxt = TextEditingController();
   TextEditingController familyTxt = TextEditingController();
@@ -39,6 +39,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   UserProvider userProvider = UserProvider();
   late PlakModel plakProvider;
   late CheckboxModel checkboxProvider;
+  @override
   void initState() {
     Future.delayed(Duration.zero, () => _loadResources());
     plakProvider = Provider.of<PlakModel>(context, listen: false);
@@ -94,10 +95,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return response;
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("پروفایل"),
+        title: const Text("پروفایل"),
       ),
       body: Form(
         key: _formKey,
@@ -113,7 +115,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: CustomTextField(
                         controller: nameTxt,
                         label: "نام",
-                        suffixIcon: Icon(Icons.person_outline),
+                        suffixIcon: const Icon(Icons.person_outline),
                         helper: "به صورت فارسی",
                         validator: profileHelper.checkFarsi,
                       ),
@@ -126,7 +128,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         label: "نام خانوادگی",
                         controller: familyTxt,
                         validator: profileHelper.checkFarsi,
-                        suffixIcon: Icon(Icons.person_outline),
+                        suffixIcon: const Icon(Icons.person_outline),
                         helper: "به صورت فارسی",
                       ),
                     ),
@@ -140,7 +142,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       padding: const EdgeInsets.all(8.0),
                       child: CustomTextField(
                         label: "نام کاربری",
-                        suffixIcon: Icon(Icons.person_pin_outlined),
+                        suffixIcon: const Icon(Icons.person_pin_outlined),
                         controller: usernameTxt,
                         helper: "به صورت لاتین",
                         validator: profileHelper.checkLatin,
@@ -153,7 +155,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: CustomTextField(
                         controller: familyMembersTxt,
                         label: "تعداد نفرات",
-                        suffixIcon: Icon(Icons.car_repair),
+                        suffixIcon: const Icon(Icons.car_repair),
                         helper: "",
                         validator: profileHelper.isNotNull,
                       ),
@@ -170,7 +172,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         label: "شماره همراه",
                         controller: phoneTxt,
                         validator: profileHelper.checkPhone,
-                        suffixIcon: Icon(Icons.phone),
+                        suffixIcon: const Icon(Icons.phone),
                         helper: "شماره برای ثبت در ریموت",
                       ),
                     ),
@@ -182,7 +184,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         label: "شماره همراه ۲",
                         validator: profileHelper.checkPhone,
                         controller: phone2Txt,
-                        suffixIcon: Icon(Icons.phone),
+                        suffixIcon: const Icon(Icons.phone),
                         helper: "شماره برای ثبت در ریموت",
                       ),
                     ),
@@ -197,7 +199,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: CustomTextField(
                         controller: bluckTxt,
                         label: "بلوک",
-                        suffixIcon: Icon(Icons.domain_outlined),
+                        suffixIcon: const Icon(Icons.domain_outlined),
                         keyboardType: TextInputType.number,
                         validator: profileHelper.isNotNull,
                       ),
@@ -209,7 +211,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: CustomTextField(
                         controller: vahedTxt,
                         label: "واحد",
-                        suffixIcon: Icon(Icons.account_balance_outlined),
+                        suffixIcon: const Icon(Icons.account_balance_outlined),
                         keyboardType: TextInputType.number,
                         validator: profileHelper.isNotNull,
                       ),
@@ -227,7 +229,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         helper: "تاریخ ورود به مجتمع",
                         controller: startdateTxt,
                         validator: profileHelper.isDate,
-                        suffixIcon: Icon(Icons.date_range_outlined),
+                        suffixIcon: const Icon(Icons.date_range_outlined),
                         keyboardType: TextInputType.datetime,
                       ),
                     ),
@@ -246,7 +248,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           }
                         },
                         helper: "تاریخ خروج از مجتمع",
-                        suffixIcon: Icon(Icons.date_range_outlined),
+                        suffixIcon: const Icon(Icons.date_range_outlined),
                         keyboardType: TextInputType.datetime,
                       ),
                     ),
@@ -257,7 +259,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 numValidator: profileHelper.isNotNull,
                 farsiValidator: profileHelper.checkFarsi,
               ),
-              OwnerStatusCheckbox(),
+              const OwnerStatusCheckbox(),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: CustomButton(
@@ -299,7 +301,7 @@ class OwnerStatusCheckbox extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
             ),
-            title: Text("مالک هستم."),
+            title: const Text("مالک هستم."),
             value: checkModel.isOwner,
             onChanged: (newValue) {
               checkModel.toggleCheckbox();

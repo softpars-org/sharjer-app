@@ -8,7 +8,7 @@ import 'package:mojtama/views/widgets/textfield_widget.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
-  GlobalKey<FormState> _key = GlobalKey<FormState>();
+  final GlobalKey<FormState> _key = GlobalKey<FormState>();
   ProfileHelper profileHelper = ProfileHelper();
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -16,7 +16,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("صفحه ورود"),
+        title: const Text("صفحه ورود"),
       ),
       body: Form(
         key: _key,
@@ -26,24 +26,24 @@ class LoginPage extends StatelessWidget {
               height: MediaQuery.of(context).size.height / 5,
             ),
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: CustomTextField(
                 label: "نام کاربری",
                 controller: usernameController,
-                suffixIcon: Icon(Icons.person_outlined),
+                suffixIcon: const Icon(Icons.person_outlined),
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: CustomTextField(
                 label: "گذرواژه",
                 controller: passwordController,
-                suffixIcon: Icon(Icons.password_outlined),
+                suffixIcon: const Icon(Icons.password_outlined),
                 obscureText: true,
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: CustomButton(
                 text: "ورود",
                 icon: Icons.login,
@@ -62,9 +62,9 @@ class LoginPage extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: TextButton(
-                child: Text("حساب کاربری ندارید؟ ثبت نام"),
+                child: const Text("حساب کاربری ندارید؟ ثبت نام"),
                 onPressed: () {
                   _key.currentState!.validate();
                   AppService appService = AppService(context);
@@ -72,7 +72,7 @@ class LoginPage extends StatelessWidget {
                 },
               ),
             ),
-            Padding(
+            const Padding(
               padding: EdgeInsets.all(20),
               child: Center(
                 child: Text(

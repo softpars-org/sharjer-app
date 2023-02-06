@@ -13,26 +13,26 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "تنظیمات",
         ),
       ),
       body: Column(
         children: [
-          Padding(
+          const Padding(
             padding: EdgeInsets.all(20),
-            child: Container(
+            child: SizedBox(
               width: 50,
               height: 50,
             ),
           ),
-          Divider(
+          const Divider(
             indent: 8,
             endIndent: 8,
             height: 0.5,
           ),
           Padding(
-            padding: EdgeInsets.all(7),
+            padding: const EdgeInsets.all(7),
             child: Consumer<ThemeModel>(builder: (context, model, child) {
               return ListTile(
                 shape: RoundedRectangleBorder(
@@ -43,11 +43,11 @@ class SettingsScreen extends StatelessWidget {
                   style: TextStyle(
                       fontSize: 14, color: Theme.of(context).primaryColor),
                 ),
-                leading: Icon(
+                leading: const Icon(
                   Icons.dark_mode,
                 ),
                 subtitle: !model.isDarkMode
-                    ? Text(
+                    ? const Text(
                         "برای کمتر آسیب دیدن چشم، توصیه می‌شود تم تیره را فعال کنید.")
                     : null,
                 trailing: Checkbox(
@@ -67,19 +67,19 @@ class SettingsScreen extends StatelessWidget {
               );
             }),
           ),
-          Divider(
+          const Divider(
             height: 0.5,
             indent: 8,
             endIndent: 8,
           ),
           Padding(
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             child: ListTile(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
-              title: Text("راه ارتباطی با برنامه‌نویس در پیامرسان بله"),
-              subtitle: Text(
+              title: const Text("راه ارتباطی با برنامه‌نویس در پیامرسان بله"),
+              subtitle: const Text(
                   "اطلاعات کامل سفارش خود را به پیوی ارسال نمایید. (با فشردن این قسمت وارد محیط برنامه بله شوید.)"),
               onTap: () {
                 launchUrlString("http://ble.im/JohnPeterson",
@@ -87,7 +87,7 @@ class SettingsScreen extends StatelessWidget {
               },
             ),
           ),
-          Divider(
+          const Divider(
             height: 0.5,
             indent: 8,
             endIndent: 8,
@@ -102,6 +102,7 @@ class SettingsScreen extends StatelessWidget {
 class UpdateApp extends StatelessWidget {
   @override
   UserProvider userProvider = UserProvider();
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: userProvider.checkApplicationVersion(),
@@ -110,16 +111,15 @@ class UpdateApp extends StatelessWidget {
           if (snapshot.data["status"] == "updated") {
             return Container(
               child: TextButton(
-                child: Text("نسخه اپلیکیشن شما بروز می‌باشد."),
+                child: const Text("نسخه اپلیکیشن شما بروز می‌باشد."),
                 onPressed: () {},
               ),
             );
           } else if (snapshot.data["status"] == "not updated") {
             return Container(
               child: TextButton(
-                child: Text("نسخه‌ی اپلیکیشن شما: " +
-                    snapshot.data["version"] +
-                    ". (برای دانلود، ضربه بزنید)"),
+                child: Text("${"نسخه‌ی اپلیکیشن شما: " +
+                    snapshot.data["version"]}. (برای دانلود، ضربه بزنید)"),
                 onPressed: () {
                   launchUrlString(snapshot.data["link"],
                       mode: LaunchMode.externalApplication);

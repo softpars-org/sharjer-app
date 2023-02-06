@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:mojtama/models/adminpanel_model.dart';
-import 'package:mojtama/models/month_model.dart';
 import 'package:mojtama/models/user_model.dart';
 import 'package:mojtama/services/app_service.dart';
-import 'package:mojtama/services/user_api_service.dart';
+import 'package:mojtama/views/screens/admin_panel/user_charge_status/user_charge_status_screen.dart';
 import 'package:mojtama/views/screens/admin_panel/users_section/add_charge_to_user_screen.dart';
 import 'package:mojtama/views/screens/admin_panel/users_section/remove_charge_from_user_screen.dart';
 import 'package:mojtama/views/widgets/car_plate_shower_widget.dart';
@@ -40,8 +38,8 @@ class _UsersListScreenState extends State<UsersListScreen> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: Text("لیست اعضا"),
-          bottom: TabBar(
+          title: const Text("لیست اعضا"),
+          bottom: const TabBar(
             indicatorColor: Colors.white,
             tabs: [
               Tab(
@@ -59,7 +57,7 @@ class _UsersListScreenState extends State<UsersListScreen> {
         body: Consumer<AdminPanelModel>(
           builder: (context, model, child) {
             return model.isLoading
-                ? Center(child: CircularProgressIndicator())
+                ? const Center(child: CircularProgressIndicator())
                 : TabBarView(
                     children: [
                       ListView.builder(
@@ -98,7 +96,7 @@ class UserCard extends StatelessWidget {
     return Container(
       child: ExpansionTile(
         expandedAlignment: Alignment.topRight,
-        childrenPadding: EdgeInsets.all(30),
+        childrenPadding: const EdgeInsets.all(30),
         expandedCrossAxisAlignment: CrossAxisAlignment.start,
         title: Text("${user.name} ${user.family}"),
         subtitle: Text("بلوک ${user.bluck}، واحد ${user.vahed}"),
@@ -116,7 +114,7 @@ class UserCard extends StatelessWidget {
           //   ),
           // ),
           ThreeDots(
-            username: user.username,
+            user: user,
           ),
           Text("نام کاربری: ${user.username}"),
           Text("نام و نام خانوادگی: ${user.family}"),
@@ -132,7 +130,7 @@ class UserCard extends StatelessWidget {
                   carPlate: user.carPlate,
                 ),
               ),
-              Expanded(
+              const Expanded(
                 child: SizedBox(),
               )
             ],
@@ -149,8 +147,8 @@ class UserCard extends StatelessWidget {
 }
 
 class ThreeDots extends StatelessWidget {
-  String username;
-  ThreeDots({Key? key, required this.username}) : super(key: key);
+  User user;
+  ThreeDots({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -191,13 +189,17 @@ class ThreeDots extends StatelessWidget {
           ),
           tooltip: "تنظیمات کاربر",
           onSelected: (value) {
-            if (value == "اضافه کردن شارژ") {
+            if (value == "وضعیت شارژ") {
+              appService.navigate(UserChargeStatusScreen(
+                user: user,
+              ));
+            } else if (value == "اضافه کردن شارژ") {
               appService.navigate(AddChargeToUserScreen(
-                username: username,
+                username: user.username,
               ));
             } else if (value == "حذف شارژ") {
               appService.navigate(RemoveChargeFromUserScreen(
-                username: username,
+                username: user.username,
               ));
             }
           },
@@ -213,7 +215,7 @@ class ThreeDots extends StatelessWidget {
                         popupItems["icons"]![i],
                         color: Theme.of(context).primaryColor,
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Text(popupItems["strings"]![i]),
                     ],
                   ),

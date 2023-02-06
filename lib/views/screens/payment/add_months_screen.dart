@@ -13,23 +13,23 @@ class AddMonthsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("اضافه کردن شارژ معوقه"),
+        title: const Text("اضافه کردن شارژ معوقه"),
       ),
       body: ListView(
         children: [
           SizedBox(
             height: MediaQuery.of(context).size.height / 6,
           ),
-          Padding(
-            padding: const EdgeInsets.all(5.0),
+          const Padding(
+            padding: EdgeInsets.all(5.0),
             child: MonthsCheckBox(),
           ),
-          Divider(
+          const Divider(
             indent: 5,
             endIndent: 5,
           ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
+          const Padding(
+            padding: EdgeInsets.all(20.0),
             child: YearDropDownWidget(),
           ),
         ],
@@ -48,12 +48,12 @@ class AddMonthsPage extends StatelessWidget {
                     var months = model.months;
 
                     model.yearMonthsDetails.add([year, months.values.toList()]);
-                    AppService _appService = AppService(context);
-                    _appService.snackBar("شارژ معوقه به لیست اضافه شد.");
+                    AppService appService = AppService(context);
+                    appService.snackBar("شارژ معوقه به لیست اضافه شد.");
                     model.update();
                   },
                   tooltip: "اضافه کردن",
-                  child: Icon(Icons.add_card),
+                  child: const Icon(Icons.add_card),
                 );
         },
       ),

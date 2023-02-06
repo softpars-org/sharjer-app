@@ -31,7 +31,7 @@ class _MojtamaFinanceScreenState extends State<MojtamaFinanceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("وضعیت مالی مجتمع"),
+        title: const Text("وضعیت مالی مجتمع"),
       ),
       body: RefreshIndicator(
         onRefresh: () => _loadResources(),
@@ -47,7 +47,7 @@ class _MojtamaFinanceScreenState extends State<MojtamaFinanceScreen> {
                   children: [
                     ExpansionPanel(
                       headerBuilder: (context, isOpen) {
-                        return Center(
+                        return const Center(
                           child: Text(
                             'قوانین مجتمع',
                             style: TextStyle(fontWeight: FontWeight.bold),
@@ -59,13 +59,13 @@ class _MojtamaFinanceScreenState extends State<MojtamaFinanceScreen> {
                         child: Column(
                           children: [
                             model.isLoading
-                                ? CircularProgressIndicator()
+                                ? const CircularProgressIndicator()
                                 : RichText(
                                     text: TextSpan(
                                       style: DefaultTextStyle.of(context).style,
                                       children: [
                                         TextSpan(
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontWeight: FontWeight.bold),
                                             text:
                                                 "${model.mojtamaRule.rule}\n\n"),
@@ -95,9 +95,9 @@ class _MojtamaFinanceScreenState extends State<MojtamaFinanceScreen> {
                         );
                       },
                       body: Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: model.isLoading
-                            ? CircularProgressIndicator()
+                            ? const CircularProgressIndicator()
                             : CustomTable(
                                 decodedJson:
                                     jsonDecode(model.financialStatusText),

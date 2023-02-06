@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class MonthsModel extends ChangeNotifier {
   List<bool> checkMonths = List<bool>.generate(12, (index) => false);
-  Map<int, String> months = Map<int, String>();
+  Map<int, String> months = <int, String>{};
   Map<String, int> monthsPricesDetails = {};
   List<String> monthsStrings = [
     "محرم",

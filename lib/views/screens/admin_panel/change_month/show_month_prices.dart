@@ -3,7 +3,6 @@ import 'package:mojtama/models/charge_status_model.dart';
 import 'package:mojtama/models/month_model.dart';
 import 'package:mojtama/models/year_model.dart';
 import 'package:mojtama/services/admin_api_service.dart';
-import 'package:mojtama/views/widgets/custom_table_widget.dart';
 import 'package:mojtama/views/widgets/payment_status_table.dart';
 import 'package:provider/provider.dart';
 
@@ -26,14 +25,16 @@ class _ShowMonthPricesScreenState extends State<ShowMonthPricesScreen> {
     monthsProvider = Provider.of<MonthsModel>(context, listen: false);
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("لیست مبالغ شارژ"),
+        title: const Text("لیست مبالغ شارژ"),
       ),
       body: ListView.builder(
         itemBuilder: (context, index) => PaymentStatusTable(
           year: 'year',
+          name: "TESTNAME",
           chargeStatusOfTheUser: ChargeRowStatus(
             '1444',
             monthsProvider.monthsPricesDetails.keys.toList(),

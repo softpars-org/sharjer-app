@@ -60,9 +60,9 @@ class PaymentProvider {
     request = await http.get(url);
     List response = jsonDecode(request.body);
     List<History> paymentHistory = [];
-    response.forEach((jsonHistory) {
+    for (var jsonHistory in response) {
       paymentHistory.add(History.fromJson(jsonHistory));
-    });
+    }
     if (paymentHistory.isNotEmpty) {
       return paymentHistory;
     }

@@ -11,7 +11,7 @@ import 'package:mojtama/views/widgets/button_widget.dart';
 import 'package:provider/provider.dart';
 
 class AdminPanelScreen extends StatefulWidget {
-  AdminPanelScreen({super.key});
+  const AdminPanelScreen({super.key});
 
   @override
   State<AdminPanelScreen> createState() => _AdminPanelScreenState();
@@ -25,13 +25,14 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
     provider = Provider.of<PermissionModel>(context, listen: false);
   }
 
+  @override
   Widget build(BuildContext context) {
     bool isFullAdmin = provider.userPermissionType == "full";
     List items = [
       {
         "onPressed": () {
           AppService appService = AppService(context);
-          appService.navigate(UsersListScreen());
+          appService.navigate(const UsersListScreen());
         },
         "title": "لیست اعضا",
         "icon": Icons.group_outlined,
@@ -40,7 +41,7 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
         "onPressed": isFullAdmin
             ? () {
                 AppService service = AppService(context);
-                service.navigate(ChangeMonthScreen());
+                service.navigate(const ChangeMonthScreen());
               }
             : null,
         "title": "تغییر ماه شارژ",
@@ -60,7 +61,7 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
         "onPressed": isFullAdmin
             ? () {
                 AppService service = AppService(context);
-                service.navigate(ChangeWholeMonthsScreen());
+                service.navigate(const ChangeWholeMonthsScreen());
               }
             : null,
         "title": "تغییر ماه‌های شارژ",
@@ -80,7 +81,7 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
         "onPressed": isFullAdmin
             ? () {
                 AppService service = AppService(context);
-                service.navigate(FinancialAdminStatusScreen());
+                service.navigate(const FinancialAdminStatusScreen());
               }
             : null,
         "title": "وضعیت مالی مجتمع",
@@ -89,7 +90,7 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
     ];
     return Scaffold(
       appBar: AppBar(
-        title: Text("مدیریت"),
+        title: const Text("مدیریت"),
       ),
       body: ListView.builder(
         itemCount: items.length,
