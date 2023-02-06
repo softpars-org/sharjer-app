@@ -101,7 +101,8 @@ class UserProvider {
   }
 
   checkApplicationVersion() async {
-    Future.delayed(const Duration(seconds: 2), () => print("Checking version..."));
+    Future.delayed(
+        const Duration(seconds: 2), () => print("Checking version..."));
     return {
       "status": "not updated",
       "version": "1.1.1",

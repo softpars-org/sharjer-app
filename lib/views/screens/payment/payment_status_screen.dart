@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mojtama/models/charge_status_model.dart';
 import 'package:mojtama/models/payment_model.dart';
+import 'package:mojtama/services/user_api_service.dart';
 import 'package:mojtama/views/widgets/payment_status_table.dart';
 import 'package:provider/provider.dart';
 
@@ -12,11 +13,7 @@ class PaymentStatusScreen extends StatefulWidget {
 }
 
 class _PaymentStatusScreenState extends State<PaymentStatusScreen> {
-  List<ChargeRowStatus> chargeStatusOfTheUser = [
-    ChargeRowStatus("1444", ["ربیع", "علی"], ["10000", "20000"]),
-    ChargeRowStatus("1444", ["ربیع", "علی"], ["10000", "20000"]),
-    ChargeRowStatus("1444", ["ربیع", "حسن"], ["10000", "20000"]),
-  ];
+  String nameFamily = "";
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -26,6 +23,15 @@ class _PaymentStatusScreenState extends State<PaymentStatusScreen> {
   _loadResources() async {
     var provider = Provider.of<PaymentModel>(context, listen: false);
     provider.getChargeStatusOfTheUser();
+    UserProvider userProvider = UserProvider();
+    var response = await userProvider.getMyProfile();
+
+    //check if successfuly got user information.
+    if (response == false) {
+      nameFamily = "";
+    } else {
+      nameFamily = "${response.name} ${response.family}";
+    }
   }
 
   @override
@@ -45,7 +51,7 @@ class _PaymentStatusScreenState extends State<PaymentStatusScreen> {
                   (index) {
                     return PaymentStatusTable(
                       year: "1444",
-                      name: "TESTNAME",
+                      name: nameFamily,
                       chargeStatusOfTheUser: model.chargeStatusOfTheUser[index],
                     );
                   },
