@@ -13,9 +13,9 @@ class AdminPanelModel extends ChangeNotifier {
   }
 
   List<User> _users = [];
-  final List<User> _bluck1Users = [];
-  final List<User> _bluck2Users = [];
-  final List<User> _bluck3Users = [];
+  List<User> _bluck1Users = [];
+  List<User> _bluck2Users = [];
+  List<User> _bluck3Users = [];
   List<User> get bluck1Users {
     return _bluck1Users;
   }
@@ -125,6 +125,10 @@ class AdminPanelModel extends ChangeNotifier {
   }
 
   filterUsersByBluck() {
+    //TODO: I SHOULD EDIT THE FUNCTION. BUG...
+    _bluck1Users = [];
+    _bluck2Users = [];
+    _bluck3Users = [];
     for (var user in users) {
       if (user.bluck == 1) {
         _bluck1Users.add(user);

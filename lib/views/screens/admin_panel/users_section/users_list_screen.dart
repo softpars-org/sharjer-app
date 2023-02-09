@@ -17,8 +17,8 @@ class UsersListScreen extends StatefulWidget {
 
 class _UsersListScreenState extends State<UsersListScreen> {
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
     Future.delayed(Duration.zero, () => _loadResources());
   }
 
@@ -60,10 +60,13 @@ class _UsersListScreenState extends State<UsersListScreen> {
                 ? const Center(child: CircularProgressIndicator())
                 : TabBarView(
                     children: [
-                      ListView.builder(
-                        itemCount: model.getUsersLengthOfBluck(1),
-                        itemBuilder: (context, index) => UserCard(
-                          user: model.bluck1Users[index],
+                      RefreshIndicator(
+                        onRefresh: () => _loadResources(),
+                        child: ListView.builder(
+                          itemCount: model.getUsersLengthOfBluck(1),
+                          itemBuilder: (context, index) => UserCard(
+                            user: model.bluck1Users[index],
+                          ),
                         ),
                       ),
                       ListView.builder(

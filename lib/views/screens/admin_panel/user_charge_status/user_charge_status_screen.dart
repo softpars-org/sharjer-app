@@ -36,25 +36,34 @@ class _UserChargeStatusScreenState extends State<UserChargeStatusScreen> {
       body: RefreshIndicator(
         onRefresh: () => _loadResources(),
         child: Consumer<PaymentModel>(builder: (context, model, child) {
-          return ListView(
-            children: model.chargeStatusOfAMember.isEmpty
-                ? [
-                    Center(
-                      child: Text(
-                          "${widget.user.name} ${widget.user.family} شارژی را پرداخت نکرده است."),
-                    ),
-                  ]
-                : List.generate(
-                    model.chargeStatusOfAMember.length,
-                    (index) {
-                      return PaymentStatusTable(
-                        year: "1444",
-                        name: "${widget.user.name} ${widget.user.family}",
-                        chargeStatusOfTheUser:
-                            model.chargeStatusOfAMember[index],
-                      );
-                    },
-                  ),
+          return SingleChildScrollView(
+            child: Scrollbar(
+              child: Column(
+                mainAxisAlignment: model.chargeStatusOfAMember.isEmpty
+                    ? MainAxisAlignment.center
+                    : MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: model.chargeStatusOfAMember.isEmpty
+                    ? [
+                        Center(
+                          child: Text(
+                            "${widget.user.name} ${widget.user.family} شارژی را پرداخت نکرده است.",
+                          ),
+                        ),
+                      ]
+                    : List.generate(
+                        model.chargeStatusOfAMember.length,
+                        (index) {
+                          return PaymentStatusTable(
+                            year: "1444",
+                            name: "${widget.user.name} ${widget.user.family}",
+                            chargeStatusOfTheUser:
+                                model.chargeStatusOfAMember[index],
+                          );
+                        },
+                      ),
+              ),
+            ),
           );
         }),
       ),
