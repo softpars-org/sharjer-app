@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
@@ -27,6 +26,14 @@ class AppService {
       screen: page,
       withNavBar: true,
     );
+  }
+
+  back({BuildContext? optionalContext}) {
+    if (optionalContext == null) {
+      Navigator.pop(context);
+      return;
+    }
+    Navigator.pop(optionalContext);
   }
 
   navigate(Widget page) {
@@ -85,5 +92,43 @@ class AppService {
     box.put("username", "");
     box.put("password", "");
     box.put("is_loggined", false);
+  }
+
+  throwDialog(
+    BuildContext context,
+    String question, {
+    String okMsg = "",
+    String errMsg = "",
+    Function()? handleSuccess,
+    Function()? handleError,
+  }) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            title: Text(
+              question,
+              textDirection: TextDirection.rtl,
+            ),
+            content: Row(
+              children: [
+                OutlinedButton(
+                  onPressed: handleSuccess,
+                  child: Text(okMsg),
+                ),
+                OutlinedButton(
+                  onPressed: () {
+                    handleError!();
+                    back(optionalContext: context); //close dialog.
+                  },
+                  child: Text(errMsg),
+                ),
+              ],
+            ),
+          );
+        });
   }
 }
