@@ -94,6 +94,23 @@ class UserCard extends StatelessWidget {
   User user;
   UserCard({super.key, required this.user});
 
+  String _generateHumanizedPermission(String userType) {
+    switch (userType) {
+      case "no":
+        return "عادی";
+      case "bluck1":
+        return "مدیر بلوک۱";
+      case "bluck2":
+        return "مدیر بلوک۲";
+      case "bluck3":
+        return "مدیر بلوک۳";
+      case "full":
+        return "مدیر مجتمع";
+      default:
+        return "";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -177,6 +194,90 @@ class ThreeDots extends StatelessWidget {
         Icons.delete,
       ],
     };
+  void _handlePopupMenu(choice) {
+    AppService appService = AppService(context);
+    List<dynamic> choices = popupItems["strings"];
+    switch (choice) {
+      case "وضعیت شارژ":
+        appService.navigate(UserChargeStatusScreen(user: widget.user));
+        break;
+      case "اضافه کردن شارژ":
+        appService
+            .navigate(AddChargeToUserScreen(username: widget.user.username));
+        break;
+      case "حذف شارژ":
+        appService.navigate(
+            RemoveChargeFromUserScreen(username: widget.user.username));
+        break;
+      case "تبدیل به کاربر عادی":
+        AdminProvider adminProvider = AdminProvider();
+        appService.throwDialog(
+          context,
+          "آیا با تبدیل کاربر به کاربر عادی موافقید؟",
+          okMsg: "بله",
+          errMsg: "خیر",
+          handleSuccess: () async {
+            await adminProvider.changeUserPrivilege(
+              widget.user.username,
+              "no", //means no permission
+            );
+          },
+          handleError: () {},
+        );
+        break;
+      case "تبدیل به مدیر بلوک۱":
+        AdminProvider adminProvider = AdminProvider();
+        appService.throwDialog(
+          context,
+          "آیا با تبدیل کاربر به مدیر بلوک۱ موافقید؟",
+          okMsg: "بله",
+          errMsg: "خیر",
+          handleSuccess: () async {
+            await adminProvider.changeUserPrivilege(
+              widget.user.username,
+              "bluck1",
+            );
+          },
+          handleError: () {},
+        );
+        break;
+      case "تبدیل به مدیر بلوک۲":
+        AdminProvider adminProvider = AdminProvider();
+        appService.throwDialog(
+          context,
+          "آیا با تبدیل کاربر به مدیر بلوک۲ موافقید؟",
+          okMsg: "بله",
+          errMsg: "خیر",
+          handleSuccess: () async {
+            await adminProvider.changeUserPrivilege(
+              widget.user.username,
+              "bluck2",
+            );
+          },
+          handleError: () {},
+        );
+        break;
+      case "تبدیل به مدیر بلوک۳":
+        AdminProvider adminProvider = AdminProvider();
+        appService.throwDialog(
+          context,
+          "آیا با تبدیل کاربر به مدیر بلوک۳ موافقید؟",
+          okMsg: "بله",
+          errMsg: "خیر",
+          handleSuccess: () async {
+            await adminProvider.changeUserPrivilege(
+              widget.user.username,
+              "bluck3",
+            );
+          },
+          handleError: () {},
+        );
+        break;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return InkWell(
       onTap: () {},
       borderRadius: BorderRadius.circular(8),
