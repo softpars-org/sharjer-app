@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/retry.dart';
 import 'package:mojtama/models/user_model.dart';
 import 'package:mojtama/services/admin_api_service.dart';
 import 'package:mojtama/views/widgets/textfield_widget.dart';
@@ -13,9 +14,9 @@ class AdminPanelModel extends ChangeNotifier {
   }
 
   List<User> _users = [];
-  final List<User> _bluck1Users = [];
-  final List<User> _bluck2Users = [];
-  final List<User> _bluck3Users = [];
+  List<User> _bluck1Users = [];
+  List<User> _bluck2Users = [];
+  List<User> _bluck3Users = [];
   List<User> get bluck1Users {
     return _bluck1Users;
   }
@@ -125,7 +126,11 @@ class AdminPanelModel extends ChangeNotifier {
   }
 
   filterUsersByBluck() {
-    for (var user in users) {
+    //TODO: I SHOULD EDIT THE FUNCTION. BUG...
+    _bluck1Users = [];
+    _bluck2Users = [];
+    _bluck3Users = [];
+    for (var user in _users) {
       if (user.bluck == 1) {
         _bluck1Users.add(user);
       } else if (user.bluck == 2) {
@@ -135,5 +140,17 @@ class AdminPanelModel extends ChangeNotifier {
       }
     }
     notifyListeners();
+  }
+
+  updateUserType(User selectedUser, String newUserType) {
+    int i = 0;
+    for (User user in _users) {
+      if (selectedUser == user) {
+        _users[i].userType = newUserType;
+        filterUsersByBluck();
+        break;
+      }
+      i++;
+    }
   }
 }

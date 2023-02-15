@@ -129,6 +129,24 @@ class AdminProvider {
     return true;
   }
 
+  changeUserPrivilege(String username, String privilege) async {
+    var url =
+        Uri.parse("$host/adminpanel/change_privilege/$username/$privilege");
+    Map<String, dynamic> payload = {
+      "username": _box.get("username"),
+      "password": _box.get("password")
+    };
+    http.Response request;
+    request = await http.post(url, body: payload);
+    if (request.statusCode == 200) {
+      return true;
+    } else if (request.statusCode == 401) {
+      return -1;
+    } else {
+      return false;
+    }
+  }
+
   getMonthsPricesInfo() async {
     var url = Uri.parse("$host/adminpanel/months_price");
     http.Response request;
@@ -140,10 +158,14 @@ class AdminProvider {
   getChargeStatusOfAMember(String username) async {
     var url = Uri.parse("$host/adminpanel/get_charge_status_of/$username");
     http.Response request;
-
+    Map<String, dynamic> payload = {
+      "username": _box.get("username"),
+      "password": _box.get("password")
+    };
     request = await http.post(url);
-    List<dynamic> response = jsonDecode(request.body);
+
     if (request.statusCode == 200) {
+      List<dynamic> response = jsonDecode(request.body);
       List<ChargeRowStatus> charges = [];
       for (var element in response) {
         ChargeRowStatus chargeRow = ChargeRowStatus.fromJson(element);
@@ -151,6 +173,7 @@ class AdminProvider {
       }
       return charges;
     } else if (request.statusCode == 401) {
+      return <ChargeRowStatus>[];
     } else {}
   }
 }
