@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
@@ -105,28 +107,34 @@ class AppService {
     showDialog(
         context: context,
         builder: (context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            title: Text(
-              question,
-              textDirection: TextDirection.rtl,
-            ),
-            content: Row(
-              children: [
-                OutlinedButton(
-                  onPressed: handleSuccess,
-                  child: Text(okMsg),
-                ),
-                OutlinedButton(
-                  onPressed: () {
-                    handleError!();
-                    back(optionalContext: context); //close dialog.
-                  },
-                  child: Text(errMsg),
-                ),
-              ],
+          return BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+            child: AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              title: Text(
+                question,
+                textDirection: TextDirection.rtl,
+              ),
+              content: Row(
+                children: [
+                  OutlinedButton(
+                    onPressed: () {
+                      handleSuccess!();
+                      back(optionalContext: context);
+                    },
+                    child: Text(okMsg),
+                  ),
+                  OutlinedButton(
+                    onPressed: () {
+                      handleError!();
+                      back(optionalContext: context); //close dialog.
+                    },
+                    child: Text(errMsg),
+                  ),
+                ],
+              ),
             ),
           );
         });
