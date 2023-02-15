@@ -41,7 +41,8 @@ class _YearDropDownWidgetState extends State<YearDropDownWidget> {
           ),
         ),
         Container(
-          child: Consumer<YearModel>(builder: (contex, model, child) {
+          child: Consumer<YearModel>(builder: (context, model, child) {
+            print(model.years);
             return DropdownButton(
               underline: Container(
                 height: 3,
