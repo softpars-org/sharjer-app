@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mojtama/models/charge_status_model.dart';
 
 class MonthsModel extends ChangeNotifier {
   List<bool> checkMonths = List<bool>.generate(12, (index) => false);
   Map<int, String> months = <int, String>{};
-  Map<String, int> monthsPricesDetails = {};
+  // Map<String, dynamic> monthsPricesDetails = {};
+  List<ChargeRowStatus> yearMonthsPricesDetails = [];
   List<String> monthsStrings = [
     "محرم",
     "صفر",
@@ -26,9 +28,17 @@ class MonthsModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  changeMonthsPricesValue(Map<String, int> newMonthsPricesValue) {
-    monthsPricesDetails = newMonthsPricesValue;
-    notifyListeners();
+  setMonthsPricesValue(Map<String, dynamic> newYearMonthsPricesValue) {
+    //details contains: month, price
+    yearMonthsPricesDetails = [];
+    newYearMonthsPricesValue.forEach((year, details) {
+      Map<String, dynamic> tempMap = {year: details};
+
+      yearMonthsPricesDetails.add(
+        ChargeRowStatus.fromJson(tempMap),
+      );
+      notifyListeners();
+    });
   }
 
   add(month) {
