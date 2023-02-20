@@ -17,12 +17,16 @@ class _ShowMonthPricesScreenState extends State<ShowMonthPricesScreen> {
   late AdminProvider adminProvider;
   late YearModel yearProvider;
   late MonthsModel monthsProvider;
+  List<String> years = [];
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
     adminProvider = AdminProvider();
     yearProvider = Provider.of<YearModel>(context, listen: false);
     monthsProvider = Provider.of<MonthsModel>(context, listen: false);
+    Map<String, dynamic> response = await adminProvider.getMonthsPricesInfo();
+    print(response);
+    monthsProvider.setMonthsPricesValue(response);
   }
 
   @override
@@ -31,17 +35,23 @@ class _ShowMonthPricesScreenState extends State<ShowMonthPricesScreen> {
       appBar: AppBar(
         title: const Text("لیست مبالغ شارژ"),
       ),
-      body: ListView.builder(
-        //TODO: it has to be completed.
-        itemBuilder: (context, index) => PaymentStatusTable(
-          year: 'year',
-          name: "TESTNAME",
-          chargeStatusOfTheUser: ChargeRowStatus(
-            '1444',
-            monthsProvider.monthsPricesDetails.keys.toList(),
-            monthsProvider.monthsPricesDetails.values.toList().cast<int>(),
-          ),
-        ),
+      body: Consumer2<YearModel, MonthsModel>(
+        builder: (context, yearModel, monthModel, child) {
+          return ListView.builder(
+            itemCount: monthModel.yearMonthsPricesDetails.length,
+            //TODO: it has to be completed.
+            itemBuilder: (context, index) {
+              ChargeRowStatus chargeMonthPrice =
+                  monthModel.yearMonthsPricesDetails[index];
+
+              return PaymentStatusTable(
+                year: 'year',
+                name: "‌",
+                chargeStatusOfTheUser: chargeMonthPrice,
+              );
+            },
+          );
+        },
       ),
     );
   }
