@@ -114,9 +114,9 @@ class AdminProvider {
     return (request.statusCode == 200);
   }
 
-  changeMonthsPriceOfYear(String year, Map<String, int> months) async {
+  changeMonthsPriceOfYear(String year, Map<String, int> monthsPrices) async {
     var url = Uri.parse("$host/adminpanel/change_months_price/");
-    String jsonMonths = jsonEncode(months);
+    String jsonMonths = jsonEncode(monthsPrices);
     Map<String, dynamic> payload = {
       "username": _box.get("username"),
       "password": _box.get("password"),
