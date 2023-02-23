@@ -55,7 +55,7 @@ class _CustomPayPageState extends State<CustomPayPage> {
                   .getCustomChargeUrl(jsonYearMonthsChargeInfo);
               if (response == "price shouldn't be 0 Rial") {
                 appService.snackBar(
-                    "شما شارژهای ماه‌هایی که انتخاب کرده‌اید را پرداخت کرده‌اید.");
+                    "شما شارژهای ماه‌هایی که انتخاب کرده‌اید را پرداخت کرده‌ و یا مبلغ صفر ریال است.");
               } else if (response == "try changing your months") {
                 appService.snackBar("ماه‌های شارژ خود را تغییر دهید.");
               } else {
@@ -122,7 +122,8 @@ class CartShower extends StatelessWidget {
                 ),
                 Expanded(
                   flex: 5,
-                  child: Text("سال: ${model.yearMonthsDetails[index][0]}\n" "ماه‌ها: ${model.yearMonthsDetails[index][1].join('، ')}"),
+                  child: Text("سال: ${model.yearMonthsDetails[index][0]}\n"
+                      "ماه‌ها: ${model.yearMonthsDetails[index][1].join('، ')}"),
                 ),
               ],
             ),
