@@ -62,6 +62,30 @@ class CarPlateShower extends StatelessWidget {
                 ),
               ],
             ),
+            Padding(
+              padding: const EdgeInsets.only(right: 5),
+              child: Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.zero,
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    color: Colors.green,
+                    child: SizedBox(height: 5),
+                  ),
+                  Container(
+                    margin: EdgeInsets.zero,
+                    color: Colors.white,
+                    child: SizedBox(height: 5),
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    margin: EdgeInsets.zero,
+                    color: Colors.red,
+                    child: SizedBox(height: 5),
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),
