@@ -5,6 +5,7 @@ import 'package:mojtama/models/charge_status_model.dart';
 import 'package:mojtama/models/rule_model.dart';
 import 'package:mojtama/models/user_model.dart';
 import 'package:mojtama/services/encryption_service.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class UserProvider {
   String? host;
@@ -101,8 +102,6 @@ class UserProvider {
   }
 
   checkApplicationVersion() async {
-    Future.delayed(
-        const Duration(seconds: 2), () => print("Checking version..."));
     return {
       "status": "not updated",
       "version": "1.1.1",
@@ -183,5 +182,14 @@ class UserProvider {
     }
     print(request.body);
     return false;
+  }
+
+  appVersionCalculator() async {
+    PackageInfo currentAppPackage = await PackageInfo.fromPlatform();
+    String currentAppVersion = currentAppPackage.version;
+    var url = Uri.parse("$host/user/app_version/$currentAppVersion");
+    http.Response request;
+    request = await http.get(url);
+    return jsonDecode(request.body);
   }
 }
