@@ -58,6 +58,21 @@ class AdminProvider {
     }
   }
 
+  addOrUpdateMojtamaFinancialStatus(String json) async {
+    var url = Uri.parse("$host/adminpanel/add_mojtama_financial_status/");
+    Map<String, dynamic> payload = {
+      "username": _box.get("username"),
+      "password": _box.get("password"),
+      "financial_json": json,
+    };
+    http.Response request = await http.post(url, body: payload);
+    if (request.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   getUsers() async {
     var url = Uri.parse("$host/adminpanel/users");
     http.Response request;

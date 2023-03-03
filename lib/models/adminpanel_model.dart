@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/retry.dart';
 import 'package:mojtama/models/user_model.dart';
@@ -86,16 +88,15 @@ class AdminPanelModel extends ChangeNotifier {
     }
   }
 
-  generateJsonFromFields() {
+  String generateJsonFromFields() {
     List json = [];
     for (Map textControllersMap in _textEditingControllersMapList) {
       Map manipulatedMap = {
-        "title": textControllersMap["title"].text,
-        "price": textControllersMap["price"].text,
+        textControllersMap["title"].text: textControllersMap["price"].text,
       };
       json.add(manipulatedMap);
     }
-    return json;
+    return jsonEncode(json);
   }
 
   getUsers() async {

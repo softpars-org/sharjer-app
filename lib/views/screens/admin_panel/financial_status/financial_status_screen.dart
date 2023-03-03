@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mojtama/models/adminpanel_model.dart';
+import 'package:mojtama/services/admin_api_service.dart';
 import 'package:mojtama/services/app_service.dart';
 import 'package:provider/provider.dart';
 
@@ -45,9 +46,18 @@ class FinancialAdminStatusScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          var test = providerModel.generateJsonFromFields();
-          print(test);
+        onPressed: () async {
+          AdminProvider adminProvider = AdminProvider();
+          AppService appService = AppService(context);
+          String test = providerModel.generateJsonFromFields();
+
+          bool isRequestSent =
+              await adminProvider.addOrUpdateMojtamaFinancialStatus(test);
+          if (isRequestSent) {
+            appService.snackBar("وضعیت مالی بروزرسانی شد!");
+          } else {
+            appService.snackBar("مشکلی در بروزرسانی به وجود آمد!");
+          }
         },
         tooltip: "ثبت مبالغ",
         child: const Icon(Icons.save_outlined),
