@@ -42,7 +42,6 @@ class _MojtamaFinanceScreenState extends State<MojtamaFinanceScreen> {
                 return ExpansionPanelList(
                   expansionCallback: (index, isExpanded) {
                     model.changeIsOpen(index, !isExpanded);
-                    print(model.mojtamaRule.createdOn);
                   },
                   children: [
                     ExpansionPanel(
@@ -98,9 +97,16 @@ class _MojtamaFinanceScreenState extends State<MojtamaFinanceScreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: model.isLoading
                             ? const CircularProgressIndicator()
-                            : CustomTable(
-                                decodedJson:
-                                    jsonDecode(model.financialStatusText),
+                            : Column(
+                                children: List.generate(
+                                  jsonDecode(model.financialStatusText).length,
+                                  (index) {
+                                    var financialJson =
+                                        jsonDecode(model.financialStatusText);
+                                    return CustomTable(
+                                        decodedJson: financialJson[index]);
+                                  },
+                                ),
                               ),
                       ),
                       isExpanded: model.isOpen[1],
