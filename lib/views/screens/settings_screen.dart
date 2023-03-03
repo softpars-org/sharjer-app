@@ -105,7 +105,7 @@ class UpdateApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: userProvider.checkApplicationVersion(),
+      future: userProvider.appVersionCalculator(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.data["status"] == "updated") {
@@ -118,10 +118,10 @@ class UpdateApp extends StatelessWidget {
           } else if (snapshot.data["status"] == "not updated") {
             return Container(
               child: TextButton(
-                child: Text("${"نسخه‌ی اپلیکیشن شما: " +
-                    snapshot.data["version"]}. (برای دانلود، ضربه بزنید)"),
+                child: Text(
+                    "${"نسخه‌ی اپلیکیشن شما: " + snapshot.data["given_version"]}. (برای دانلود، ضربه بزنید)"),
                 onPressed: () {
-                  launchUrlString(snapshot.data["link"],
+                  launchUrlString(snapshot.data["app_link"],
                       mode: LaunchMode.externalApplication);
                 },
               ),
