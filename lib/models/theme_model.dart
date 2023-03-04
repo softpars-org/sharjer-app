@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
@@ -90,7 +89,7 @@ class ThemeModel extends ChangeNotifier {
       box.put("isDarkTheme", !isDarkMode);
       currentTheme = lightTheme;
       SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        systemNavigationBarColor: const Color(0xffece5dd),
+        systemNavigationBarColor: Colors.white,
         systemNavigationBarIconBrightness: Brightness.dark,
         statusBarColor: lightTheme.primaryColor,
         statusBarBrightness: Brightness.dark,

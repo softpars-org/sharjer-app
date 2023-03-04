@@ -29,7 +29,8 @@ void main() async {
           isDarkTheme ? const Color(0xff282a36) : const Color(0xffece5dd),
       systemNavigationBarIconBrightness:
           isDarkTheme ? Brightness.light : Brightness.dark,
-      statusBarColor: isDarkTheme ? const Color(0xff282a36) : const Color(0xff075e54),
+      statusBarColor:
+          isDarkTheme ? const Color(0xff282a36) : const Color(0xff075e54),
       statusBarBrightness: isDarkTheme ? Brightness.light : Brightness.dark,
     ),
   );
@@ -66,7 +67,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         scrollBehavior: CustomScrollBehaviour(),
         theme: model.currentTheme,
-        initialRoute: Hive.box("auth").get("is_loggined") ? "/home" : "/login",
+        initialRoute:
+            Hive.box("auth").get("is_loggined") ?? false ? "/home" : "/login",
         routes: {
           "/home": (context) => Directionality(
                 textDirection: TextDirection.rtl,
