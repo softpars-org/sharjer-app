@@ -6,16 +6,27 @@ import 'package:mojtama/services/app_service.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final PersistentTabController _controller = PersistentTabController();
+  @override
+  void initState() {
+    super.initState();
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      AppService(context).snackBar(message.notification!.body!);
+    }); //it should be fixed.
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer2<NavBarModel, ThemeModel>(
         builder: (context, navModel, themeModel, child) {
-      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        AppService(context).snackBar(message.notification!.body!);
-      });
       navModel.context = context;
       return PersistentTabView(
         context,

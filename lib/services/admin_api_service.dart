@@ -191,4 +191,16 @@ class AdminProvider {
       return <ChargeRowStatus>[];
     } else {}
   }
+
+  sendNotif(String title, String body) async {
+    var url = Uri.parse("$host/adminpanel/send_notif/$title");
+    Map<String, String> payload = {
+      "username": _box.get("username"),
+      "password": _box.get("password"),
+      "body": body,
+    };
+    http.Response request;
+    request = await http.post(url, body: payload);
+    return (request.statusCode == 200);
+  }
 }

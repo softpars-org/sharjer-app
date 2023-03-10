@@ -6,6 +6,7 @@ import 'package:mojtama/views/screens/admin_panel/change_month/change_price_scre
 import 'package:mojtama/views/screens/admin_panel/change_month/change_whole_months_screen.dart';
 import 'package:mojtama/views/screens/admin_panel/financial_status/financial_status_screen.dart';
 import 'package:mojtama/views/screens/admin_panel/mojtama_rules/mojtama_rules_screen.dart';
+import 'package:mojtama/views/screens/admin_panel/notifications/send_notification_screen.dart';
 import 'package:mojtama/views/screens/admin_panel/users_section/users_list_screen.dart';
 import 'package:mojtama/views/widgets/button_widget.dart';
 import 'package:provider/provider.dart';
@@ -56,6 +57,16 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
             : null,
         "title": "تغییر میزان شارژ",
         "icon": Icons.change_circle_outlined,
+      },
+      {
+        "onPressed": isFullAdmin
+            ? () {
+                AppService service = AppService(context);
+                service.navigate(SendNotificationScreen());
+              }
+            : null,
+        "title": "ارسال اعلان",
+        "icon": Icons.notifications,
       },
       {
         "onPressed": isFullAdmin
