@@ -38,7 +38,8 @@ class ThemeModel extends ChangeNotifier {
         const Color(0xff075e54),
       ),
     ),
-    backgroundColor: const Color(0xffece5dd),
+    scaffoldBackgroundColor: Colors.white,
+    backgroundColor: Colors.white,
     iconTheme: const IconThemeData(color: Colors.white),
     floatingActionButtonTheme:
         const FloatingActionButtonThemeData(foregroundColor: Colors.white),
