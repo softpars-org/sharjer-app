@@ -68,20 +68,20 @@ class CarPlateShower extends StatelessWidget {
                 children: [
                   Container(
                     margin: EdgeInsets.zero,
-                    padding: EdgeInsets.only(left: 10, right: 10),
+                    padding: EdgeInsets.only(left: 5, right: 5),
                     color: Colors.green,
-                    child: SizedBox(height: 5),
+                    child: SizedBox(height: 2),
                   ),
                   Container(
                     margin: EdgeInsets.zero,
                     color: Colors.white,
-                    child: SizedBox(height: 5),
+                    child: SizedBox(height: 2),
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 10, right: 10),
+                    padding: EdgeInsets.only(left: 5, right: 5),
                     margin: EdgeInsets.zero,
                     color: Colors.red,
-                    child: SizedBox(height: 5),
+                    child: SizedBox(height: 2),
                   ),
                 ],
               ),
