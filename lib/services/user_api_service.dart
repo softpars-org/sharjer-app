@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:mojtama/models/charge_status_model.dart';
@@ -26,12 +27,22 @@ class UserProvider {
     try {
       request = await http.post(url, body: payload);
       if (request.statusCode == 200) {
+        //Set user's information
         _box.put("is_loggined", true);
         _box.put("username", username);
         _box.put(
           "password",
           password,
         );
+        //Register for firebase token.
+        String? fcmToken = await FirebaseMessaging.instance.getToken();
+        UserProvider userProvider = UserProvider();
+        if (fcmToken != null) {
+          await userProvider.updateFirebaseToken(fcmToken);
+        }
+        FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) async {
+          await userProvider.updateFirebaseToken(fcmToken);
+        });
         return true;
       }
     } catch (e) {
@@ -70,6 +81,15 @@ class UserProvider {
         "password",
         userInfo.password,
       );
+      //Register for firebase token.
+      String? fcmToken = await FirebaseMessaging.instance.getToken();
+      UserProvider userProvider = UserProvider();
+      if (fcmToken != null) {
+        await userProvider.updateFirebaseToken(fcmToken);
+      }
+      FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) async {
+        await userProvider.updateFirebaseToken(fcmToken);
+      });
       return 1; //everything works fine!
     } else if (response["message"] == "user is in the database") {
       return -1; //means user exists
@@ -191,5 +211,18 @@ class UserProvider {
     http.Response request;
     request = await http.get(url);
     return jsonDecode(request.body);
+  }
+
+  updateFirebaseToken(String fcmToken) async {
+    var url = Uri.parse("$host/user/update_firebase_token/");
+    Map<String, dynamic> payload = {
+      "username": _box.get("username"),
+      "password": _box.get("password"),
+      "new_token": fcmToken,
+    };
+    print(payload);
+    http.Response request = await http.post(url, body: payload);
+    print("here's the response: ${request.body}");
+    return (request.statusCode == 200);
   }
 }

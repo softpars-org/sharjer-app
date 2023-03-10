@@ -1,6 +1,8 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:mojtama/models/navbar_model.dart';
 import 'package:mojtama/models/theme_model.dart';
+import 'package:mojtama/services/app_service.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
 
@@ -11,6 +13,9 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer2<NavBarModel, ThemeModel>(
         builder: (context, navModel, themeModel, child) {
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+        AppService(context).snackBar(message.notification!.body!);
+      });
       navModel.context = context;
       return PersistentTabView(
         context,
