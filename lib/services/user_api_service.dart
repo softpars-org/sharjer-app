@@ -1,16 +1,18 @@
 import 'dart:convert';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:mojtama/models/charge_status_model.dart';
 import 'package:mojtama/models/rule_model.dart';
 import 'package:mojtama/models/user_model.dart';
 import 'package:mojtama/services/encryption_service.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class UserProvider {
   String? host;
   final _box = Hive.box("auth");
   UserProvider() {
-    host = "http://localhost/mojtama-server-mvc";
+    host = "http://192.168.42.62/mojtama-server-mvc";
   }
 
   login(String username, String password) async {
@@ -25,12 +27,22 @@ class UserProvider {
     try {
       request = await http.post(url, body: payload);
       if (request.statusCode == 200) {
+        //Set user's information
         _box.put("is_loggined", true);
         _box.put("username", username);
         _box.put(
           "password",
           password,
         );
+        //Register for firebase token.
+        String? fcmToken = await FirebaseMessaging.instance.getToken();
+        UserProvider userProvider = UserProvider();
+        if (fcmToken != null) {
+          await userProvider.updateFirebaseToken(fcmToken);
+        }
+        FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) async {
+          await userProvider.updateFirebaseToken(fcmToken);
+        });
         return true;
       }
     } catch (e) {
@@ -69,6 +81,15 @@ class UserProvider {
         "password",
         userInfo.password,
       );
+      //Register for firebase token.
+      String? fcmToken = await FirebaseMessaging.instance.getToken();
+      UserProvider userProvider = UserProvider();
+      if (fcmToken != null) {
+        await userProvider.updateFirebaseToken(fcmToken);
+      }
+      FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) async {
+        await userProvider.updateFirebaseToken(fcmToken);
+      });
       return 1; //everything works fine!
     } else if (response["message"] == "user is in the database") {
       return -1; //means user exists
@@ -101,8 +122,6 @@ class UserProvider {
   }
 
   checkApplicationVersion() async {
-    Future.delayed(
-        const Duration(seconds: 2), () => print("Checking version..."));
     return {
       "status": "not updated",
       "version": "1.1.1",
@@ -183,5 +202,27 @@ class UserProvider {
     }
     print(request.body);
     return false;
+  }
+
+  appVersionCalculator() async {
+    PackageInfo currentAppPackage = await PackageInfo.fromPlatform();
+    String currentAppVersion = currentAppPackage.version;
+    var url = Uri.parse("$host/user/app_version/$currentAppVersion");
+    http.Response request;
+    request = await http.get(url);
+    return jsonDecode(request.body);
+  }
+
+  updateFirebaseToken(String fcmToken) async {
+    var url = Uri.parse("$host/user/update_firebase_token/");
+    Map<String, dynamic> payload = {
+      "username": _box.get("username"),
+      "password": _box.get("password"),
+      "new_token": fcmToken,
+    };
+    print(payload);
+    http.Response request = await http.post(url, body: payload);
+    print("here's the response: ${request.body}");
+    return (request.statusCode == 200);
   }
 }

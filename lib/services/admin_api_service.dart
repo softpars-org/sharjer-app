@@ -9,7 +9,7 @@ class AdminProvider {
   String? host;
   final _box = Hive.box("auth");
   AdminProvider() {
-    host = "http://localhost/mojtama-server-mvc/";
+    host = "http://192.168.42.62/mojtama-server-mvc/";
   }
 
   updateMonth(month) async {
@@ -51,6 +51,21 @@ class AdminProvider {
     };
     http.Response request;
     request = await http.post(url, body: payload);
+    if (request.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  addOrUpdateMojtamaFinancialStatus(String json) async {
+    var url = Uri.parse("$host/adminpanel/add_mojtama_financial_status/");
+    Map<String, dynamic> payload = {
+      "username": _box.get("username"),
+      "password": _box.get("password"),
+      "financial_json": json,
+    };
+    http.Response request = await http.post(url, body: payload);
     if (request.statusCode == 200) {
       return true;
     } else {

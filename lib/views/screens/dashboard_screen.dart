@@ -42,7 +42,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         child: ListView(
           children: [
             Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(7),
               child: Center(
                 child: Consumer<PaymentModel>(
                   builder: (context, model, child) {
@@ -51,7 +51,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).primaryColor,
-                        fontSize: 20,
+                        fontSize: 16,
                       ),
                     );
                   },
@@ -59,7 +59,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height / 8,
+              height: MediaQuery.of(context).size.height / 15,
             ),
             Consumer<PermissionModel>(builder: (context, model, child) {
               if (model.userPermissionType != "no") {

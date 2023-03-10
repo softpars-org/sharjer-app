@@ -34,7 +34,7 @@ class _CustomPayPageState extends State<CustomPayPage> {
           );
         },
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: SpeedDial(
         direction: SpeedDialDirection.up,
         animatedIcon: AnimatedIcons.menu_close,
@@ -71,7 +71,7 @@ class _CustomPayPageState extends State<CustomPayPage> {
           ),
           SpeedDialChild(
             backgroundColor: Theme.of(context).primaryColor,
-            label: "اضافه کردن شارژ معوقه",
+            label: "اضافه کردن",
             onTap: () {
               appService.navigate(const AddMonthsPage());
             },

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
@@ -39,7 +38,8 @@ class ThemeModel extends ChangeNotifier {
         const Color(0xff075e54),
       ),
     ),
-    backgroundColor: const Color(0xffece5dd),
+    scaffoldBackgroundColor: Colors.white,
+    backgroundColor: Colors.white,
     iconTheme: const IconThemeData(color: Colors.white),
     floatingActionButtonTheme:
         const FloatingActionButtonThemeData(foregroundColor: Colors.white),
@@ -90,7 +90,7 @@ class ThemeModel extends ChangeNotifier {
       box.put("isDarkTheme", !isDarkMode);
       currentTheme = lightTheme;
       SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        systemNavigationBarColor: const Color(0xffece5dd),
+        systemNavigationBarColor: Colors.white,
         systemNavigationBarIconBrightness: Brightness.dark,
         statusBarColor: lightTheme.primaryColor,
         statusBarBrightness: Brightness.dark,
