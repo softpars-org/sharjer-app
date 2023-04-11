@@ -68,7 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     vahedTxt.text = user.vahed.toString();
     startdateTxt.text = user.startDate;
     enddateTxt.text = user.endDate!;
-    plakProvider.setCarPlate(user.carPlate);
+    plakProvider.setCarPlate(user.carPlate != "" ? user.carPlate : "|||");
   }
 
   Future<bool> updateProfile() async {
