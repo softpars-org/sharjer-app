@@ -15,11 +15,13 @@ import 'package:mojtama/services/app_service.dart';
 import 'package:mojtama/services/user_api_service.dart';
 import 'package:mojtama/views/screens/auth_screens/login_screen.dart';
 import 'package:mojtama/views/screens/home_screen.dart';
+import 'package:mojtama/views/screens/payment_history_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
+GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
@@ -32,6 +34,17 @@ void main() async {
   UserProvider userProvider = UserProvider();
   FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) async {
     await userProvider.updateFirebaseToken(fcmToken);
+  });
+
+  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    if (message.data["navigation"] == "/history_screen") {
+      Navigator.push(
+        navigatorKey.currentState!.context,
+        MaterialPageRoute(
+          builder: (context) => PaymentHistoryScreen(),
+        ),
+      );
+    }
   });
 
   var box = Hive.box("theme");
@@ -78,6 +91,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ThemeModel>(builder: (context, model, child) {
       return MaterialApp(
+        navigatorKey: navigatorKey,
         title: 'مجتمع آملی',
         debugShowCheckedModeBanner: false,
         scrollBehavior: CustomScrollBehaviour(),
