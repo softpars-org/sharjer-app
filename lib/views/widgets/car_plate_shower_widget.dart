@@ -14,7 +14,7 @@ class CarPlateShower extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).scaffoldBackgroundColor,
         border: Border.all(
           color: Colors.grey.withOpacity(0.5),
         ),
@@ -29,14 +29,18 @@ class CarPlateShower extends StatelessWidget {
                   flex: 1,
                   child: Text(
                     "ایـــران",
-                    style: TextStyle(fontSize: 9),
+                    style: TextStyle(
+                      fontSize: 9,
+                    ),
                   ),
                 ),
                 Expanded(
                   flex: 2,
                   child: Text(
                     carPlateValues[0],
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ],
@@ -50,15 +54,21 @@ class CarPlateShower extends StatelessWidget {
                 ),
                 Text(
                   carPlateValues[1],
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Text(
                   carPlateValues[2],
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Text(
                   carPlateValues[3],
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),
@@ -74,6 +84,7 @@ class CarPlateShower extends StatelessWidget {
                   ),
                   Container(
                     margin: EdgeInsets.zero,
+                    padding: EdgeInsets.only(left: 5, right: 5),
                     color: Colors.white,
                     child: SizedBox(height: 2),
                   ),
