@@ -12,7 +12,7 @@ class UserProvider {
   String? host;
   final _box = Hive.box("auth");
   UserProvider() {
-    host = "http://192.168.42.62/mojtama-server-mvc";
+    host = "https://amolicomplex.ir/mojtama-server-mvc";
   }
 
   login(String username, String password) async {

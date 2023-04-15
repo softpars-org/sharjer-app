@@ -8,7 +8,7 @@ class PaymentProvider {
   String? host;
   final _box = Hive.box("auth");
   PaymentProvider() {
-    host = "http://192.168.42.62/mojtama-server-mvc/";
+    host = "https://amolicomplex.ir/mojtama-server-mvc/";
   }
 
   getCurrentMonth() async {
