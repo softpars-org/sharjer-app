@@ -57,7 +57,8 @@ class _CustomPayPageState extends State<CustomPayPage> {
                 appService.snackBar(
                     "شما شارژهای ماه‌هایی که انتخاب کرده‌اید را پرداخت کرده‌ و یا مبلغ صفر ریال است.");
               } else if (response == "try changing your months") {
-                appService.snackBar("ماه‌های شارژ خود را تغییر دهید.");
+                appService.snackBar(
+                    "قیمت ماه‌های انتخاب شده شما هنوز توسط مدیر در پایگاه داده اضافه نشده است.");
               } else {
                 String url = response;
                 await launchUrlString(url,

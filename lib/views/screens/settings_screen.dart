@@ -111,7 +111,7 @@ class UpdateApp extends StatelessWidget {
           if (snapshot.data["status"] == "updated") {
             return Container(
               child: TextButton(
-                child: const Text("نسخه اپلیکیشن شما بروز می‌باشد."),
+                child: const Text("نسخه اپلیکیشن شما به روز می‌باشد."),
                 onPressed: () {},
               ),
             );
