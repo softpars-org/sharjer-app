@@ -41,10 +41,12 @@ class MojtamaStatusExpansionModel extends ChangeNotifier {
 
   getRules() async {
     toggleLoading();
-    Rule response = await UserProvider().getMojtamaRules();
-    toggleLoading();
-    mojtamaRule = response;
-    notifyListeners();
+    Rule? response = await UserProvider().getMojtamaRules();
+    if (response != null) {
+      toggleLoading();
+      mojtamaRule = response;
+      notifyListeners();
+    }
   }
 
   toggleLoading() {
