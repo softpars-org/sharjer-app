@@ -127,7 +127,6 @@ class AdminPanelModel extends ChangeNotifier {
   }
 
   filterUsersByBluck() {
-    //TODO: I SHOULD EDIT THE FUNCTION. BUG...
     _bluck1Users = [];
     _bluck2Users = [];
     _bluck3Users = [];
@@ -147,8 +146,15 @@ class AdminPanelModel extends ChangeNotifier {
     int i = 0;
     for (User user in _users) {
       if (selectedUser == user) {
-        _users[i].userType = newUserType;
-        filterUsersByBluck();
+        print(newUserType);
+        if (newUserType == "delete") {
+          _users.removeWhere(
+              (goingToBeRemovedUser) => selectedUser == goingToBeRemovedUser);
+          notifyListeners();
+        } else {
+          _users[i].userType = newUserType;
+          filterUsersByBluck();
+        }
         break;
       }
       i++;

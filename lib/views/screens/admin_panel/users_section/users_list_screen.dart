@@ -334,6 +334,35 @@ class _ThreeDotsState extends State<ThreeDots> {
           handleError: () {},
         );
         break;
+      case "حذف کاربر":
+        AdminProvider adminProvider = AdminProvider();
+        appService.throwDialog(
+          context,
+          "آیا با حذف کاربر موافقید؟",
+          okMsg: "بله",
+          errMsg: "خیر",
+          handleSuccess: () async {
+            String permissionType = "delete";
+            var response = await adminProvider.changeUserPrivilege(
+              widget.user.username,
+              permissionType,
+            );
+            switch (response) {
+              case true:
+                appService.snackBar("کاربر حذف شد.");
+                model.updateUserType(widget.user, permissionType);
+                break;
+              case -1:
+                appService.snackBar("شما دسترسی این کار را ندارید.");
+                break;
+              case false:
+                appService.snackBar("مشکلی پیش آمد.");
+                break;
+            }
+          },
+          handleError: () {},
+        );
+        break;
     }
   }
 
