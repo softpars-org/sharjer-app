@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mojtama/models/adminpanel_model.dart';
 import 'package:mojtama/models/user_model.dart';
 import 'package:mojtama/services/admin_api_service.dart';
 import 'package:mojtama/services/app_service.dart';
+import 'package:mojtama/services/encryption_service.dart';
 import 'package:mojtama/views/screens/admin_panel/user_charge_status/user_charge_status_screen.dart';
 import 'package:mojtama/views/screens/admin_panel/users_section/add_charge_to_user_screen.dart';
 import 'package:mojtama/views/screens/admin_panel/users_section/remove_charge_from_user_screen.dart';
@@ -179,6 +181,7 @@ class _ThreeDotsState extends State<ThreeDots> {
       "وضعیت شارژ",
       "اضافه کردن شارژ",
       "حذف شارژ",
+      "مشاهده گذرواژه کاربر",
       "تبدیل به کاربر عادی",
       "تبدیل به مدیر بلوک۱",
       "تبدیل به مدیر بلوک۲",
@@ -189,6 +192,7 @@ class _ThreeDotsState extends State<ThreeDots> {
       Icons.assignment_outlined,
       Icons.add_card_outlined,
       Icons.credit_card_off_outlined,
+      Icons.visibility_rounded,
       Icons.person_outlined,
       Icons.admin_panel_settings_outlined,
       Icons.admin_panel_settings_outlined,
@@ -203,7 +207,7 @@ class _ThreeDotsState extends State<ThreeDots> {
     model = Provider.of(context, listen: false);
   }
 
-  void _handlePopupMenu(choice) {
+  Future<void> _handlePopupMenu(choice) async {
     AppService appService = AppService(context);
     List<dynamic> choices = popupItems["strings"];
     switch (choice) {
@@ -217,6 +221,23 @@ class _ThreeDotsState extends State<ThreeDots> {
       case "حذف شارژ":
         appService.navigate(
             RemoveChargeFromUserScreen(username: widget.user.username));
+        break;
+      case "مشاهده گذرواژه کاربر":
+        String decryptedPassword =
+            await Encryption().decrypt(widget.user.password);
+        // ignore: use_build_context_synchronously
+        appService.throwDialog(
+          context,
+          decryptedPassword,
+          okMsg: "کپی",
+          errMsg: "بازگشت",
+          handleSuccess: () {
+            Clipboard.setData(ClipboardData(
+              text: decryptedPassword,
+            ));
+          },
+          handleError: () {},
+        );
         break;
       case "تبدیل به کاربر عادی":
         AdminProvider adminProvider = AdminProvider();
