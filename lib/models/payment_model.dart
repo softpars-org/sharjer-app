@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:mojtama/models/charge_status_model.dart';
 import 'package:mojtama/models/history_model.dart';

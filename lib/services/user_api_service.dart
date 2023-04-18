@@ -12,7 +12,7 @@ class UserProvider {
   String? host;
   final _box = Hive.box("auth");
   UserProvider() {
-    host = "https://amolicomplex.ir/mojtama-server-mvc";
+    host = "http://amolicomplex.ir/mojtama-server-mvc";
   }
 
   login(String username, String password) async {
@@ -109,16 +109,15 @@ class UserProvider {
     }
   }
 
-  getMojtamaRules() async {
+  Future<Rule?> getMojtamaRules() async {
     var url = Uri.parse("$host/user/get_mojtama_rules");
     http.Response request;
     request = await http.get(url);
     if (request.statusCode == 200) {
       Map<String, dynamic> decodedBody = jsonDecode(request.body);
       return Rule.fromMap(decodedBody["data"][0]);
-    } else {
-      return false;
     }
+    return null;
   }
 
   checkApplicationVersion() async {

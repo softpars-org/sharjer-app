@@ -9,7 +9,7 @@ class AdminProvider {
   String? host;
   final _box = Hive.box("auth");
   AdminProvider() {
-    host = "https://amolicomplex.ir/mojtama-server-mvc/";
+    host = "http://amolicomplex.ir/mojtama-server-mvc/";
   }
 
   updateMonth(month) async {
