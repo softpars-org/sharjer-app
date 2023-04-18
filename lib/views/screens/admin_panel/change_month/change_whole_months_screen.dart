@@ -285,10 +285,11 @@ class _ChangeWholeMonthsScreenState extends State<ChangeWholeMonthsScreen> {
             }
             i++;
           }
-          bool isSent = await adminProvider.changeMonthsPriceOfYear(
+          await adminProvider.changeMonthsPriceOfYear(
             year,
             monthsPricesDetails,
           );
+          AppService(context).snackBar("مبالغ با موفقیت اعمال شدند!");
         },
         child: const Icon(Icons.check_rounded),
       ),

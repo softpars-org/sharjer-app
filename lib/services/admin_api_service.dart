@@ -140,7 +140,6 @@ class AdminProvider {
     };
     http.Response request;
     request = await http.post(url, body: payload);
-    print(request.body);
     return true;
   }
 

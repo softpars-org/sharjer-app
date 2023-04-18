@@ -26,9 +26,6 @@ class _UsersListScreenState extends State<UsersListScreen> {
   _loadResources() async {
     var provider = Provider.of<AdminPanelModel>(context, listen: false);
     List<User> users = await provider.getUsers();
-    users.sort((a, b) => a.bluck.compareTo(1));
-    users.sort((a, b) => a.bluck.compareTo(2));
-    users.sort((a, b) => a.bluck.compareTo(3));
     provider.filterUsersByBluck();
   }
 
