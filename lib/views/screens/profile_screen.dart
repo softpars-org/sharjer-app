@@ -154,6 +154,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       padding: const EdgeInsets.all(8.0),
                       child: CustomTextField(
                         controller: familyMembersTxt,
+                        keyboardType: TextInputType.number,
                         label: "تعداد نفرات",
                         suffixIcon: const Icon(Icons.car_repair),
                         helper: "",
@@ -171,6 +172,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: CustomTextField(
                         label: "شماره همراه",
                         controller: phoneTxt,
+                        keyboardType: TextInputType.phone,
                         validator: profileHelper.checkPhone,
                         suffixIcon: const Icon(Icons.phone),
                         helper: "شماره برای ثبت در ریموت",
@@ -181,6 +183,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CustomTextField(
+                        keyboardType: TextInputType.phone,
                         label: "شماره همراه ۲",
                         validator: profileHelper.checkPhone,
                         controller: phone2Txt,

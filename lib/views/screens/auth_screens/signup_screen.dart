@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:mojtama/helpers/profile_helper.dart';
 import 'package:mojtama/models/plak_model.dart';
@@ -87,6 +86,7 @@ class SignupPage extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: CustomTextField(
                       label: "تعداد نفرات",
+                      keyboardType: TextInputType.number,
                       suffixIcon: const Icon(Icons.group_outlined),
                       helper: "",
                       controller: familyMembersTxt,
@@ -104,6 +104,7 @@ class SignupPage extends StatelessWidget {
                     child: CustomTextField(
                       label: "شماره همراه",
                       controller: phoneTxt,
+                      keyboardType: TextInputType.phone,
                       validator: profileHelper.checkPhone,
                       suffixIcon: const Icon(Icons.phone),
                       helper: "شماره برای ثبت در ریموت",
@@ -117,6 +118,7 @@ class SignupPage extends StatelessWidget {
                       label: "شماره همراه ۲",
                       validator: profileHelper.checkPhone,
                       controller: phone2Txt,
+                      keyboardType: TextInputType.phone,
                       suffixIcon: const Icon(Icons.phone),
                       helper: "شماره برای ثبت در ریموت",
                     ),
