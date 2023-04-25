@@ -203,6 +203,21 @@ class UserProvider {
     return false;
   }
 
+  changePassword(String newPassword) async {
+    var url = Uri.parse("$host/user/change_password");
+    http.Response request;
+    var box = Hive.box("auth");
+    String username = box.get("username");
+    String password = box.get("password");
+    Map<String, dynamic> payload = {
+      "username": username,
+      "password": password,
+      "new_password": newPassword,
+    };
+    request = await http.post(url, body: payload);
+    return (request.statusCode == 200);
+  }
+
   appVersionCalculator() async {
     PackageInfo currentAppPackage = await PackageInfo.fromPlatform();
     String currentAppVersion = currentAppPackage.version;
