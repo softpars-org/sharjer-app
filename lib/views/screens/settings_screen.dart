@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:hive/hive.dart';
 import 'package:mojtama/models/theme_model.dart';
+import 'package:mojtama/services/app_service.dart';
 import 'package:mojtama/services/user_api_service.dart';
+import 'package:mojtama/views/screens/auth_screens/change_password.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -84,6 +86,22 @@ class SettingsScreen extends StatelessWidget {
               onTap: () {
                 launchUrlString("http://ble.im/JohnPeterson",
                     mode: LaunchMode.externalNonBrowserApplication);
+              },
+            ),
+          ),
+          const Divider(),
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: ListTile(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              leading: Icon(Icons.password_outlined),
+              title: const Text("تغییر رمز عبور"),
+              subtitle: const Text(
+                  "با فشردن این قسمت وارد صفحه تغییر رمز عبور خود شوید."),
+              onTap: () {
+                AppService(context).navigate(ChangePasswordScreen());
               },
             ),
           ),
