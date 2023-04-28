@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mojtama/models/adminpanel_model.dart';
+import 'package:mojtama/models/permission_model.dart';
 import 'package:mojtama/models/user_model.dart';
 import 'package:mojtama/services/admin_api_service.dart';
 import 'package:mojtama/services/app_service.dart';
@@ -223,6 +224,13 @@ class _ThreeDotsState extends State<ThreeDots> {
             RemoveChargeFromUserScreen(username: widget.user.username));
         break;
       case "مشاهده گذرواژه کاربر":
+        var permissionProvider =
+            Provider.of<PermissionModel>(context, listen: false);
+        bool isFullAdmin = (permissionProvider.userPermissionType == "full");
+        if (!isFullAdmin) {
+          appService.snackBar("شما دسترسی این کار را ندارید.");
+          break;
+        }
         String decryptedPassword =
             await Encryption().decrypt(widget.user.password);
         // ignore: use_build_context_synchronously
