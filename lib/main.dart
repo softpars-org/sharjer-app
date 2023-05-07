@@ -14,6 +14,7 @@ import 'package:mojtama/models/year_model.dart';
 import 'package:mojtama/services/app_service.dart';
 import 'package:mojtama/services/user_api_service.dart';
 import 'package:mojtama/viewmodels/change_password_model.dart';
+import 'package:mojtama/viewmodels/who_didnt_pay_model.dart';
 import 'package:mojtama/views/screens/auth_screens/login_screen.dart';
 import 'package:mojtama/views/screens/home_screen.dart';
 import 'package:mojtama/views/screens/payment_history_screen.dart';
@@ -73,7 +74,8 @@ void main() async {
         ChangeNotifierProvider(create: (_) => AdminPanelModel()),
         ChangeNotifierProvider(create: (_) => MojtamaStatusExpansionModel()),
         ChangeNotifierProvider(create: (_) => PermissionModel()),
-        ChangeNotifierProvider(create: (_) => ChangePasswordModel())
+        ChangeNotifierProvider(create: (_) => ChangePasswordModel()),
+        ChangeNotifierProvider(create: (_) => WhoDidntPayChargeModel()),
       ],
       child: const MyApp(),
     ),

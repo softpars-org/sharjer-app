@@ -19,27 +19,58 @@ class _WhoDidntPayChargeScreenState extends State<WhoDidntPayChargeScreen> {
   }
 
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => WhoDidntPayChargeModel(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text("افراد پرداخت نکرده شارژ"),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("افراد پرداخت نکرده شارژ"),
+      ),
+      body: Consumer<WhoDidntPayChargeModel>(
+        builder: (context, model, child) {
+          return Visibility(
+            visible: !model.isLoading,
+            replacement: const Center(
+              child: CircularProgressIndicator(),
+            ),
+            child: ListView.builder(
+              itemCount: model.users.keys.length,
+              itemBuilder: (context, index) {
+                String bluckNumber = model.users.keys.elementAt(index);
+                String users = model.users.values.elementAt(index).join("\n");
+                return UsersWhoDidntPay(bluckNumber: bluckNumber, users: users);
+              },
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class UsersWhoDidntPay extends StatelessWidget {
+  String bluckNumber;
+  String users;
+  UsersWhoDidntPay({super.key, required this.bluckNumber, required this.users});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: Theme.of(context).cardColor,
         ),
-        body: Consumer<WhoDidntPayChargeModel>(
-          builder: (context, model, child) {
-            return Visibility(
-              visible: !model.isLoading,
-              replacement: Center(
-                child: CircularProgressIndicator(),
-              ),
-              child: ListView.builder(
-                itemCount: 4,
-                itemBuilder: (context, index) {
-                  return Text("jello");
-                },
-              ),
-            );
-          },
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            Text(
+              "پرداخت نکرده‌های بلوک$bluckNumber",
+              style: Theme.of(context).textTheme.headline6,
+            ),
+            const Divider(),
+            Text(
+              users,
+            ),
+          ],
         ),
       ),
     );
