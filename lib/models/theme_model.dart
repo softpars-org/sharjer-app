@@ -38,6 +38,7 @@ class ThemeModel extends ChangeNotifier {
         const Color(0xff075e54),
       ),
     ),
+    cardColor: Color(0xfff7f7f7),
     scaffoldBackgroundColor: Colors.white,
     backgroundColor: Colors.white,
     iconTheme: const IconThemeData(color: Colors.white),

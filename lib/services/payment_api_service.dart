@@ -73,7 +73,7 @@ class PaymentProvider {
     var url = Uri.parse("$host/payment/get_who_didnt_pay_this_month");
     http.Response request;
     request = await http.get(url);
-    Map response = jsonDecode(request.body);
+    Map<String, dynamic> response = jsonDecode(request.body);
     return (request.statusCode == 200) ? response : false;
   }
 }

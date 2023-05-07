@@ -33,13 +33,8 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
         child: Consumer<PaymentModel>(builder: (context, model, child) {
           return ListView.builder(
             itemCount: model.paymentHistory.length,
-            itemBuilder: (_, index) => CustomCard(
-                history: model.paymentHistory[index]
-                // name: "محمدمهدی بنیادی",
-                // content:
-                //     "محمدمهدی بنیادی بلوک ۱ واحد ۱۳ شارژ ماه ربیع الثانی را پرداخت کرد.",
-                // date: "1401/2/1",
-                ),
+            itemBuilder: (_, index) =>
+                CustomCard(history: model.paymentHistory[index]),
           );
         }),
       ),
