@@ -33,10 +33,6 @@ void main() async {
   await Hive.openBox("theme");
   await Hive.openBox("auth");
   UserProvider userProvider = UserProvider();
-  FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) async {
-    await userProvider.updateFirebaseToken(fcmToken);
-  });
-
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
     if (message.data["navigation"] == "/history_screen") {
       Navigator.push(
