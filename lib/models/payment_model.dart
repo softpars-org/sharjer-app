@@ -17,7 +17,9 @@ class PaymentModel extends ChangeNotifier {
 
   getPaymentStatusOfTheUsersInTheMonth() async {
     UserProvider userProvider = UserProvider();
+    toggleLoading();
     String? ans = await userProvider.getPaymentStatusMessageOfTheUsers();
+    toggleLoading();
     if (ans != null) {
       paymentStat = ans;
       notifyListeners();
