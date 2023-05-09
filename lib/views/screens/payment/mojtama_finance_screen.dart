@@ -1,10 +1,13 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mojtama/models/state_model.dart';
 
 import 'package:mojtama/views/widgets/custom_table_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class MojtamaFinanceScreen extends StatefulWidget {
   const MojtamaFinanceScreen({super.key});
@@ -40,7 +43,7 @@ class _MojtamaFinanceScreenState extends State<MojtamaFinanceScreen> {
             Consumer<MojtamaStatusExpansionModel>(
               builder: (context, model, child) {
                 return ExpansionPanelList(
-                  expansionCallback: (index, isExpanded) {
+                  expansionCallback: (index, isExpanded) async {
                     model.changeIsOpen(index, !isExpanded);
                   },
                   children: [
@@ -59,25 +62,45 @@ class _MojtamaFinanceScreenState extends State<MojtamaFinanceScreen> {
                           children: [
                             model.isLoading
                                 ? const CircularProgressIndicator()
-                                : RichText(
-                                    text: TextSpan(
-                                      style: DefaultTextStyle.of(context).style,
-                                      children: [
-                                        TextSpan(
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.bold),
-                                            text:
-                                                "${model.mojtamaRule.rule}\n\n"),
-                                        TextSpan(
-                                          text:
-                                              '${model.mojtamaRule.createdOn} روز پیش، در ساعت ${model.mojtamaRule.createdTime} ساخته شد.\n',
+                                : Column(
+                                    children: [
+                                      ElevatedButton.icon(
+                                        onPressed: () async {
+                                          String dataUri =
+                                              "http://amolicomplex.ir/statute.pdf";
+                                          await launchUrlString(
+                                            dataUri,
+                                            mode:
+                                                LaunchMode.externalApplication,
+                                          );
+                                        },
+                                        icon: const Icon(Icons.rule),
+                                        label:
+                                            const Text("دیدن اساسنامه مجتمع"),
+                                      ),
+                                      RichText(
+                                        text: TextSpan(
+                                          style: DefaultTextStyle.of(context)
+                                              .style,
+                                          children: [
+                                            TextSpan(
+                                                style: const TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                                text:
+                                                    "${model.mojtamaRule.rule}\n\n"),
+                                            TextSpan(
+                                              text:
+                                                  '${model.mojtamaRule.createdOn} روز پیش، در ساعت ${model.mojtamaRule.createdTime} ساخته شد.\n',
+                                            ),
+                                            TextSpan(
+                                              text:
+                                                  '${model.mojtamaRule.editedOn} روز پیش، در ساعت ${model.mojtamaRule.editedTime} ویرایش شد.\n',
+                                            ),
+                                          ],
                                         ),
-                                        TextSpan(
-                                          text:
-                                              '${model.mojtamaRule.editedOn} روز پیش، در ساعت ${model.mojtamaRule.editedTime} ویرایش شد.\n',
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                           ],
                         ),
