@@ -48,12 +48,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
               child: Center(
                 child: Consumer<PaymentModel>(
                   builder: (context, model, child) {
-                    return Text(
-                      model.paymentStat,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).primaryColor,
-                        fontSize: 16,
+                    return Visibility(
+                      visible: !model.isLoading,
+                      replacement: CircularProgressIndicator(),
+                      child: Text(
+                        model.paymentStat,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 16,
+                        ),
                       ),
                     );
                   },
