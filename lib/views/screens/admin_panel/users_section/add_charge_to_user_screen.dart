@@ -1,15 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:mojtama/helpers/profile_helper.dart';
 import 'package:mojtama/models/month_model.dart';
 import 'package:mojtama/models/year_model.dart';
 import 'package:mojtama/services/admin_api_service.dart';
 import 'package:mojtama/services/app_service.dart';
 import 'package:mojtama/views/widgets/months_checkbox_widget.dart';
-import 'package:mojtama/views/widgets/radiobutton_widget.dart';
-import 'package:mojtama/views/widgets/textfield_widget.dart';
 import 'package:mojtama/views/widgets/year_dropdown_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -23,10 +20,10 @@ class AddChargeToUserScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("اضافه کردن شارژ به کاربر"),
+        title: const Text("اضافه کردن شارژ به کاربر"),
       ),
       body: ListView(
-        children: [
+        children: const [
           YearDropDownWidget(),
           Divider(),
           MonthsCheckBox(),
@@ -54,7 +51,7 @@ class AddChargeToUserScreen extends StatelessWidget {
                 .snackBar("شارژ ماه‌های $addedMonths به کاربر اضافه نشد.");
           }
         },
-        child: Icon(Icons.check_rounded),
+        child: const Icon(Icons.check_rounded),
       ),
     );
   }

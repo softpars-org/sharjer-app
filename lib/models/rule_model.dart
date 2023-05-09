@@ -16,10 +16,10 @@ class Rule {
   );
   factory Rule.fromMap(Map<String, dynamic> ruleMap) {
     DateTime now = DateTime.now();
-    DateTime createdTime = DateTime.fromMillisecondsSinceEpoch(
-        int.parse(ruleMap["created_at"]) * 1000);
+    DateTime createdTime =
+        DateTime.fromMillisecondsSinceEpoch(ruleMap["created_at"] * 1000);
     DateTime editedTime = DateTime.fromMillisecondsSinceEpoch(
-        int.parse(ruleMap["edited_at"]) * 1000);
+        ruleMap["edited_at"] ?? ruleMap["created_at"] * 1000);
     Duration createdTimeDifference = now.difference(createdTime);
     Duration editedTimeDifference = now.difference(editedTime);
     DateFormat formatter = DateFormat("HH:mm");

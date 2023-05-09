@@ -1,14 +1,34 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:mojtama/models/navbar_model.dart';
 import 'package:mojtama/models/theme_model.dart';
 import 'package:mojtama/services/app_service.dart';
-import 'package:mojtama/views/screens/auth_screens/login_screen.dart';
+import 'package:mojtama/services/user_api_service.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
-  PersistentTabController _controller = PersistentTabController();
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final PersistentTabController _controller = PersistentTabController();
+  @override
+  void initState() {
+    super.initState();
+    FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) async {
+      UserProvider userProvider = UserProvider();
+      await userProvider.updateFirebaseToken(fcmToken);
+    });
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      AppService(context).snackBar(message.notification!.body!);
+    }); //it should be fixed.
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer2<NavBarModel, ThemeModel>(
@@ -31,12 +51,12 @@ class HomeScreen extends StatelessWidget {
 
         popAllScreensOnTapOfSelectedTab: true,
         popActionScreens: PopActionScreensType.all,
-        itemAnimationProperties: ItemAnimationProperties(
+        itemAnimationProperties: const ItemAnimationProperties(
           // Navigation Bar's items animation properties.
           duration: Duration(milliseconds: 200),
           curve: Curves.ease,
         ),
-        screenTransitionAnimation: ScreenTransitionAnimation(
+        screenTransitionAnimation: const ScreenTransitionAnimation(
           // Screen transition animation on change of selected tab.
           animateTabTransition: false,
           curve: Curves.ease,

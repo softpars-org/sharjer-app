@@ -21,12 +21,13 @@ class _YearDropDownWidgetState extends State<YearDropDownWidget> {
     await provider.getYears();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
             color: Theme.of(context).primaryColor.withOpacity(0.25),
             borderRadius: BorderRadius.circular(20),
@@ -40,7 +41,7 @@ class _YearDropDownWidgetState extends State<YearDropDownWidget> {
           ),
         ),
         Container(
-          child: Consumer<YearModel>(builder: (contex, model, child) {
+          child: Consumer<YearModel>(builder: (context, model, child) {
             return DropdownButton(
               underline: Container(
                 height: 3,
@@ -52,13 +53,13 @@ class _YearDropDownWidgetState extends State<YearDropDownWidget> {
               items: model.years
                   .map<DropdownMenuItem>(
                     (dynamic value) => DropdownMenuItem(
-                      child: Text(value),
                       value: value,
+                      child: Text(value),
                     ),
                   )
                   .toList(),
               alignment: Alignment.center,
-              hint: Text("سال شارژ"),
+              hint: const Text("سال شارژ"),
               borderRadius: BorderRadius.circular(10),
               onChanged: model.changeYear,
               value: model.year,

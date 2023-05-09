@@ -1,4 +1,11 @@
 class ProfileHelper {
+  String? checkNullCharacterValue(String? value) {
+    if (value!.isEmpty) {
+      return "مقدار خالی می‌باشد.";
+    }
+    return null;
+  }
+
   String? checkFarsi(String? value) {
     if (value!.isEmpty) return "فیلد خالی است!";
 

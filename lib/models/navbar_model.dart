@@ -10,10 +10,10 @@ class NavBarModel {
   BuildContext? context;
   List<Widget> get screens {
     return [
-      DashboardScreen(),
-      PaymentScreen(),
-      PaymentStatusScreen(),
-      MojtamaFinanceScreen(),
+      const DashboardScreen(),
+      const PaymentScreen(),
+      const PaymentStatusScreen(),
+      const MojtamaFinanceScreen(),
       SettingsScreen(),
     ];
   }
@@ -21,34 +21,34 @@ class NavBarModel {
   List<PersistentBottomNavBarItem> get items {
     return [
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.dashboard_outlined),
+        icon: const Icon(Icons.dashboard_outlined),
         title: "پیشخان",
         activeColorPrimary: Theme.of(context!).primaryColor,
-        inactiveColorPrimary: Color.fromARGB(255, 196, 190, 183),
+        inactiveColorPrimary: const Color.fromARGB(255, 196, 190, 183),
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.credit_card_outlined),
+        icon: const Icon(Icons.credit_card_outlined),
         title: "پرداخت شارژ",
         activeColorPrimary: Theme.of(context!).primaryColor,
-        inactiveColorPrimary: Color.fromARGB(255, 196, 190, 183),
+        inactiveColorPrimary: const Color.fromARGB(255, 196, 190, 183),
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.insert_chart_outlined),
+        icon: const Icon(Icons.insert_chart_outlined),
         title: "وضعیت شارژ",
         activeColorPrimary: Theme.of(context!).primaryColor,
-        inactiveColorPrimary: Color.fromARGB(255, 196, 190, 183),
+        inactiveColorPrimary: const Color.fromARGB(255, 196, 190, 183),
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.domain_outlined),
+        icon: const Icon(Icons.domain_outlined),
         title: "وضعیت مالی مجتمع",
         activeColorPrimary: Theme.of(context!).primaryColor,
-        inactiveColorPrimary: Color.fromARGB(255, 196, 190, 183),
+        inactiveColorPrimary: const Color.fromARGB(255, 196, 190, 183),
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.settings_outlined),
+        icon: const Icon(Icons.settings_outlined),
         title: "تنظیمات",
         activeColorPrimary: Theme.of(context!).primaryColor,
-        inactiveColorPrimary: Color.fromARGB(255, 196, 190, 183),
+        inactiveColorPrimary: const Color.fromARGB(255, 196, 190, 183),
       ),
     ];
   }

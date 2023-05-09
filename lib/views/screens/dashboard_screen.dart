@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mojtama/models/payment_model.dart';
+import 'package:mojtama/models/permission_model.dart';
 import 'package:mojtama/services/app_service.dart';
+import 'package:mojtama/viewmodels/who_didnt_pay_model.dart';
 import 'package:mojtama/views/screens/admin_panel/main_screen.dart';
 import 'package:mojtama/views/screens/auth_screens/login_screen.dart';
 import 'package:mojtama/views/screens/payment_history_screen.dart';
 import 'package:mojtama/views/screens/profile_screen.dart';
+import 'package:mojtama/views/screens/who_didnt_pay_charge_screen.dart';
 import 'package:mojtama/views/widgets/button_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -16,37 +19,45 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  @override
   didChangeDependencies() {
     super.didChangeDependencies();
     Future.delayed(Duration.zero, () => _loadResources());
   }
 
   _loadResources() async {
-    var provider = Provider.of<PaymentModel>(context, listen: false);
-    await provider.getPaymentStatusOfTheUsersInTheMonth();
+    var paymentProvider = Provider.of<PaymentModel>(context, listen: false);
+    var permissionProvider =
+        Provider.of<PermissionModel>(context, listen: false);
+    await paymentProvider.getPaymentStatusOfTheUsersInTheMonth();
+    await permissionProvider.fetchUserType();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("پیشخان"),
+        title: const Text("پیشخان"),
       ),
       body: RefreshIndicator(
         onRefresh: () async => _loadResources(),
         child: ListView(
           children: [
             Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(7),
               child: Center(
                 child: Consumer<PaymentModel>(
                   builder: (context, model, child) {
-                    return Text(
-                      model.paymentStat,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).primaryColor,
-                        fontSize: 20,
+                    return Visibility(
+                      visible: !model.isLoading,
+                      replacement: CircularProgressIndicator(),
+                      child: Text(
+                        model.paymentStat,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 16,
+                        ),
                       ),
                     );
                   },
@@ -54,32 +65,38 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height / 8,
+              height: MediaQuery.of(context).size.height / 15,
             ),
+            Consumer<PermissionModel>(builder: (context, model, child) {
+              if (model.userPermissionType != "no") {
+                return Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: CustomButton(
+                    icon: Icons.admin_panel_settings_outlined,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const AdminPanelScreen(),
+                        ),
+                      );
+                    },
+                    text: "مدیریت",
+                  ),
+                );
+              } else {
+                return Container();
+              }
+            }),
             Padding(
-              padding: EdgeInsets.all(20),
-              child: CustomButton(
-                icon: Icons.admin_panel_settings_outlined,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AdminPanelScreen(),
-                    ),
-                  );
-                },
-                text: "مدیریت",
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: CustomButton(
                 icon: Icons.person_outline,
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ProfileScreen(),
+                      builder: (context) => const ProfileScreen(),
                     ),
                   );
                 },
@@ -87,13 +104,31 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
+              child: CustomButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ChangeNotifierProvider<WhoDidntPayChargeModel>(
+                          create: (_) => WhoDidntPayChargeModel(),
+                          child: WhoDidntPayChargeScreen(),
+                        ),
+                      ));
+                },
+                icon: Icons.person_pin_circle_outlined,
+                text: "افراد پرداخت نکننده شارژ",
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20),
               child: CustomButton(
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => PaymentHistoryScreen(),
+                      builder: (context) => const PaymentHistoryScreen(),
                     ),
                   );
                 },
@@ -102,7 +137,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: CustomButton(
                 icon: Icons.exit_to_app_rounded,
                 onPressed: () {

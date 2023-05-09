@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mojtama/models/adminpanel_model.dart';
+import 'package:mojtama/services/admin_api_service.dart';
 import 'package:mojtama/services/app_service.dart';
 import 'package:provider/provider.dart';
 
@@ -12,7 +13,7 @@ class FinancialAdminStatusScreen extends StatelessWidget {
     final providerModel = Provider.of<AdminPanelModel>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        title: Text("وضعیت مالی مجتمع"),
+        title: const Text("وضعیت مالی مجتمع"),
       ),
       body: Consumer<AdminPanelModel>(
         builder: (context, model, child) {
@@ -30,7 +31,7 @@ class FinancialAdminStatusScreen extends StatelessWidget {
                 onPressed: () {
                   providerModel.removeTextField();
                 },
-                child: Text("حذف آخرین فیلد"),
+                child: const Text("حذف آخرین فیلد"),
               ),
             ),
             Expanded(
@@ -38,19 +39,28 @@ class FinancialAdminStatusScreen extends StatelessWidget {
                 onPressed: () {
                   providerModel.addTextField();
                 },
-                child: Text("اضافه کردن فیلد جدید"),
+                child: const Text("اضافه کردن فیلد جدید"),
               ),
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          var test = providerModel.generateJsonFromFields();
-          print(test);
+        onPressed: () async {
+          AdminProvider adminProvider = AdminProvider();
+          AppService appService = AppService(context);
+          String test = providerModel.generateJsonFromFields();
+
+          bool isRequestSent =
+              await adminProvider.addOrUpdateMojtamaFinancialStatus(test);
+          if (isRequestSent) {
+            appService.snackBar("وضعیت مالی بروزرسانی شد!");
+          } else {
+            appService.snackBar("مشکلی در بروزرسانی به وجود آمد!");
+          }
         },
         tooltip: "ثبت مبالغ",
-        child: Icon(Icons.save_outlined),
+        child: const Icon(Icons.save_outlined),
       ),
     );
   }

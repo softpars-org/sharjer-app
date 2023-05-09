@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "332958643290",
+    "project_id": "mojtama-3e50c",
+    "storage_bucket": "mojtama-3e50c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:332958643290:android:227e1b36255d5dc0f01463",
+        "android_client_info": {
+          "package_name": "com.example.mojtama"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "332958643290-h89fn2bo61tj2j0681t48v08bq4fcj10.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmLvifiaoS2yR206wGclRhVwKXd37L0Mg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "332958643290-h89fn2bo61tj2j0681t48v08bq4fcj10.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "332958643290-9kk34brid23fnl5chnruug38t9blkrcu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.mojtama"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/retry.dart';
 import 'package:mojtama/models/user_model.dart';
 import 'package:mojtama/services/admin_api_service.dart';
 import 'package:mojtama/views/widgets/textfield_widget.dart';
@@ -48,14 +51,14 @@ class AdminPanelModel extends ChangeNotifier {
     TextEditingController titleController,
     TextEditingController priceController,
   ) {
-    final Widget _textField = Row(
+    final Widget textField = Row(
       children: [
         Expanded(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: CustomTextField(
               label: "عنوان",
-              suffixIcon: Icon(Icons.title_outlined),
+              suffixIcon: const Icon(Icons.title_outlined),
               controller: titleController,
             ),
           ),
@@ -66,7 +69,7 @@ class AdminPanelModel extends ChangeNotifier {
             child: CustomTextField(
               label: "مبلغ",
               keyboardType: TextInputType.number,
-              suffixIcon: Icon(Icons.price_check_outlined),
+              suffixIcon: const Icon(Icons.price_check_outlined),
               controller: priceController,
             ),
           ),
@@ -74,7 +77,7 @@ class AdminPanelModel extends ChangeNotifier {
       ],
     );
 
-    return _textField;
+    return textField;
   }
 
   removeTextField() {
@@ -85,16 +88,15 @@ class AdminPanelModel extends ChangeNotifier {
     }
   }
 
-  generateJsonFromFields() {
+  String generateJsonFromFields() {
     List json = [];
     for (Map textControllersMap in _textEditingControllersMapList) {
       Map manipulatedMap = {
-        "title": textControllersMap["title"].text,
-        "price": textControllersMap["price"].text,
+        textControllersMap["title"].text: textControllersMap["price"].text,
       };
       json.add(manipulatedMap);
     }
-    return json;
+    return jsonEncode(json);
   }
 
   getUsers() async {
@@ -116,16 +118,19 @@ class AdminPanelModel extends ChangeNotifier {
 
   getUsersLengthOfBluck(int bluck) {
     int usersLength = 0;
-    users.forEach((user) {
+    for (var user in users) {
       if (user.bluck == bluck) {
         usersLength++;
       }
-    });
+    }
     return usersLength;
   }
 
   filterUsersByBluck() {
-    users.forEach((user) {
+    _bluck1Users = [];
+    _bluck2Users = [];
+    _bluck3Users = [];
+    for (var user in _users) {
       if (user.bluck == 1) {
         _bluck1Users.add(user);
       } else if (user.bluck == 2) {
@@ -133,7 +138,26 @@ class AdminPanelModel extends ChangeNotifier {
       } else if (user.bluck == 3) {
         _bluck3Users.add(user);
       }
-    });
+    }
     notifyListeners();
+  }
+
+  updateUserType(User selectedUser, String newUserType) {
+    int i = 0;
+    for (User user in _users) {
+      if (selectedUser == user) {
+        print(newUserType);
+        if (newUserType == "delete") {
+          _users.removeWhere(
+              (goingToBeRemovedUser) => selectedUser == goingToBeRemovedUser);
+          notifyListeners();
+        } else {
+          _users[i].userType = newUserType;
+          filterUsersByBluck();
+        }
+        break;
+      }
+      i++;
+    }
   }
 }

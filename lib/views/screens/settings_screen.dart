@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:hive/hive.dart';
 import 'package:mojtama/models/theme_model.dart';
+import 'package:mojtama/services/app_service.dart';
 import 'package:mojtama/services/user_api_service.dart';
+import 'package:mojtama/views/screens/auth_screens/change_password.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -13,26 +15,26 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "تنظیمات",
         ),
       ),
       body: Column(
         children: [
-          Padding(
+          const Padding(
             padding: EdgeInsets.all(20),
-            child: Container(
+            child: SizedBox(
               width: 50,
               height: 50,
             ),
           ),
-          Divider(
+          const Divider(
             indent: 8,
             endIndent: 8,
             height: 0.5,
           ),
           Padding(
-            padding: EdgeInsets.all(7),
+            padding: const EdgeInsets.all(7),
             child: Consumer<ThemeModel>(builder: (context, model, child) {
               return ListTile(
                 shape: RoundedRectangleBorder(
@@ -43,11 +45,11 @@ class SettingsScreen extends StatelessWidget {
                   style: TextStyle(
                       fontSize: 14, color: Theme.of(context).primaryColor),
                 ),
-                leading: Icon(
+                leading: const Icon(
                   Icons.dark_mode,
                 ),
                 subtitle: !model.isDarkMode
-                    ? Text(
+                    ? const Text(
                         "برای کمتر آسیب دیدن چشم، توصیه می‌شود تم تیره را فعال کنید.")
                     : null,
                 trailing: Checkbox(
@@ -67,19 +69,19 @@ class SettingsScreen extends StatelessWidget {
               );
             }),
           ),
-          Divider(
+          const Divider(
             height: 0.5,
             indent: 8,
             endIndent: 8,
           ),
           Padding(
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             child: ListTile(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
-              title: Text("راه ارتباطی با برنامه‌نویس در پیامرسان بله"),
-              subtitle: Text(
+              title: const Text("راه ارتباطی با برنامه‌نویس در پیامرسان بله"),
+              subtitle: const Text(
                   "اطلاعات کامل سفارش خود را به پیوی ارسال نمایید. (با فشردن این قسمت وارد محیط برنامه بله شوید.)"),
               onTap: () {
                 launchUrlString("http://ble.im/JohnPeterson",
@@ -87,7 +89,23 @@ class SettingsScreen extends StatelessWidget {
               },
             ),
           ),
-          Divider(
+          const Divider(),
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: ListTile(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              leading: Icon(Icons.password_outlined),
+              title: const Text("تغییر رمز عبور"),
+              subtitle: const Text(
+                  "با فشردن این قسمت وارد صفحه تغییر رمز عبور خود شوید."),
+              onTap: () {
+                AppService(context).navigate(ChangePasswordScreen());
+              },
+            ),
+          ),
+          const Divider(
             height: 0.5,
             indent: 8,
             endIndent: 8,
@@ -102,26 +120,26 @@ class SettingsScreen extends StatelessWidget {
 class UpdateApp extends StatelessWidget {
   @override
   UserProvider userProvider = UserProvider();
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: userProvider.checkApplicationVersion(),
+      future: userProvider.appVersionCalculator(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.data["status"] == "updated") {
             return Container(
               child: TextButton(
-                child: Text("نسخه اپلیکیشن شما بروز می‌باشد."),
+                child: const Text("نسخه اپلیکیشن شما به روز می‌باشد."),
                 onPressed: () {},
               ),
             );
           } else if (snapshot.data["status"] == "not updated") {
             return Container(
               child: TextButton(
-                child: Text("نسخه‌ی اپلیکیشن شما: " +
-                    snapshot.data["version"] +
-                    ". (برای دانلود، ضربه بزنید)"),
+                child: Text(
+                    "${"نسخه‌ی اپلیکیشن شما: " + snapshot.data["given_version"]}. (برای دانلود، ضربه بزنید)"),
                 onPressed: () {
-                  launchUrlString(snapshot.data["link"],
+                  launchUrlString(snapshot.data["app_link"],
                       mode: LaunchMode.externalApplication);
                 },
               ),

@@ -8,7 +8,7 @@ class PaymentProvider {
   String? host;
   final _box = Hive.box("auth");
   PaymentProvider() {
-    host = "http://localhost/mojtama-server-mvc/";
+    host = "http://amolicomplex.ir/mojtama-server-mvc/";
   }
 
   getCurrentMonth() async {
@@ -60,12 +60,20 @@ class PaymentProvider {
     request = await http.get(url);
     List response = jsonDecode(request.body);
     List<History> paymentHistory = [];
-    response.forEach((jsonHistory) {
+    for (var jsonHistory in response) {
       paymentHistory.add(History.fromJson(jsonHistory));
-    });
+    }
     if (paymentHistory.isNotEmpty) {
       return paymentHistory;
     }
     return false;
+  }
+
+  getPeopleWhoDidntPayCharge() async {
+    var url = Uri.parse("$host/payment/get_who_didnt_pay_this_month");
+    http.Response request;
+    request = await http.get(url);
+    Map<String, dynamic> response = jsonDecode(request.body);
+    return (request.statusCode == 200) ? response : false;
   }
 }

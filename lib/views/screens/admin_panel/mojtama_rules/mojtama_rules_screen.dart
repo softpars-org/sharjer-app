@@ -16,7 +16,7 @@ class MojtamaRulesScreen extends StatelessWidget {
     ruleController.text = model.mojtamaRule.rule;
     return Scaffold(
       appBar: AppBar(
-        title: Text("قوانین مجتمع"),
+        title: const Text("قوانین مجتمع"),
       ),
       body: ListView(
         children: [
@@ -26,7 +26,7 @@ class MojtamaRulesScreen extends StatelessWidget {
               label: "محل قرارگیری قوانین",
               controller: ruleController,
               maxLines: 20,
-              suffixIcon: Icon(Icons.rule_sharp),
+              suffixIcon: const Icon(Icons.rule_sharp),
             ),
           ),
         ],
@@ -43,7 +43,7 @@ class MojtamaRulesScreen extends StatelessWidget {
           }
         },
         tooltip: "تایید",
-        child: Icon(
+        child: const Icon(
           Icons.check_rounded,
         ),
       ),

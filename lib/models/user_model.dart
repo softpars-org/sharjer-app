@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class User {
   String username;
   String password;
@@ -41,14 +39,33 @@ class User {
       decodedJson["family"],
       decodedJson["phone"],
       decodedJson["phone2"],
-      int.parse(decodedJson["bluck"]),
-      int.parse(decodedJson["vahed"]),
-      int.parse(decodedJson["family_members"]),
+      decodedJson["bluck"] as int,
+      decodedJson["vahed"] as int,
+      decodedJson["family_members"] as int,
       decodedJson["car_plate"],
       decodedJson["startdate"],
       decodedJson["enddate"],
       decodedJson["is_admin"],
-      int.parse(decodedJson["is_owner"]),
+      decodedJson["is_owner"] as int,
     );
+  }
+
+  static Map<String, dynamic> toJson(User user) {
+    return {
+      "username": user.username,
+      "password": user.password,
+      "name": user.name,
+      "family": user.family,
+      "phone": user.phone,
+      "phone2": user.phone2,
+      "bluck": user.bluck,
+      "vahed": user.vahed,
+      "family_members": user.familyMembers,
+      "car_plate": user.carPlate,
+      "startdate": user.startDate,
+      "enddate": user.endDate,
+      "is_admin": user.userType,
+      "is_owner": user.isOwner,
+    };
   }
 }

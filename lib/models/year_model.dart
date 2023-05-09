@@ -11,8 +11,8 @@ class YearModel extends ChangeNotifier {
 
   getYears() async {
     UserProvider userProvider = UserProvider();
-    List<dynamic> _years = await userProvider.getYears();
-    years = _years;
+    List<dynamic> yearsFromAPI = await userProvider.getYears();
+    years = yearsFromAPI;
     notifyListeners();
   }
 }

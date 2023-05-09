@@ -1,11 +1,8 @@
 import 'dart:convert';
-import 'dart:math';
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:mojtama/models/rule_model.dart';
 import 'package:mojtama/services/user_api_service.dart';
-import 'package:provider/provider.dart';
 
 class CheckboxModel extends ChangeNotifier {
   bool _isOwner = false;
@@ -44,10 +41,12 @@ class MojtamaStatusExpansionModel extends ChangeNotifier {
 
   getRules() async {
     toggleLoading();
-    Rule response = await UserProvider().getMojtamaRules();
-    toggleLoading();
-    mojtamaRule = response;
-    notifyListeners();
+    Rule? response = await UserProvider().getMojtamaRules();
+    if (response != null) {
+      toggleLoading();
+      mojtamaRule = response;
+      notifyListeners();
+    }
   }
 
   toggleLoading() {

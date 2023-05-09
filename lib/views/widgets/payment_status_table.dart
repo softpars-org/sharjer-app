@@ -4,41 +4,33 @@ import 'package:mojtama/models/charge_status_model.dart';
 class PaymentStatusTable extends StatelessWidget {
   ChargeRowStatus chargeStatusOfTheUser;
   String year;
+  String name;
   PaymentStatusTable({
     super.key,
     required this.year,
     required this.chargeStatusOfTheUser,
+    required this.name,
   });
 
   @override
   Widget build(BuildContext context) {
-    // chargeStatusOfTheUser = {
-    //   "1444": {
-    //     "واحد": "13",
-    //     "ربیع الاول": "10000",
-    //   },
-    //   "1443": {
-    //     "واحدم": "دو هستش",
-    //   }
-    // };
-
     return Container(
-      padding: EdgeInsets.all(30),
+      padding: const EdgeInsets.all(30),
       child: Column(
         children: [
           Center(
             child: Text(
               chargeStatusOfTheUser.year,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 decoration: TextDecoration.underline,
               ),
             ),
           ),
           Center(
-            child: Text("محمدمهدی بنیادی"),
+            child: Text(name),
           ),
-          Divider(),
+          const Divider(),
           Table(
             border: TableBorder.all(
               color: Theme.of(context).primaryColor,
@@ -56,7 +48,7 @@ class PaymentStatusTable extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           title,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
                       Padding(
