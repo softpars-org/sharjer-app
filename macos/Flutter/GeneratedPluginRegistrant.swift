@@ -8,7 +8,7 @@ import Foundation
 import firebase_core
 import firebase_messaging
 import package_info_plus
-import path_provider_macos
+import path_provider_foundation
 import url_launcher_macos
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
