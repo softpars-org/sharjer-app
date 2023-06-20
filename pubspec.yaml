@@ -50,7 +50,7 @@ dependencies:
   package_info_plus:
   firebase_core:
   firebase_messaging:
-
+  flutter_background_service:
 dev_dependencies:
   flutter_test:
     sdk: flutter
