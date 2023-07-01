@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:mojtama/models/navbar_model.dart';
@@ -19,14 +21,16 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) async {
-      UserProvider userProvider = UserProvider();
-      await userProvider.updateFirebaseToken(fcmToken);
-    });
+    if (Platform.isAndroid || Platform.isIOS) {
+      FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) async {
+        UserProvider userProvider = UserProvider();
+        await userProvider.updateFirebaseToken(fcmToken);
+      });
 
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      AppService(context).snackBar(message.notification!.body!);
-    }); //it should be fixed.
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+        AppService(context).snackBar(message.notification!.body!);
+      }); //it should be fixed.
+    }
   }
 
   @override

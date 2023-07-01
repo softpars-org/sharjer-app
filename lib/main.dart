@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,23 +29,26 @@ GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  if (Platform.isAndroid || Platform.isIOS) {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  }
   await Hive.openBox("theme");
   await Hive.openBox("auth");
   UserProvider userProvider = UserProvider();
-  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-    if (message.data["navigation"] == "/history_screen") {
-      Navigator.push(
-        navigatorKey.currentState!.context,
-        MaterialPageRoute(
-          builder: (context) => PaymentHistoryScreen(),
-        ),
-      );
-    }
-  });
+  if (Platform.isAndroid || Platform.isIOS) {
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      if (message.data["navigation"] == "/history_screen") {
+        Navigator.push(
+          navigatorKey.currentState!.context,
+          MaterialPageRoute(
+            builder: (context) => PaymentHistoryScreen(),
+          ),
+        );
+      }
+    });
+  }
 
   var box = Hive.box("theme");
   box.put("isDarkTheme", box.get("isDarkTheme") ?? false);
