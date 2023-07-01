@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
@@ -12,7 +13,7 @@ class UserProvider {
   String? host;
   final _box = Hive.box("auth");
   UserProvider() {
-    host = "http://amolicomplex.ir/mojtama-server-mvc";
+    host = "https://amolicomplex.ir/mojtama-server-mvc";
   }
 
   login(String username, String password) async {
@@ -35,14 +36,16 @@ class UserProvider {
           password,
         );
         //Register for firebase token.
-        String? fcmToken = await FirebaseMessaging.instance.getToken();
-        UserProvider userProvider = UserProvider();
-        if (fcmToken != null) {
-          await userProvider.updateFirebaseToken(fcmToken);
+        if (Platform.isAndroid || Platform.isIOS) {
+          String? fcmToken = await FirebaseMessaging.instance.getToken();
+          UserProvider userProvider = UserProvider();
+          if (fcmToken != null) {
+            await userProvider.updateFirebaseToken(fcmToken);
+          }
+          FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) async {
+            await userProvider.updateFirebaseToken(fcmToken);
+          });
         }
-        FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) async {
-          await userProvider.updateFirebaseToken(fcmToken);
-        });
         return true;
       }
     } catch (e) {

@@ -17,24 +17,15 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -52,11 +43,41 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyCkn5KdqdaW6SfIP0bnakxFTGrDGDx7sk0',
+    appId: '1:332958643290:web:d43fe42fa2b42b17f01463',
+    messagingSenderId: '332958643290',
+    projectId: 'mojtama-3e50c',
+    authDomain: 'mojtama-3e50c.firebaseapp.com',
+    storageBucket: 'mojtama-3e50c.appspot.com',
+    measurementId: 'G-E0KY1BG9Q0',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDmLvifiaoS2yR206wGclRhVwKXd37L0Mg',
     appId: '1:332958643290:android:227e1b36255d5dc0f01463',
     messagingSenderId: '332958643290',
     projectId: 'mojtama-3e50c',
     storageBucket: 'mojtama-3e50c.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyBUx1xkML15ADK4lrPJBZkkJLYtCLSqw6A',
+    appId: '1:332958643290:ios:b3f54afd8506d73df01463',
+    messagingSenderId: '332958643290',
+    projectId: 'mojtama-3e50c',
+    storageBucket: 'mojtama-3e50c.appspot.com',
+    iosClientId: '332958643290-9kk34brid23fnl5chnruug38t9blkrcu.apps.googleusercontent.com',
+    iosBundleId: 'com.example.mojtama',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyBUx1xkML15ADK4lrPJBZkkJLYtCLSqw6A',
+    appId: '1:332958643290:ios:b3f54afd8506d73df01463',
+    messagingSenderId: '332958643290',
+    projectId: 'mojtama-3e50c',
+    storageBucket: 'mojtama-3e50c.appspot.com',
+    iosClientId: '332958643290-9kk34brid23fnl5chnruug38t9blkrcu.apps.googleusercontent.com',
+    iosBundleId: 'com.example.mojtama',
   );
 }

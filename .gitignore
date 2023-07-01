@@ -37,7 +37,6 @@ migrate_working_dir/
 
 <<<<<<< HEAD
 # Web related
-lib/generated_plugin_registrant.dart
 
 =======
 >>>>>>> 5efe8f1 (Update UI)
