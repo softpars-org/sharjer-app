@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mojtama/models/payment_model.dart';
-import 'package:mojtama/models/permission_model.dart';
+import 'package:mojtama/viewmodels/payment_model.dart';
+import 'package:mojtama/viewmodels/permission_model.dart';
 import 'package:mojtama/services/app_service.dart';
 import 'package:mojtama/viewmodels/who_didnt_pay_model.dart';
 import 'package:mojtama/views/screens/admin_panel/main_screen.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mojtama/models/payment_model.dart';
+import 'package:mojtama/viewmodels/payment_model.dart';
 import 'package:mojtama/services/app_service.dart';
 import 'package:mojtama/services/payment_api_service.dart';
 import 'package:mojtama/views/screens/payment/custompay_screen.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mojtama/helpers/profile_helper.dart';
-import 'package:mojtama/models/month_model.dart';
+import 'package:mojtama/viewmodels/month_model.dart';
 import 'package:mojtama/models/year_model.dart';
 import 'package:mojtama/services/admin_api_service.dart';
 import 'package:mojtama/services/app_service.dart';
@@ -69,7 +69,6 @@ class _ChangeWholeMonthsScreenState extends State<ChangeWholeMonthsScreen> {
     }
   }
 
-  @override
   _generateTextControllers() {
     for (int i = 0; i < 12; i++) {
       _controllers.add(TextEditingController(text: "0"));

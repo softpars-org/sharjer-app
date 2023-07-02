@@ -46,9 +46,13 @@ class _WhoDidntPayChargeScreenState extends State<WhoDidntPayChargeScreen> {
 }
 
 class UsersWhoDidntPay extends StatelessWidget {
-  String bluckNumber;
-  String users;
-  UsersWhoDidntPay({super.key, required this.bluckNumber, required this.users});
+  final String bluckNumber;
+  final String users;
+  const UsersWhoDidntPay({
+    super.key,
+    required this.bluckNumber,
+    required this.users,
+  });
 
   @override
   Widget build(BuildContext context) {

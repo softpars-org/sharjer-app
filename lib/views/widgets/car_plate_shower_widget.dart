@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CarPlateShower extends StatelessWidget {
-  String carPlate;
-  CarPlateShower({super.key, required this.carPlate});
+  final String carPlate;
+  const CarPlateShower({super.key, required this.carPlate});
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +92,7 @@ class CarPlateShower extends StatelessWidget {
                     padding: EdgeInsets.only(left: 5, right: 5),
                     margin: EdgeInsets.zero,
                     color: Colors.red,
-                    child: SizedBox(height: 2),
+                    child: const SizedBox(height: 2),
                   ),
                 ],
               ),

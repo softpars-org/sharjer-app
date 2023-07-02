@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mojtama/helpers/profile_helper.dart';
-import 'package:mojtama/models/plak_model.dart';
-import 'package:mojtama/models/state_model.dart';
+import 'package:mojtama/viewmodels/plak_model.dart';
+import 'package:mojtama/viewmodels/state_model.dart';
 import 'package:mojtama/models/user_model.dart';
 import 'package:mojtama/services/app_service.dart';
 import 'package:mojtama/services/user_api_service.dart';
@@ -12,23 +12,22 @@ import 'package:mojtama/views/widgets/textfield_widget.dart';
 import 'package:provider/provider.dart';
 
 class SignupPage extends StatelessWidget {
-  SignupPage({super.key});
   final GlobalKey<FormState> _formKey = GlobalKey();
-  TextEditingController nameTxt = TextEditingController();
-  TextEditingController familyTxt = TextEditingController();
-  TextEditingController familyMembersTxt = TextEditingController();
-
-  TextEditingController usernameTxt = TextEditingController();
-  TextEditingController passwordTxt = TextEditingController();
-  TextEditingController plakTxt = TextEditingController();
-  TextEditingController phoneTxt = TextEditingController();
-  TextEditingController phone2Txt = TextEditingController();
-  TextEditingController bluckTxt = TextEditingController();
-  TextEditingController vahedTxt = TextEditingController();
-  TextEditingController startdateTxt = TextEditingController();
-  TextEditingController enddateTxt = TextEditingController();
-  ProfileHelper profileHelper = ProfileHelper();
-  UserProvider userProvider = UserProvider();
+  final TextEditingController nameTxt = TextEditingController();
+  final TextEditingController familyTxt = TextEditingController();
+  final TextEditingController familyMembersTxt = TextEditingController();
+  final TextEditingController usernameTxt = TextEditingController();
+  final TextEditingController passwordTxt = TextEditingController();
+  final TextEditingController plakTxt = TextEditingController();
+  final TextEditingController phoneTxt = TextEditingController();
+  final TextEditingController phone2Txt = TextEditingController();
+  final TextEditingController bluckTxt = TextEditingController();
+  final TextEditingController vahedTxt = TextEditingController();
+  final TextEditingController startdateTxt = TextEditingController();
+  final TextEditingController enddateTxt = TextEditingController();
+  final ProfileHelper profileHelper = ProfileHelper();
+  final UserProvider userProvider = UserProvider();
+  SignupPage({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

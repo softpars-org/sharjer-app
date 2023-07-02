@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mojtama/models/month_model.dart';
+import 'package:mojtama/viewmodels/month_model.dart';
 import 'package:mojtama/models/year_model.dart';
 import 'package:mojtama/services/admin_api_service.dart';
 import 'package:mojtama/services/app_service.dart';
@@ -8,8 +8,8 @@ import 'package:mojtama/views/widgets/year_dropdown_widget.dart';
 import 'package:provider/provider.dart';
 
 class RemoveChargeFromUserScreen extends StatelessWidget {
-  String username;
-  RemoveChargeFromUserScreen({super.key, required this.username});
+  final String username;
+  const RemoveChargeFromUserScreen({super.key, required this.username});
 
   @override
   Widget build(BuildContext context) {

@@ -8,7 +8,7 @@ import 'package:mojtama/views/widgets/textfield_widget.dart';
 import 'package:provider/provider.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
-  ChangePasswordScreen({super.key});
+  const ChangePasswordScreen({super.key});
 
   @override
   State<ChangePasswordScreen> createState() => _ChangePasswordScreenState();
@@ -26,7 +26,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     Future.delayed(Duration.zero, () async => getPassword());
   }
 
-  @override
   Future<void> getPassword() async {
     var box = Hive.box("auth");
     ChangePasswordModel model =

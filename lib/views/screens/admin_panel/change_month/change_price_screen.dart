@@ -6,11 +6,11 @@ import 'package:mojtama/views/widgets/textfield_widget.dart';
 import 'package:flutter/material.dart';
 
 class ChangePriceScreen extends StatelessWidget {
-  ChangePriceScreen({super.key});
-
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
-  TextEditingController priceController = TextEditingController();
-  ProfileHelper helper = ProfileHelper();
+  final TextEditingController priceController = TextEditingController();
+  final ProfileHelper helper = ProfileHelper();
+
+  ChangePriceScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

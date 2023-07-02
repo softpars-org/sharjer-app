@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mojtama/models/month_model.dart';
+import 'package:mojtama/viewmodels/month_model.dart';
 import 'package:provider/provider.dart';
 
 class MonthsCheckBox extends StatelessWidget {
@@ -185,10 +185,10 @@ class MonthsCheckBox extends StatelessWidget {
 }
 
 class MonthCheckBox extends StatelessWidget {
-  String? name;
-  bool value;
-  void Function(bool?)? onChanged;
-  MonthCheckBox({
+  final String? name;
+  final bool value;
+  final void Function(bool?)? onChanged;
+  const MonthCheckBox({
     super.key,
     this.name = '',
     this.value = false,

@@ -1,5 +1,4 @@
 import "package:flutter/material.dart";
-import 'package:flutter/services.dart';
 import 'package:mojtama/helpers/profile_helper.dart';
 import 'package:mojtama/services/admin_api_service.dart';
 import 'package:mojtama/services/app_service.dart';
@@ -7,9 +6,9 @@ import 'package:mojtama/views/widgets/textfield_widget.dart';
 
 class SendNotificationScreen extends StatelessWidget {
   SendNotificationScreen({super.key});
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController title = TextEditingController();
-  TextEditingController body = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController title = TextEditingController();
+  final TextEditingController body = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:mojtama/helpers/profile_helper.dart';
-import 'package:mojtama/models/permission_model.dart';
-import 'package:mojtama/models/plak_model.dart';
-import 'package:mojtama/models/state_model.dart';
-import 'package:mojtama/models/theme_model.dart';
+import 'package:mojtama/viewmodels/permission_model.dart';
+import 'package:mojtama/viewmodels/plak_model.dart';
+import 'package:mojtama/viewmodels/state_model.dart';
+import 'package:mojtama/viewmodels/theme_model.dart';
 import 'package:mojtama/models/user_model.dart';
 import 'package:mojtama/services/app_service.dart';
 import 'package:mojtama/services/user_api_service.dart';
@@ -21,7 +21,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  @override
   final GlobalKey<FormState> _formKey = GlobalKey();
   FocusNode nameNode = FocusNode();
   TextEditingController nameTxt = TextEditingController();

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:mojtama/models/charge_status_model.dart';
 
 class PaymentStatusTable extends StatelessWidget {
-  ChargeRowStatus chargeStatusOfTheUser;
-  String year;
-  String name;
-  PaymentStatusTable({
+  final ChargeRowStatus chargeStatusOfTheUser;
+  final String year;
+  final String name;
+  const PaymentStatusTable({
     super.key,
     required this.year,
     required this.chargeStatusOfTheUser,

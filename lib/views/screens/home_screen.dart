@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:mojtama/models/navbar_model.dart';
-import 'package:mojtama/models/theme_model.dart';
+import 'package:mojtama/viewmodels/navbar_model.dart';
+import 'package:mojtama/viewmodels/theme_model.dart';
 import 'package:mojtama/services/app_service.dart';
 import 'package:mojtama/services/user_api_service.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';

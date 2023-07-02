@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:hive/hive.dart';
-import 'package:mojtama/models/theme_model.dart';
+import 'package:mojtama/viewmodels/theme_model.dart';
 import 'package:mojtama/services/app_service.dart';
 import 'package:mojtama/services/user_api_service.dart';
 import 'package:mojtama/views/screens/auth_screens/change_password.dart';
@@ -118,8 +118,7 @@ class SettingsScreen extends StatelessWidget {
 }
 
 class UpdateApp extends StatelessWidget {
-  @override
-  UserProvider userProvider = UserProvider();
+  final UserProvider userProvider = UserProvider();
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -127,22 +126,18 @@ class UpdateApp extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.data["status"] == "updated") {
-            return Container(
-              child: TextButton(
-                child: const Text("نسخه اپلیکیشن شما به روز می‌باشد."),
-                onPressed: () {},
-              ),
+            return TextButton(
+              child: const Text("نسخه اپلیکیشن شما به روز می‌باشد."),
+              onPressed: () {},
             );
           } else if (snapshot.data["status"] == "not updated") {
-            return Container(
-              child: TextButton(
-                child: Text(
-                    "${"نسخه‌ی اپلیکیشن شما: " + snapshot.data["given_version"]}. (برای دانلود، ضربه بزنید)"),
-                onPressed: () {
-                  launchUrlString(snapshot.data["app_link"],
-                      mode: LaunchMode.externalApplication);
-                },
-              ),
+            return TextButton(
+              onPressed: () {
+                launchUrlString(snapshot.data["app_link"],
+                    mode: LaunchMode.externalApplication);
+              },
+              child: Text(
+                  "نسخه‌ی اپلیکیشن شما: ${snapshot.data["given_version"]}. (برای دانلود، ضربه بزنید)"),
             );
           }
         } else {

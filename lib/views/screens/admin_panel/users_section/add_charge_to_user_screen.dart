@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:mojtama/helpers/profile_helper.dart';
-import 'package:mojtama/models/month_model.dart';
+import 'package:mojtama/viewmodels/month_model.dart';
 import 'package:mojtama/models/year_model.dart';
 import 'package:mojtama/services/admin_api_service.dart';
 import 'package:mojtama/services/app_service.dart';
@@ -11,10 +11,10 @@ import 'package:mojtama/views/widgets/year_dropdown_widget.dart';
 import 'package:provider/provider.dart';
 
 class AddChargeToUserScreen extends StatelessWidget {
-  String username;
+  final String username;
   AddChargeToUserScreen({super.key, required this.username});
-  ProfileHelper helper = ProfileHelper();
-  AdminProvider api = AdminProvider();
+  final ProfileHelper helper = ProfileHelper();
+  final AdminProvider api = AdminProvider();
 
   @override
   Widget build(BuildContext context) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mojtama/models/adminpanel_model.dart';
-import 'package:mojtama/models/permission_model.dart';
+import 'package:mojtama/viewmodels/adminpanel_model.dart';
+import 'package:mojtama/viewmodels/permission_model.dart';
 import 'package:mojtama/models/user_model.dart';
 import 'package:mojtama/services/admin_api_service.dart';
 import 'package:mojtama/services/app_service.dart';
@@ -28,7 +28,7 @@ class _UsersListScreenState extends State<UsersListScreen> {
 
   _loadResources() async {
     var provider = Provider.of<AdminPanelModel>(context, listen: false);
-    List<User> users = await provider.getUsers();
+    await provider.getUsers();
     provider.filterUsersByBluck();
   }
 
@@ -92,8 +92,8 @@ class _UsersListScreenState extends State<UsersListScreen> {
 }
 
 class UserCard extends StatelessWidget {
-  User user;
-  UserCard({super.key, required this.user});
+  final User user;
+  const UserCard({super.key, required this.user});
 
   String _generateHumanizedPermission(String userType) {
     switch (userType) {
@@ -169,8 +169,8 @@ class UserCard extends StatelessWidget {
 }
 
 class ThreeDots extends StatefulWidget {
-  User user;
-  ThreeDots({Key? key, required this.user}) : super(key: key);
+  final User user;
+  const ThreeDots({Key? key, required this.user}) : super(key: key);
 
   @override
   State<ThreeDots> createState() => _ThreeDotsState();
@@ -210,7 +210,6 @@ class _ThreeDotsState extends State<ThreeDots> {
 
   Future<void> _handlePopupMenu(choice) async {
     AppService appService = AppService(context);
-    List<dynamic> choices = popupItems["strings"];
     switch (choice) {
       case "وضعیت شارژ":
         appService.navigate(UserChargeStatusScreen(user: widget.user));
