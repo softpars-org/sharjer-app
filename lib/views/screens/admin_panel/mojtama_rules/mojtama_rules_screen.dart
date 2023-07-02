@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mojtama/models/state_model.dart';
+import 'package:mojtama/viewmodels/state_model.dart';
 import 'package:mojtama/services/admin_api_service.dart';
 import 'package:mojtama/services/app_service.dart';
 import 'package:mojtama/views/widgets/textfield_widget.dart';
@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 class MojtamaRulesScreen extends StatelessWidget {
   MojtamaRulesScreen({super.key});
-  TextEditingController ruleController = TextEditingController();
+  final TextEditingController ruleController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

@@ -3,18 +3,16 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mojtama/models/adminpanel_model.dart';
-import 'package:mojtama/models/month_model.dart';
-import 'package:mojtama/models/navbar_model.dart';
-import 'package:mojtama/models/payment_model.dart';
-import 'package:mojtama/models/permission_model.dart';
-import 'package:mojtama/models/plak_model.dart';
+import 'package:mojtama/viewmodels/adminpanel_model.dart';
+import 'package:mojtama/viewmodels/month_model.dart';
+import 'package:mojtama/viewmodels/navbar_model.dart';
+import 'package:mojtama/viewmodels/payment_model.dart';
+import 'package:mojtama/viewmodels/permission_model.dart';
+import 'package:mojtama/viewmodels/plak_model.dart';
 import 'package:mojtama/models/scroll_model.dart';
-import 'package:mojtama/models/state_model.dart';
-import 'package:mojtama/models/theme_model.dart';
+import 'package:mojtama/viewmodels/state_model.dart';
+import 'package:mojtama/viewmodels/theme_model.dart';
 import 'package:mojtama/models/year_model.dart';
-import 'package:mojtama/services/app_service.dart';
-import 'package:mojtama/services/user_api_service.dart';
 import 'package:mojtama/viewmodels/change_password_model.dart';
 import 'package:mojtama/viewmodels/who_didnt_pay_model.dart';
 import 'package:mojtama/views/screens/auth_screens/login_screen.dart';
@@ -36,7 +34,6 @@ void main() async {
   }
   await Hive.openBox("theme");
   await Hive.openBox("auth");
-  UserProvider userProvider = UserProvider();
   if (Platform.isAndroid || Platform.isIOS) {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       if (message.data["navigation"] == "/history_screen") {

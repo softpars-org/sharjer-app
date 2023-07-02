@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mojtama/models/payment_model.dart';
+import 'package:mojtama/viewmodels/payment_model.dart';
 import 'package:mojtama/views/widgets/card_widget.dart';
 import 'package:provider/provider.dart';
 

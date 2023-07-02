@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mojtama/models/adminpanel_model.dart';
+import 'package:mojtama/viewmodels/adminpanel_model.dart';
 import 'package:mojtama/services/admin_api_service.dart';
 import 'package:mojtama/services/app_service.dart';
 import 'package:provider/provider.dart';
@@ -9,7 +9,6 @@ class FinancialAdminStatusScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AppService service = AppService(context);
     final providerModel = Provider.of<AdminPanelModel>(context, listen: false);
     return Scaffold(
       appBar: AppBar(

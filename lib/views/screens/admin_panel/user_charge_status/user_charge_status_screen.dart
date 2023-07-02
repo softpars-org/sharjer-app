@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:mojtama/models/payment_model.dart';
+import 'package:mojtama/viewmodels/payment_model.dart';
 import 'package:mojtama/models/user_model.dart';
 import 'package:mojtama/views/widgets/payment_status_table.dart';
 import 'package:provider/provider.dart';
 
 class UserChargeStatusScreen extends StatefulWidget {
-  User user;
-  UserChargeStatusScreen({
+  final User user;
+  const UserChargeStatusScreen({
     super.key,
     required this.user,
   });
@@ -22,7 +22,6 @@ class _UserChargeStatusScreenState extends State<UserChargeStatusScreen> {
     Future.delayed(Duration.zero, () => _loadResources());
   }
 
-  @override
   Future<dynamic> _loadResources() async {
     var provider = Provider.of<PaymentModel>(context, listen: false);
     await provider.fetchChargeStatusOfAMember(widget.user.username);

@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:http/retry.dart';
 import 'package:mojtama/models/user_model.dart';
 import 'package:mojtama/services/admin_api_service.dart';
 import 'package:mojtama/views/widgets/textfield_widget.dart';

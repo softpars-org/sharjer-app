@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mojtama/models/charge_status_model.dart';
-import 'package:mojtama/models/month_model.dart';
+import 'package:mojtama/viewmodels/month_model.dart';
 import 'package:mojtama/models/year_model.dart';
 import 'package:mojtama/services/admin_api_service.dart';
 import 'package:mojtama/views/widgets/payment_status_table.dart';

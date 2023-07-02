@@ -138,9 +138,14 @@ class AdminProvider {
       "year": year,
       "months": jsonMonths
     };
-    http.Response request;
-    request = await http.post(url, body: payload);
-    return true;
+    try {
+      http.Response request = await http.post(url, body: payload);
+      if (request.statusCode == 200) {
+        return true;
+      }
+    } catch (e) {
+      return false;
+    }
   }
 
   changeUserPrivilege(String username, String privilege) async {
@@ -176,19 +181,18 @@ class AdminProvider {
       "username": _box.get("username"),
       "password": _box.get("password")
     };
-    request = await http.post(url);
-
+    request = await http.post(url, body: payload);
+    List<ChargeRowStatus> charges = [];
     if (request.statusCode == 200) {
       List<dynamic> response = jsonDecode(request.body);
-      List<ChargeRowStatus> charges = [];
       for (var element in response) {
         ChargeRowStatus chargeRow = ChargeRowStatus.fromJson(element);
         charges.add(chargeRow);
       }
       return charges;
     } else if (request.statusCode == 401) {
-      return <ChargeRowStatus>[];
-    } else {}
+      return charges;
+    }
   }
 
   sendNotif(String title, String body) async {

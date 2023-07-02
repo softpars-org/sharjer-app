@@ -1,16 +1,15 @@
-
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-  TextEditingController? controller;
-  String? label;
-  String? helper;
-  bool obscureText;
-  Icon? suffixIcon;
-  int? maxLines;
-  TextInputType? keyboardType;
-  String? Function(String?)? validator;
-  CustomTextField({
+  final TextEditingController? controller;
+  final String? label;
+  final String? helper;
+  final bool obscureText;
+  final Icon? suffixIcon;
+  final int? maxLines;
+  final TextInputType? keyboardType;
+  final String? Function(String?)? validator;
+  const CustomTextField({
     super.key,
     this.validator,
     this.controller,

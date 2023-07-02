@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:mojtama/models/plak_model.dart';
+import 'package:mojtama/viewmodels/plak_model.dart';
 import 'package:mojtama/views/widgets/textfield_widget.dart';
 import 'package:provider/provider.dart';
 
 class PlakInputWidget extends StatelessWidget {
-  String? Function(String?)? numValidator;
-  String? Function(String?)? farsiValidator;
-  PlakInputWidget({
+  final String? Function(String?)? numValidator;
+  final String? Function(String?)? farsiValidator;
+  const PlakInputWidget({
     super.key,
     required this.numValidator,
     required this.farsiValidator,
@@ -89,26 +89,5 @@ class PlakInputWidget extends StatelessWidget {
         ],
       );
     });
-  }
-
-  List<DropdownMenuItem<dynamic>>? get _items {
-    return [
-      const DropdownMenuItem(
-        value: 1,
-        child: Text("تست"),
-      ),
-      const DropdownMenuItem(
-        value: 2,
-        child: Text("تست"),
-      ),
-      const DropdownMenuItem(
-        value: 3,
-        child: Text("تست"),
-      ),
-      const DropdownMenuItem(
-        value: 4,
-        child: Text("تست"),
-      ),
-    ];
   }
 }

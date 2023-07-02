@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:mojtama/models/month_model.dart';
+import 'package:mojtama/viewmodels/month_model.dart';
 import 'package:mojtama/services/app_service.dart';
 import 'package:mojtama/services/payment_api_service.dart';
 import 'package:mojtama/views/screens/payment/add_months_screen.dart';
@@ -85,9 +85,9 @@ class _CustomPayPageState extends State<CustomPayPage> {
 }
 
 class CartShower extends StatelessWidget {
-  MonthsModel model;
-  int index;
-  CartShower({Key? key, required this.model, required this.index})
+  final MonthsModel model;
+  final int index;
+  const CartShower({Key? key, required this.model, required this.index})
       : super(key: key);
 
   @override

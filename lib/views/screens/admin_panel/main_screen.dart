@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mojtama/models/permission_model.dart';
+import 'package:mojtama/viewmodels/permission_model.dart';
 import 'package:mojtama/services/app_service.dart';
 import 'package:mojtama/views/screens/admin_panel/change_month/change_month_screen.dart';
 import 'package:mojtama/views/screens/admin_panel/change_month/change_price_screen.dart';
@@ -116,10 +116,10 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
 }
 
 class Item extends StatelessWidget {
-  String? title;
-  IconData? icon;
-  Function()? onPressed;
-  Item({super.key, this.title, this.icon, this.onPressed});
+  final String? title;
+  final IconData? icon;
+  final Function()? onPressed;
+  const Item({super.key, this.title, this.icon, this.onPressed});
 
   @override
   Widget build(BuildContext context) {

@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:mojtama/models/history_model.dart';
 
 class CustomCard extends StatelessWidget {
-  History history;
-  CustomCard({super.key, required this.history});
+  final History history;
+  const CustomCard({super.key, required this.history});
 
   @override
   Widget build(BuildContext context) {
-    // DateTime date = DateTime.parse(history.date);
-    // DateFormat dateFormatter = DateFormat("HH:mm,");
-    // String paidAt = dateFormatter.format(date);
     return Container(
       padding: const EdgeInsets.all(25),
       child: Card(

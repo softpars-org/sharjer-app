@@ -9,9 +9,9 @@ import 'package:mojtama/views/widgets/textfield_widget.dart';
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
-  ProfileHelper profileHelper = ProfileHelper();
-  TextEditingController usernameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  final ProfileHelper profileHelper = ProfileHelper();
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
