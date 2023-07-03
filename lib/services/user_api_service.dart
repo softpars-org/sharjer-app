@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
+import 'package:mojtama/config/strings.dart';
 import 'package:mojtama/models/charge_status_model.dart';
 import 'package:mojtama/models/rule_model.dart';
 import 'package:mojtama/models/user_model.dart';
@@ -13,7 +14,7 @@ class UserProvider {
   String? host;
   final _box = Hive.box("auth");
   UserProvider() {
-    host = "https://amolicomplex.ir/mojtama-server-mvc";
+    host = Strings.baseURL;
   }
 
   login(String username, String password) async {
