@@ -2,13 +2,14 @@ import 'dart:convert';
 
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
+import 'package:mojtama/config/strings.dart';
 import 'package:mojtama/models/history_model.dart';
 
 class PaymentProvider {
   String? host;
   final _box = Hive.box("auth");
   PaymentProvider() {
-    host = "https://amolicomplex.ir/mojtama-server-mvc/";
+    host = Strings.baseURL;
   }
 
   getCurrentMonth() async {
@@ -27,6 +28,7 @@ class PaymentProvider {
       "password": _box.get("password")
     };
     request = await http.post(url, body: body);
+    print(request.body);
     Map<String, dynamic> response = jsonDecode(request.body);
     if (response.containsKey("url")) {
       return response["url"];
