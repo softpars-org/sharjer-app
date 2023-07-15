@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:mojtama/config/strings.dart';
@@ -135,6 +136,13 @@ class UserProvider {
   Future<String?> getPaymentStatusMessageOfTheUsers() async {
     var url = Uri.parse("$host/user/people_who_charged_this_month");
     http.Response request;
+    try {
+      request = await http.get(url);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
     request = await http.get(url);
     Map<String, dynamic> response = jsonDecode(request.body);
     if (request.statusCode == 200) {

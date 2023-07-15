@@ -11,6 +11,8 @@ import 'package:url_launcher/url_launcher_string.dart';
 var box = Hive.box("theme");
 
 class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,7 +126,8 @@ class UpdateApp extends StatelessWidget {
     return FutureBuilder(
       future: userProvider.appVersionCalculator(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
+        if (snapshot.connectionState == ConnectionState.done &&
+            snapshot.data != null) {
           if (snapshot.data["status"] == "updated") {
             return TextButton(
               child: const Text("نسخه اپلیکیشن شما به روز می‌باشد."),
