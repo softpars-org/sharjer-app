@@ -38,16 +38,19 @@ class _UserChargeStatusScreenState extends State<UserChargeStatusScreen> {
           return SingleChildScrollView(
             child: Scrollbar(
               child: Column(
-                mainAxisAlignment: model.chargeStatusOfAMember.isEmpty
-                    ? MainAxisAlignment.center
-                    : MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: model.chargeStatusOfAMember.isEmpty
                     ? [
-                        Center(
-                          child: Text(
-                            "${widget.user.name} ${widget.user.family} شارژی را پرداخت نکرده است.",
-                          ),
+                        Column(
+                          children: [
+                            Center(
+                              child: Text(
+                                "${widget.user.name} ${widget.user.family} شارژی را پرداخت نکرده است.",
+                              ),
+                            ),
+                            CircularProgressIndicator(),
+                          ],
                         ),
                       ]
                     : List.generate(
