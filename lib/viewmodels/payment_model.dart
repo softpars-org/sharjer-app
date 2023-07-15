@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mojtama/models/charge_status_model.dart';
 import 'package:mojtama/models/history_model.dart';
@@ -44,8 +45,16 @@ class PaymentModel extends ChangeNotifier {
   getCurrentMonth() async {
     PaymentProvider paymentProvider = PaymentProvider();
     toggleLoading();
-    String month = await paymentProvider.getCurrentMonth();
-    toggleLoading();
+    var month;
+    try {
+      month = await paymentProvider.getCurrentMonth();
+      toggleLoading();
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+
     currentMonth = month;
     notifyListeners();
   }

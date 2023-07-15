@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:mojtama/config/strings.dart';
@@ -20,12 +21,16 @@ class AdminProvider {
       "password": _box.get("password")
     };
     http.Response request;
-    request = await http.post(url, body: payload);
-    if (request.statusCode == 200) {
-      return true;
-    } else {
+    try {
+      request = await http.post(url, body: payload);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
       return false;
     }
+
+    return (request.statusCode == 200);
   }
 
   updatePrice(price) async {
@@ -35,12 +40,16 @@ class AdminProvider {
       "password": _box.get("password"),
     };
     http.Response request;
-    request = await http.post(url, body: payload);
-    if (request.statusCode == 200) {
-      return true;
-    } else {
+    try {
+      request = await http.post(url, body: payload);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
       return false;
     }
+
+    return (request.statusCode == 200);
   }
 
   addOrUpdateMojtamaRule(String rule) async {
@@ -51,12 +60,16 @@ class AdminProvider {
       "rule": rule,
     };
     http.Response request;
-    request = await http.post(url, body: payload);
-    if (request.statusCode == 200) {
-      return true;
-    } else {
+    try {
+      request = await http.post(url, body: payload);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
       return false;
     }
+    request = await http.post(url, body: payload);
+    return (request.statusCode == 200);
   }
 
   addOrUpdateMojtamaFinancialStatus(String json) async {
@@ -66,18 +79,30 @@ class AdminProvider {
       "password": _box.get("password"),
       "financial_json": json,
     };
-    http.Response request = await http.post(url, body: payload);
-    if (request.statusCode == 200) {
-      return true;
-    } else {
+    http.Response request;
+    try {
+      request = await http.post(url, body: payload);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
       return false;
     }
+    return (request.statusCode == 200);
   }
 
   getUsers() async {
     var url = Uri.parse("$host/adminpanel/users");
     http.Response request;
-    request = await http.get(url);
+    try {
+      request = await http.get(url);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return false;
+    }
+
     List<User> users = [];
     if (request.statusCode == 200) {
       List listUsers = jsonDecode(request.body);
@@ -100,9 +125,15 @@ class AdminProvider {
       "target_username": targetUsername,
       "json": jsonedChargeData,
     };
-    request = await http.post(url, body: payload);
+    try {
+      request = await http.post(url, body: payload);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return false;
+    }
     Map<String, dynamic> response = jsonDecode(request.body);
-    print(response);
     if (request.statusCode == 200) {
       if (response["message"] == "charges were added") {
         return response["months"];
@@ -126,7 +157,14 @@ class AdminProvider {
       "year": year,
       "month": month,
     };
-    request = await http.post(url, body: body);
+    try {
+      request = await http.post(url, body: body);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return false;
+    }
     return (request.statusCode == 200);
   }
 
@@ -145,6 +183,9 @@ class AdminProvider {
         return true;
       }
     } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
       return false;
     }
   }
@@ -157,20 +198,35 @@ class AdminProvider {
       "password": _box.get("password")
     };
     http.Response request;
-    request = await http.post(url, body: payload);
-    if (request.statusCode == 200) {
-      return true;
-    } else if (request.statusCode == 401) {
-      return -1;
-    } else {
+    try {
+      request = await http.post(url, body: payload);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
       return false;
+    }
+    switch (request.statusCode) {
+      case 200:
+        return true;
+      case 401:
+        return -1;
+      default:
+        return false;
     }
   }
 
   getMonthsPricesInfo() async {
     var url = Uri.parse("$host/adminpanel/months_price");
     http.Response request;
-    request = await http.get(url);
+    try {
+      request = await http.get(url);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return false;
+    }
     Map<String, dynamic> response = jsonDecode(request.body);
     return response;
   }
@@ -182,8 +238,16 @@ class AdminProvider {
       "username": _box.get("username"),
       "password": _box.get("password")
     };
-    request = await http.post(url, body: payload);
     List<ChargeRowStatus> charges = [];
+    try {
+      request = await http.post(url, body: payload);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return charges;
+    }
+
     if (request.statusCode == 200) {
       List<dynamic> response = jsonDecode(request.body);
       for (var element in response) {
@@ -204,7 +268,14 @@ class AdminProvider {
       "body": body,
     };
     http.Response request;
-    request = await http.post(url, body: payload);
+    try {
+      request = await http.post(url, body: payload);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return false;
+    }
     return (request.statusCode == 200);
   }
 }

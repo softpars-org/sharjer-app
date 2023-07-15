@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mojtama/models/rule_model.dart';
 import 'package:mojtama/services/user_api_service.dart';
@@ -33,15 +34,29 @@ class MojtamaStatusExpansionModel extends ChangeNotifier {
 
   getFinancialStatus() async {
     toggleLoading();
-    var response = await UserProvider().getFinancialStatus();
-    toggleLoading();
+    var response;
+    try {
+      response = await UserProvider().getFinancialStatus();
+      toggleLoading();
+    } catch (e) {
+      return;
+    }
+
     financialStatusText = jsonDecode(response)["data"];
     notifyListeners();
   }
 
   getRules() async {
     toggleLoading();
-    Rule? response = await UserProvider().getMojtamaRules();
+    Rule? response;
+    try {
+      response = await UserProvider().getMojtamaRules();
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return;
+    }
     if (response != null) {
       toggleLoading();
       mojtamaRule = response;

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:mojtama/config/strings.dart';
@@ -15,7 +16,14 @@ class PaymentProvider {
   getCurrentMonth() async {
     var url = Uri.parse("$host/user/get_month");
     http.Response request;
-    request = await http.get(url);
+    try {
+      request = await http.get(url);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return false;
+    }
     Map<String, dynamic> response = jsonDecode(request.body);
     return response["month"];
   }
@@ -27,8 +35,14 @@ class PaymentProvider {
       "username": _box.get("username"),
       "password": _box.get("password")
     };
-    request = await http.post(url, body: body);
-    print(request.body);
+    try {
+      request = await http.post(url, body: body);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return false;
+    }
     Map<String, dynamic> response = jsonDecode(request.body);
     if (response.containsKey("url")) {
       return response["url"];
@@ -46,8 +60,14 @@ class PaymentProvider {
       "password": _box.get("password"),
       "json": jsonChargeInfo,
     };
-    request = await http.post(url, body: body);
-    print(request.body);
+    try {
+      request = await http.post(url, body: body);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return false;
+    }
     Map<String, dynamic> response = jsonDecode(request.body);
     if (request.statusCode == 200) {
       return response["url"];
@@ -59,7 +79,14 @@ class PaymentProvider {
   getPaymentHistory() async {
     var url = Uri.parse("$host/payment/get_payment_history");
     http.Response request;
-    request = await http.get(url);
+    try {
+      request = await http.get(url);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return false;
+    }
     List response = jsonDecode(request.body);
     List<History> paymentHistory = [];
     for (var jsonHistory in response) {
@@ -74,7 +101,15 @@ class PaymentProvider {
   getPeopleWhoDidntPayCharge() async {
     var url = Uri.parse("$host/payment/get_who_didnt_pay_this_month");
     http.Response request;
-    request = await http.get(url);
+    try {
+      request = await http.get(url);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return false;
+    }
+
     Map<String, dynamic> response = jsonDecode(request.body);
     return (request.statusCode == 200) ? response : false;
   }
