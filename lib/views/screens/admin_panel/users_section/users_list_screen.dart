@@ -234,7 +234,6 @@ class _ThreeDotsState extends State<ThreeDots> {
             await Encryption().decrypt(widget.user.password);
         // ignore: use_build_context_synchronously
         appService.throwDialog(
-          context,
           decryptedPassword,
           okMsg: "کپی",
           errMsg: "بازگشت",
@@ -249,7 +248,6 @@ class _ThreeDotsState extends State<ThreeDots> {
       case "تبدیل به کاربر عادی":
         AdminProvider adminProvider = AdminProvider();
         appService.throwDialog(
-          context,
           "آیا با تبدیل کاربر به کاربر عادی موافقید؟",
           okMsg: "بله",
           errMsg: "خیر",
@@ -278,7 +276,6 @@ class _ThreeDotsState extends State<ThreeDots> {
       case "تبدیل به مدیر بلوک۱":
         AdminProvider adminProvider = AdminProvider();
         appService.throwDialog(
-          context,
           "آیا با تبدیل کاربر به مدیر بلوک۱ موافقید؟",
           okMsg: "بله",
           errMsg: "خیر",
@@ -307,7 +304,6 @@ class _ThreeDotsState extends State<ThreeDots> {
       case "تبدیل به مدیر بلوک۲":
         AdminProvider adminProvider = AdminProvider();
         appService.throwDialog(
-          context,
           "آیا با تبدیل کاربر به مدیر بلوک۲ موافقید؟",
           okMsg: "بله",
           errMsg: "خیر",
@@ -336,7 +332,6 @@ class _ThreeDotsState extends State<ThreeDots> {
       case "تبدیل به مدیر بلوک۳":
         AdminProvider adminProvider = AdminProvider();
         appService.throwDialog(
-          context,
           "آیا با تبدیل کاربر به مدیر بلوک۳ موافقید؟",
           okMsg: "بله",
           errMsg: "خیر",
@@ -365,7 +360,6 @@ class _ThreeDotsState extends State<ThreeDots> {
       case "حذف کاربر":
         AdminProvider adminProvider = AdminProvider();
         appService.throwDialog(
-          context,
           "آیا با حذف کاربر موافقید؟",
           okMsg: "بله",
           errMsg: "خیر",
