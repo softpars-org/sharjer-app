@@ -97,7 +97,6 @@ class AppService {
   }
 
   throwDialog(
-    BuildContext context,
     String question, {
     String okMsg = "",
     String errMsg = "",

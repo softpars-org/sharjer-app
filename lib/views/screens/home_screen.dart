@@ -28,7 +28,9 @@ class _HomeScreenState extends State<HomeScreen> {
       });
 
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        AppService(context).snackBar(message.notification!.body!);
+        AppService(context).throwDialog(
+          message.notification!.body!,
+        );
       }); //it should be fixed.
     }
   }
