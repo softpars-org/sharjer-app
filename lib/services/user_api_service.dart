@@ -142,8 +142,8 @@ class UserProvider {
       if (kDebugMode) {
         print(e);
       }
+      return null;
     }
-    request = await http.get(url);
     Map<String, dynamic> response = jsonDecode(request.body);
     if (request.statusCode == 200) {
       return response["data"];
@@ -185,7 +185,16 @@ class UserProvider {
       "username": _box.get("username"),
       "password": _box.get("password")
     };
-    http.Response request = await http.post(url, body: body);
+    http.Response request;
+    try {
+      request = await http.post(url, body: body);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return false;
+    }
+
     Map<String, dynamic> response = jsonDecode(request.body);
     if (request.statusCode == 200) {
       return User.fromJson(response["data"]);
