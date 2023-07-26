@@ -100,7 +100,7 @@ class _ChangeWholeMonthsScreenState extends State<ChangeWholeMonthsScreen> {
               ),
               Column(
                 children: [
-                  Text("به ریال مبالغ را وارد کنید."),
+                  const Text("به تومان مبالغ را وارد کنید."),
                   Icon(
                     Icons.keyboard_arrow_down,
                     color: Theme.of(context).hintColor,
