@@ -122,18 +122,6 @@ class UserCard extends StatelessWidget {
         title: Text("${user.name} ${user.family}"),
         subtitle: Text("بلوک ${user.bluck}، واحد ${user.vahed}"),
         children: [
-          // Card(
-          //   shape: RoundedRectangleBorder(
-          //     borderRadius: BorderRadius.circular(10),
-          //   ),
-          //   child: Padding(
-          //     padding: const EdgeInsets.all(10.0),
-          //     child: Column(
-          //       crossAxisAlignment: CrossAxisAlignment.start,
-          //       children: [],
-          //     ),
-          //   ),
-          // ),
           ThreeDots(
             user: user,
           ),
