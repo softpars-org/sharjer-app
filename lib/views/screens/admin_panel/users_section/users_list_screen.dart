@@ -122,18 +122,6 @@ class UserCard extends StatelessWidget {
         title: Text("${user.name} ${user.family}"),
         subtitle: Text("بلوک ${user.bluck}، واحد ${user.vahed}"),
         children: [
-          // Card(
-          //   shape: RoundedRectangleBorder(
-          //     borderRadius: BorderRadius.circular(10),
-          //   ),
-          //   child: Padding(
-          //     padding: const EdgeInsets.all(10.0),
-          //     child: Column(
-          //       crossAxisAlignment: CrossAxisAlignment.start,
-          //       children: [],
-          //     ),
-          //   ),
-          // ),
           ThreeDots(
             user: user,
           ),
@@ -142,6 +130,7 @@ class UserCard extends StatelessWidget {
           Text("بلوک: ${user.bluck}"),
           Text("واحد: ${user.vahed}"),
           Text("نوع کاربر: ${_generateHumanizedPermission(user.userType)}"),
+          Text("تعداد خانوار: ${user.familyMembers}"),
           SelectableText("شمارهٔ همراه: ${user.phone}"),
           SelectableText("شمارهٔ همراه۲: ${user.phone2}"),
           Row(
@@ -184,6 +173,7 @@ class _ThreeDotsState extends State<ThreeDots> {
       "حذف شارژ",
       "مشاهده گذرواژه کاربر",
       "تبدیل به کاربر عادی",
+      "تعویض مدیر مجتمع",
       "تبدیل به مدیر بلوک۱",
       "تبدیل به مدیر بلوک۲",
       "تبدیل به مدیر بلوک۳",
@@ -195,6 +185,7 @@ class _ThreeDotsState extends State<ThreeDots> {
       Icons.credit_card_off_outlined,
       Icons.visibility_rounded,
       Icons.person_outlined,
+      Icons.admin_panel_settings_outlined,
       Icons.admin_panel_settings_outlined,
       Icons.admin_panel_settings_outlined,
       Icons.admin_panel_settings_outlined,
@@ -241,6 +232,34 @@ class _ThreeDotsState extends State<ThreeDots> {
             Clipboard.setData(ClipboardData(
               text: decryptedPassword,
             ));
+          },
+          handleError: () {},
+        );
+        break;
+      case "تعویض مدیر مجتمع":
+        AdminProvider adminProvider = AdminProvider();
+        appService.throwDialog(
+          "آیا با تبدیل کاربر به کاربر عادی موافقید؟",
+          okMsg: "بله",
+          errMsg: "خیر",
+          handleSuccess: () async {
+            String permissionType = "full"; //means full admin (full permission)
+            var response = await adminProvider.changeUserPrivilege(
+              widget.user.username,
+              permissionType,
+            );
+            switch (response) {
+              case true:
+                appService.snackBar("دسترسی با موفقیت تغییر کرد.");
+                model.updateUserType(widget.user, permissionType);
+                break;
+              case false:
+                appService.snackBar("مشکلی پیش آمد.");
+                break;
+              case -1:
+                appService.snackBar("شما دسترسی اینکار را ندارید.");
+                break;
+            }
           },
           handleError: () {},
         );
