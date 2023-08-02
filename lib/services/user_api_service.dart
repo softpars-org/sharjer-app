@@ -179,6 +179,25 @@ class UserProvider {
     return years;
   }
 
+  Future<dynamic> getCurrentPrice() async {
+    var url = Uri.parse("$host/user/get_price");
+    http.Response request;
+    Map<String, dynamic> response;
+    try {
+      request = await http.get(url);
+      response = jsonDecode(request.body);
+      if (request.statusCode == 200) {
+        return response["message"]; //"message" key contains the price.
+      }
+      throw Exception("Something went wrong");
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+        return;
+      }
+    }
+  }
+
   Future<dynamic> getMyProfile() async {
     var url = Uri.parse("$host/user/get_myself");
     Map<String, dynamic> body = {

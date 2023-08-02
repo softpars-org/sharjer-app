@@ -1,16 +1,30 @@
 import 'package:mojtama/helpers/profile_helper.dart';
 import 'package:mojtama/services/admin_api_service.dart';
 import 'package:mojtama/services/app_service.dart';
+import 'package:mojtama/services/user_api_service.dart';
 import 'package:mojtama/views/widgets/textfield_widget.dart';
 
 import 'package:flutter/material.dart';
 
-class ChangePriceScreen extends StatelessWidget {
+class ChangePriceScreen extends StatefulWidget {
+  const ChangePriceScreen({super.key});
+
+  @override
+  State<ChangePriceScreen> createState() => _ChangePriceScreenState();
+}
+
+class _ChangePriceScreenState extends State<ChangePriceScreen> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
   final TextEditingController priceController = TextEditingController();
   final ProfileHelper helper = ProfileHelper();
+  final UserProvider _userProvider = UserProvider();
+  @override
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
+    int price = await _userProvider.getCurrentPrice() ~/ 10;
+    priceController.text = price.toString();
+  }
 
-  ChangePriceScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
