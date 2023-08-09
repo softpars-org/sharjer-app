@@ -14,6 +14,26 @@ class AdminProvider {
     host = Strings.baseURL;
   }
 
+  Future<bool> updateYear(year) async {
+    var url = Uri.parse("$host/adminpanel/update_year/$year");
+    Map<String, dynamic> payload = {
+      "username": _box.get("username"),
+      "password": _box.get("password"),
+    };
+    http.Response request;
+    try {
+      request = await http.post(url, body: payload);
+      if (request.statusCode == 200) {
+        return true;
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+    return false;
+  }
+
   updateMonth(month) async {
     var url = Uri.parse("$host/adminpanel/update_month/$month");
     Map<String, dynamic> payload = {
