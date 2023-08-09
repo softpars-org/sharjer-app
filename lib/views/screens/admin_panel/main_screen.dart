@@ -4,6 +4,7 @@ import 'package:mojtama/services/app_service.dart';
 import 'package:mojtama/views/screens/admin_panel/change_month/change_month_screen.dart';
 import 'package:mojtama/views/screens/admin_panel/change_month/change_price_screen.dart';
 import 'package:mojtama/views/screens/admin_panel/change_month/change_whole_months_screen.dart';
+import 'package:mojtama/views/screens/admin_panel/change_year/change_year_screen.dart';
 import 'package:mojtama/views/screens/admin_panel/financial_status/financial_status_screen.dart';
 import 'package:mojtama/views/screens/admin_panel/mojtama_rules/mojtama_rules_screen.dart';
 import 'package:mojtama/views/screens/admin_panel/notifications/send_notification_screen.dart';
@@ -42,6 +43,16 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
         "onPressed": isFullAdmin
             ? () {
                 AppService service = AppService(context);
+                service.navigate(const ChangeYearScreen());
+              }
+            : null,
+        "title": "تغییر سال شارژ",
+        "icon": Icons.date_range_outlined,
+      },
+      {
+        "onPressed": isFullAdmin
+            ? () {
+                AppService service = AppService(context);
                 service.navigate(const ChangeMonthScreen());
               }
             : null,
@@ -52,7 +63,7 @@ class _AdminPanelScreenState extends State<AdminPanelScreen> {
         "onPressed": isFullAdmin
             ? () {
                 AppService service = AppService(context);
-                service.navigate(ChangePriceScreen());
+                service.navigate(const ChangePriceScreen());
               }
             : null,
         "title": "تغییر میزان شارژ",

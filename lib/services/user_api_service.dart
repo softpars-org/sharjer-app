@@ -171,6 +171,21 @@ class UserProvider {
     return false;
   }
 
+  Future<int?> getYear() async {
+    var url = Uri.parse("$host/user/get_year");
+    http.Response request;
+    try {
+      request = await http.get(url);
+      Map<String, dynamic> response = jsonDecode(request.body);
+      return response["year"];
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+    return null;
+  }
+
   Future<List<dynamic>> getYears() async {
     var url = Uri.parse("$host/user/get_years");
     http.Response request;
