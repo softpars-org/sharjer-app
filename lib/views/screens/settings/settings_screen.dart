@@ -5,6 +5,8 @@ import 'package:mojtama/viewmodels/theme_model.dart';
 import 'package:mojtama/services/app_service.dart';
 import 'package:mojtama/services/user_api_service.dart';
 import 'package:mojtama/views/screens/auth_screens/change_password.dart';
+import 'package:mojtama/views/screens/settings/privacy_policy_screen.dart';
+import 'package:mojtama/views/widgets/button_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -112,15 +114,32 @@ class SettingsScreen extends StatelessWidget {
             indent: 8,
             endIndent: 8,
           ),
-          UpdateApp(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListTile(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              title: const Text("حریم خصوصی"),
+              leading: const Icon(Icons.privacy_tip_outlined),
+              onTap: () {
+                AppService appService = AppService(context);
+                appService.navigate(const PrivacyPolicyScreen());
+              },
+            ),
+          ),
+          const Divider(),
+          UpdateAppButton(),
         ],
       ),
     );
   }
 }
 
-class UpdateApp extends StatelessWidget {
+class UpdateAppButton extends StatelessWidget {
   final UserProvider userProvider = UserProvider();
+
+  UpdateAppButton({super.key});
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
