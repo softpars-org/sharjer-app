@@ -3,7 +3,7 @@ import 'package:mojtama/views/screens/dashboard_screen.dart';
 import 'package:mojtama/views/screens/payment/mojtama_finance_screen.dart';
 import 'package:mojtama/views/screens/payment/payment_screen.dart';
 import 'package:mojtama/views/screens/payment/payment_status_screen.dart';
-import 'package:mojtama/views/screens/settings_screen.dart';
+import 'package:mojtama/views/screens/settings/settings_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class NavBarModel {
