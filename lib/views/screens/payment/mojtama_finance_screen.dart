@@ -23,8 +23,8 @@ class _MojtamaFinanceScreenState extends State<MojtamaFinanceScreen> {
   _loadResources() async {
     var provider =
         Provider.of<MojtamaStatusExpansionModel>(context, listen: false);
-    await provider.getFinancialStatus();
-    await provider.getRules();
+    await provider.getFinancialStatus(context);
+    await provider.getRules(context);
   }
 
   @override

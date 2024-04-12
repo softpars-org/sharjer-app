@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mojtama/viewmodels/network_viewmodel.dart';
 import 'package:mojtama/viewmodels/payment_model.dart';
 import 'package:mojtama/viewmodels/permission_model.dart';
 import 'package:mojtama/services/app_service.dart';
@@ -29,7 +30,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     var paymentProvider = Provider.of<PaymentModel>(context, listen: false);
     var permissionProvider =
         Provider.of<PermissionModel>(context, listen: false);
-    await paymentProvider.getPaymentStatusOfTheUsersInTheMonth();
+    await paymentProvider.getPaymentStatusOfTheUsersInTheMonth(context);
     await permissionProvider.fetchUserType();
   }
 

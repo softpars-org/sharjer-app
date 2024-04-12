@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:hive/hive.dart';
+import 'package:mojtama/services/app_services/snackbar_service.dart';
 import 'package:mojtama/viewmodels/theme_model.dart';
 import 'package:mojtama/services/app_service.dart';
 import 'package:mojtama/services/user_api_service.dart';
@@ -137,13 +138,12 @@ class SettingsScreen extends StatelessWidget {
 }
 
 class UpdateAppButton extends StatelessWidget {
-  final UserProvider userProvider = UserProvider();
-
-  UpdateAppButton({super.key});
+  const UpdateAppButton({super.key});
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: userProvider.appVersionCalculator(),
+      future: UserProvider(snackbarService: SnackbarService(context))
+          .appVersionCalculator(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.done &&
             snapshot.data != null) {

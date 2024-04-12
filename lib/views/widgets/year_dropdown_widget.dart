@@ -18,7 +18,7 @@ class _YearDropDownWidgetState extends State<YearDropDownWidget> {
 
   _loadResources() async {
     var provider = Provider.of<YearModel>(context, listen: false);
-    await provider.getYears();
+    await provider.getYears(context);
   }
 
   @override

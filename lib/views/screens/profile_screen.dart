@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:mojtama/helpers/profile_helper.dart';
+import 'package:mojtama/services/app_services/snackbar_service.dart';
 import 'package:mojtama/viewmodels/permission_model.dart';
 import 'package:mojtama/viewmodels/plak_model.dart';
 import 'package:mojtama/viewmodels/state_model.dart';
@@ -35,12 +36,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController startdateTxt = TextEditingController();
   TextEditingController enddateTxt = TextEditingController();
   ProfileHelper profileHelper = ProfileHelper();
-  UserProvider userProvider = UserProvider();
+  late UserProvider userProvider;
   late PlakModel plakProvider;
   late CheckboxModel checkboxProvider;
   @override
   void initState() {
     Future.delayed(Duration.zero, () => _loadResources());
+    userProvider = UserProvider(
+      snackbarService: SnackbarService(context),
+    );
     plakProvider = Provider.of<PlakModel>(context, listen: false);
     checkboxProvider = Provider.of<CheckboxModel>(context, listen: false);
     super.initState();

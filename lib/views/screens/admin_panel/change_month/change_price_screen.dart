@@ -1,6 +1,7 @@
 import 'package:mojtama/helpers/profile_helper.dart';
 import 'package:mojtama/services/admin_api_service.dart';
 import 'package:mojtama/services/app_service.dart';
+import 'package:mojtama/services/app_services/snackbar_service.dart';
 import 'package:mojtama/services/user_api_service.dart';
 import 'package:mojtama/views/widgets/textfield_widget.dart';
 
@@ -17,7 +18,14 @@ class _ChangePriceScreenState extends State<ChangePriceScreen> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
   final TextEditingController priceController = TextEditingController();
   final ProfileHelper helper = ProfileHelper();
-  final UserProvider _userProvider = UserProvider();
+  late UserProvider _userProvider;
+
+  @override
+  void initState() {
+    super.initState();
+    _userProvider = UserProvider(snackbarService: SnackbarService(context));
+  }
+
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();

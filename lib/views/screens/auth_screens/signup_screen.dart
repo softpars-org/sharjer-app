@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mojtama/helpers/profile_helper.dart';
+import 'package:mojtama/services/app_services/snackbar_service.dart';
 import 'package:mojtama/viewmodels/plak_model.dart';
 import 'package:mojtama/viewmodels/state_model.dart';
 import 'package:mojtama/models/user_model.dart';
@@ -26,7 +27,7 @@ class SignupPage extends StatelessWidget {
   final TextEditingController startdateTxt = TextEditingController();
   final TextEditingController enddateTxt = TextEditingController();
   final ProfileHelper profileHelper = ProfileHelper();
-  final UserProvider userProvider = UserProvider();
+
   SignupPage({super.key});
   @override
   Widget build(BuildContext context) {
@@ -208,6 +209,8 @@ class SignupPage extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: CustomButton(
                 onPressed: () async {
+                  final UserProvider userProvider =
+                      UserProvider(snackbarService: SnackbarService(context));
                   AppService appService = AppService(context);
                   bool validated = _formKey.currentState!.validate();
                   if (validated) {

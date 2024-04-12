@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mojtama/models/rule_model.dart';
+import 'package:mojtama/services/app_services/snackbar_service.dart';
 import 'package:mojtama/services/user_api_service.dart';
 
 class CheckboxModel extends ChangeNotifier {
@@ -32,11 +33,12 @@ class MojtamaStatusExpansionModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  getFinancialStatus() async {
+  getFinancialStatus(BuildContext context) async {
     toggleLoading();
     var response;
     try {
-      response = await UserProvider().getFinancialStatus();
+      response = await UserProvider(snackbarService: SnackbarService(context))
+          .getFinancialStatus();
       toggleLoading();
     } catch (e) {
       return;
@@ -46,11 +48,12 @@ class MojtamaStatusExpansionModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  getRules() async {
+  getRules(BuildContext context) async {
     toggleLoading();
     Rule? response;
     try {
-      response = await UserProvider().getMojtamaRules();
+      response = await UserProvider(snackbarService: SnackbarService(context))
+          .getMojtamaRules();
     } catch (e) {
       if (kDebugMode) {
         print(e);

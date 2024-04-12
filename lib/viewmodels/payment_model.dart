@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mojtama/models/charge_status_model.dart';
 import 'package:mojtama/models/history_model.dart';
 import 'package:mojtama/services/admin_api_service.dart';
+import 'package:mojtama/services/app_services/snackbar_service.dart';
 import 'package:mojtama/services/payment_api_service.dart';
 import 'package:mojtama/services/user_api_service.dart';
 
@@ -16,8 +17,10 @@ class PaymentModel extends ChangeNotifier {
   List<ChargeRowStatus> chargeStatusOfTheUser = [];
   List<ChargeRowStatus> chargeStatusOfAMember = [];
 
-  getPaymentStatusOfTheUsersInTheMonth() async {
-    UserProvider userProvider = UserProvider();
+  getPaymentStatusOfTheUsersInTheMonth(BuildContext context) async {
+    UserProvider userProvider = UserProvider(
+      snackbarService: SnackbarService(context),
+    );
     toggleLoading();
     String? ans = await userProvider.getPaymentStatusMessageOfTheUsers();
     toggleLoading();
@@ -27,8 +30,10 @@ class PaymentModel extends ChangeNotifier {
     }
   }
 
-  getChargeStatusOfTheUser() async {
-    UserProvider userProvider = UserProvider();
+  void getChargeStatusOfTheUser(BuildContext context) async {
+    UserProvider userProvider = UserProvider(
+      snackbarService: SnackbarService(context),
+    );
     chargeStatusOfTheUser = await userProvider.getUserChargeStatus();
     if (chargeStatusOfTheUser != false) {
       notifyListeners();

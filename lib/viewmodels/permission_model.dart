@@ -8,7 +8,8 @@ class PermissionModel extends ChangeNotifier {
   String userPermissionType = "no";
   late User userInfo;
   bool isLoading = false;
-  UserProvider userProvider = UserProvider();
+  final UserProvider userProvider;
+  PermissionModel({required this.userProvider});
   fetchUserType() async {
     var fetchedUserPermission = await userProvider.getMyPermission();
     userPermissionType = fetchedUserPermission;

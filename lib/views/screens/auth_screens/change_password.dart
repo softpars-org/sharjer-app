@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:mojtama/services/app_service.dart';
+import 'package:mojtama/services/app_services/snackbar_service.dart';
 import 'package:mojtama/services/encryption_service.dart';
 import 'package:mojtama/services/user_api_service.dart';
 import 'package:mojtama/viewmodels/change_password_model.dart';
@@ -84,7 +85,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         onPressed: () async {
           bool isValidated = formKey.currentState!.validate();
           if (isValidated) {
-            UserProvider userProvider = UserProvider();
+            UserProvider userProvider = UserProvider(
+              snackbarService: SnackbarService(context),
+            );
             var box = Hive.box("auth");
             AppService appService = AppService(context);
             Encryption encryption = Encryption();
