@@ -51,6 +51,8 @@ dependencies:
   firebase_core:
   firebase_messaging:
   flutter_background_service:
+  http_interceptor: ^1.0.2
+  connectivity_plus: ^5.0.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

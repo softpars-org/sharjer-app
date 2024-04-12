@@ -5,53 +5,52 @@ import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:mojtama/config/strings.dart';
+import 'package:mojtama/exceptions/app_exceptions.dart';
 import 'package:mojtama/models/charge_status_model.dart';
 import 'package:mojtama/models/rule_model.dart';
 import 'package:mojtama/models/user_model.dart';
+import 'package:mojtama/services/base_service.dart';
 import 'package:mojtama/services/encryption_service.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-class UserProvider {
+class UserProvider extends BaseService {
   String? host;
   final _box = Hive.box("auth");
-  UserProvider() {
+  UserProvider({required super.snackbarService}) {
     host = Strings.baseURL;
   }
 
   login(String username, String password) async {
-    var url = Uri.parse("$host/authentication/login");
-    Encryption encryption = Encryption();
-    password = await encryption.encrypt(password);
+    var url = Uri.parse("$host/accounts/authentication/login/");
     Map<String, dynamic> payload = {
       "username": username,
       "password": password,
     };
     http.Response request;
     try {
-      request = await http.post(url, body: payload);
+      request = await client.post(
+        url,
+        body: jsonEncode(payload),
+      );
+      Map<String, dynamic> response = jsonDecode(request.body);
       if (request.statusCode == 200) {
-        //Set user's information
-        _box.put("is_loggined", true);
-        _box.put("username", username);
-        _box.put(
-          "password",
-          password,
-        );
+        //Set login information
+        _box.put("access_token", response['access']);
+        _box.put("refresh_token", response['refresh']);
         //Register for firebase token.
         if (Platform.isAndroid || Platform.isIOS) {
           String? fcmToken = await FirebaseMessaging.instance.getToken();
-          UserProvider userProvider = UserProvider();
           if (fcmToken != null) {
-            await userProvider.updateFirebaseToken(fcmToken);
+            await updateFirebaseToken(fcmToken);
           }
           FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) async {
-            await userProvider.updateFirebaseToken(fcmToken);
+            await updateFirebaseToken(fcmToken);
           });
         }
         return true;
       }
-    } catch (e) {
-      print(e);
+    } on SocketException catch (e) {
+      throw CannotConnectToTheServerException();
     }
     return false;
   }
@@ -88,12 +87,11 @@ class UserProvider {
       );
       //Register for firebase token.
       String? fcmToken = await FirebaseMessaging.instance.getToken();
-      UserProvider userProvider = UserProvider();
       if (fcmToken != null) {
-        await userProvider.updateFirebaseToken(fcmToken);
+        await updateFirebaseToken(fcmToken);
       }
       FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) async {
-        await userProvider.updateFirebaseToken(fcmToken);
+        await updateFirebaseToken(fcmToken);
       });
       return 1; //everything works fine!
     } else if (response["message"] == "user is in the database") {
