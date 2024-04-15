@@ -6,7 +6,7 @@ class ThemeModel extends ChangeNotifier {
   ThemeData? currentTheme;
   final box = Hive.box("theme");
   ThemeModel() {
-    currentTheme = box.get("isDarkTheme") ? darkTheme : lightTheme;
+    currentTheme = box.get("is_dark_mode") ? darkTheme : lightTheme;
   }
 
   ThemeData lightTheme = ThemeData(
