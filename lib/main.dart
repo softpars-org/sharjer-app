@@ -3,11 +3,12 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mojtama/services/app_services/snackbar_service.dart';
 import 'package:mojtama/viewmodels/adminpanel_model.dart';
 import 'package:mojtama/viewmodels/month_model.dart';
 import 'package:mojtama/viewmodels/navbar_model.dart';
+import 'package:mojtama/viewmodels/network_viewmodel.dart';
 import 'package:mojtama/viewmodels/payment_model.dart';
-import 'package:mojtama/viewmodels/permission_model.dart';
 import 'package:mojtama/viewmodels/plak_model.dart';
 import 'package:mojtama/models/scroll_model.dart';
 import 'package:mojtama/viewmodels/state_model.dart';
@@ -48,9 +49,9 @@ void main() async {
   }
 
   var box = Hive.box("theme");
-  box.put("isDarkTheme", box.get("isDarkTheme") ?? false);
+  box.put("is_dark_mode", box.get("is_dark_mode") ?? false);
   box.put("is_loggined", box.get("is_loggined") ?? false);
-  var isDarkTheme = box.get("isDarkTheme");
+  bool isDarkTheme = box.get("is_dark_mode") ?? false;
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
       systemNavigationBarColor:
@@ -75,41 +76,46 @@ void main() async {
         ChangeNotifierProvider(create: (_) => RadioMonthModel()),
         ChangeNotifierProvider(create: (_) => AdminPanelModel()),
         ChangeNotifierProvider(create: (_) => MojtamaStatusExpansionModel()),
-        ChangeNotifierProvider(create: (_) => PermissionModel()),
         ChangeNotifierProvider(create: (_) => ChangePasswordModel()),
         ChangeNotifierProvider(create: (_) => WhoDidntPayChargeModel()),
       ],
       child: const MyApp(),
     ),
   );
-  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-  //   systemNavigationBarColor: Colors.black,
-  // ));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<ThemeModel>(builder: (context, model, child) {
+      final isLoggined = Hive.box("auth").get("is_loggined") ?? false;
       return MaterialApp(
         navigatorKey: navigatorKey,
         title: 'مجتمع آملی',
         debugShowCheckedModeBanner: false,
         scrollBehavior: CustomScrollBehaviour(),
         theme: model.currentTheme,
-        initialRoute:
-            Hive.box("auth").get("is_loggined") ?? false ? "/home" : "/login",
-        routes: {
-          "/home": (context) => Directionality(
-                textDirection: TextDirection.rtl,
-                child: HomeScreen(),
-              ),
-          "/login": (context) => Directionality(
-                textDirection: TextDirection.rtl,
-                child: LoginPage(),
-              ),
-        },
+        home: ChangeNotifierProvider(
+          create: (_) => NetworkViewModel(snackbarService: SnackbarService(_)),
+          builder: (context, child) {
+            return Directionality(
+              textDirection: TextDirection.rtl,
+              child: isLoggined ? HomeScreen() : LoginPage(),
+            );
+          },
+        ),
       );
     });
   }
