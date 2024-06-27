@@ -15,6 +15,7 @@ class ThemeModel extends ChangeNotifier {
     colorScheme: const ColorScheme.light(
       primary: Color(0xff075e54),
       secondary: Color(0xff075e54),
+      background: Colors.white,
     ),
     appBarTheme: const AppBarTheme(
       centerTitle: true,
@@ -28,11 +29,6 @@ class ThemeModel extends ChangeNotifier {
       ),
       backgroundColor: Color(0xff075e54),
     ),
-    checkboxTheme: CheckboxThemeData(
-      fillColor: MaterialStateProperty.all(
-        const Color(0xff075e54),
-      ),
-    ),
     radioTheme: RadioThemeData(
       fillColor: MaterialStateProperty.all(
         const Color(0xff075e54),
@@ -40,7 +36,6 @@ class ThemeModel extends ChangeNotifier {
     ),
     cardColor: Color(0xfff7f7f7),
     scaffoldBackgroundColor: Colors.white,
-    backgroundColor: Colors.white,
     iconTheme: const IconThemeData(color: Colors.white),
     floatingActionButtonTheme:
         const FloatingActionButtonThemeData(foregroundColor: Colors.white),
